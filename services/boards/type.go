@@ -2,6 +2,9 @@ package boards
 
 import "github.com/gin-gonic/gin"
 
+type handler struct {
+}
+
 type Handler interface {
 	GetBoard(c *gin.Context)
 	CreateBoard(c *gin.Context)
