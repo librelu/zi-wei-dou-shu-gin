@@ -3,8 +3,8 @@ package configs
 import (
 	"fmt"
 
-	"github.com/bearners-gin/utils/utilerrors"
 	"github.com/spf13/viper"
+	"github.com/zi-wei-dou-shu-gin/utils/utilerrors"
 )
 
 func NewConfigs(configPath, configFileType string) (*Config, error) {

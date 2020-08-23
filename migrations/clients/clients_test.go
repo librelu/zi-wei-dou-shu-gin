@@ -1,10 +1,10 @@
 package migrations_test
 
 import (
-	migrations "github.com/bearners-gin/migrations/clients"
 	"github.com/golang-migrate/migrate/v4"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	migrations "github.com/zi-wei-dou-shu-gin/migrations/clients"
 )
 
 var _ = Describe("clients", func() {

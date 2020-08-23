@@ -15,7 +15,7 @@ limitations under the License.
 */
 package main
 
-import "github.com/bearners-gin/migrations/cmd"
+import "github.com/zi-wei-dou-shu-gin/migrations/cmd"
 
 func main() {
 	cmd.Execute()

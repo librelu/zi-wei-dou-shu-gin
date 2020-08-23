@@ -5,8 +5,8 @@
 
 # kill server on CTRL+C
 trap 'kill $pid; exit' SIGINT
-app_name="bearners-gin"
-app_path="/go/src/github.com/bearners-gin"
+app_name="zi-wei-dou-shu-gin"
+app_path="/go/src/github.com/zi-wei-dou-shu-gin"
 
 function build_and_execute {
     echo -e "\e[32mBuilding...\e[0m"

@@ -4,11 +4,11 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/bearners-gin/utils/utilerrors"
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/lib/pq"
+	"github.com/zi-wei-dou-shu-gin/utils/utilerrors"
 )
 
 func NewDBMigration(host, user, password, database, sslmode, migrationFilePath, driverName string, port int32) (*migrate.Migrate, error) {

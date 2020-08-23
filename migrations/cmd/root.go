@@ -18,11 +18,11 @@ package cmd
 import (
 	"os"
 
-	"github.com/bearners-gin/configs"
-	migrations "github.com/bearners-gin/migrations/clients"
-	"github.com/bearners-gin/utils/utilerrors"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cobra"
+	"github.com/zi-wei-dou-shu-gin/configs"
+	migrations "github.com/zi-wei-dou-shu-gin/migrations/clients"
+	"github.com/zi-wei-dou-shu-gin/utils/utilerrors"
 )
 
 // rootCmd represents the base command when called without any subcommands

@@ -1,8 +1,8 @@
 package configs
 
 import (
-	"github.com/bearners-gin/utils/utilerrors"
 	"github.com/spf13/viper"
+	"github.com/zi-wei-dou-shu-gin/utils/utilerrors"
 )
 
 func NewDBConfig() (*DBConfig, error) {

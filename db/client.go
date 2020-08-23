@@ -3,9 +3,9 @@ package db
 import (
 	"fmt"
 
-	"github.com/bearners-gin/utils/utilerrors"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/zi-wei-dou-shu-gin/utils/utilerrors"
 )
 
 func NewDBClient(host, user, password, database, sslmode string, port int32) (client *Client, err error) {

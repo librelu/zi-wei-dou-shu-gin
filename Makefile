@@ -33,3 +33,6 @@ deploy-to-ecr:
 
 test:
 	go test -cover ./...
+
+vet:
+	go vet ./

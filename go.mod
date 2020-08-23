@@ -1,4 +1,4 @@
-module github.com/bearners-gin
+module github.com/zi-wei-dou-shu-gin
 
 go 1.14
 

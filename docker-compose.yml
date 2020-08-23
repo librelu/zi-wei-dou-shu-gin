@@ -4,7 +4,7 @@ services:
     build: .
     ports:
       - "8080:8080"
-    command: /go/src/github.com/bearners-gin/watch.sh'
+    command: /go/src/github.com/zi-wei-dou-shu-gin/watch.sh'
     links:
       - "db"
     volumes:

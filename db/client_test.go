@@ -1,9 +1,9 @@
 package db_test
 
 import (
-	"github.com/bearners-gin/db"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/zi-wei-dou-shu-gin/db"
 )
 
 var _ = Describe("db", func() {
