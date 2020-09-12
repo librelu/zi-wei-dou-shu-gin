@@ -5,6 +5,8 @@ import (
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/gong"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/miaoxian"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/mingju"
+	"github.com/zi-wei-dou-shu-gin/utils/ziwei/stars"
+	"github.com/zi-wei-dou-shu-gin/utils/ziwei/startype"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/tiangan"
 )
 
@@ -18,8 +20,8 @@ type Block struct {
 }
 
 type Star struct {
-	Name     string
-	StarType string
+	Name     stars.StarName
+	StarType startype.StarType
 	Location tiangan.TianGan
 	MiaoXian *miaoxian.MiaoXian
 }

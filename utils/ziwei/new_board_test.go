@@ -9,6 +9,8 @@ import (
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/dizhi"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/gong"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/mingju"
+	"github.com/zi-wei-dou-shu-gin/utils/ziwei/stars"
+	"github.com/zi-wei-dou-shu-gin/utils/ziwei/startype"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/tiangan"
 )
 
@@ -21,8 +23,9 @@ var _ = Describe("ziwei", func() {
 		JustBeforeEach(func() {
 			board = ziwei.NewBoard(birthday)
 		})
-		FWhen("init board", func() {
+		When("init board", func() {
 			BeforeEach(func() {
+				// luna date: 丙寅年 7 / 3 子時
 				birthday = time.Date(1984, 8, 8, 0, 4, 0, 0, time.Local)
 			})
 			It("should returns location", func() {
@@ -35,6 +38,7 @@ var _ = Describe("ziwei", func() {
 		Context("testing Yin Shou", func() {
 			When("given a birthday with Jia year", func() {
 				BeforeEach(func() {
+					// luna date: 丙寅年 7 / 3 子時
 					birthday = time.Date(1984, 8, 8, 0, 4, 0, 0, time.Local)
 				})
 				It("should display Yin Shou by birthday", func() {
@@ -72,6 +76,7 @@ var _ = Describe("ziwei", func() {
 			})
 			When("given a birthday with Wu year", func() {
 				BeforeEach(func() {
+					// luna date: 丙寅年 7 / 3 子時
 					birthday = time.Date(1988, 8, 8, 0, 4, 0, 0, time.Local)
 				})
 				It("should display Yin Shou by birthday", func() {
@@ -95,6 +100,7 @@ var _ = Describe("ziwei", func() {
 			})
 			When("given a birthday with Bing year", func() {
 				BeforeEach(func() {
+					// luna date: 丙寅年 7 / 3 子時
 					birthday = time.Date(1986, 8, 8, 0, 4, 0, 0, time.Local)
 				})
 				It("should display Yin Shou by birthday", func() {
@@ -120,6 +126,7 @@ var _ = Describe("ziwei", func() {
 		Context("testing gong Wei order", func() {
 			When("given a birthday start with Zhi hour", func() {
 				BeforeEach(func() {
+					// luna date: 丙寅年 7 / 3 子時
 					birthday = time.Date(1984, 8, 8, 0, 4, 0, 0, time.Local)
 				})
 				It("should display Gong Wei by birthday", func() {
@@ -143,6 +150,7 @@ var _ = Describe("ziwei", func() {
 			})
 			When("given a birthday start with Chou hour", func() {
 				BeforeEach(func() {
+					// luna date: 丙寅年 7 / 3 丑時
 					birthday = time.Date(1984, 8, 8, 2, 4, 0, 0, time.Local)
 				})
 				It("should returns location", func() {
@@ -172,6 +180,7 @@ var _ = Describe("ziwei", func() {
 			})
 			When("given a birthday start with Chou hour", func() {
 				BeforeEach(func() {
+					// luna date: 丙寅年 7 / 3 子時
 					birthday = time.Date(1984, 12, 8, 0, 4, 0, 0, time.Local)
 				})
 				It("should display Gong Wei by birthday", func() {
@@ -191,6 +200,116 @@ var _ = Describe("ziwei", func() {
 				It("should returns correct Ming Ju", func() {
 					Expect(board.MingJu.JuType).Should(Equal(mingju.Huo))
 					Expect(board.MingJu.Number).Should(Equal(uint(6)))
+				})
+			})
+		})
+		Context("should display correct zi wei star", func() {
+			When("given a birthday shui ju and 12th", func() {
+				BeforeEach(func() {
+					// luna date: 甲子年 7 / 12 子時
+					birthday = time.Date(1984, 8, 8, 0, 4, 0, 0, time.Local)
+				})
+				It("should returns correct Ming Ju", func() {
+					Expect(board.MingJu.JuType).Should(Equal(mingju.Shui))
+					Expect(board.MingJu.Number).Should(Equal(uint(2)))
+				})
+				It("should dispaly in wei location", func() {
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.ZiWei,
+						StarType: startype.ZiWei,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+				})
+			})
+			When("given a birthday Huo ju and 26th", func() {
+				BeforeEach(func() {
+					// luna date: 戊辰年 6 / 26 子時
+					birthday = time.Date(1988, 8, 8, 0, 4, 0, 0, time.Local)
+				})
+				It("should returns correct Ming Ju", func() {
+					Expect(board.MingJu.JuType).Should(Equal(mingju.Huo))
+					Expect(board.MingJu.Number).Should(Equal(uint(6)))
+				})
+				It("should dispaly in you location", func() {
+					Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.ZiWei,
+						StarType: startype.ZiWei,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+				})
+			})
+			When("given a birthday Huo ju and 12th", func() {
+				BeforeEach(func() {
+					// luna date: 戊辰年 6 / 26 子時
+					birthday = time.Date(1988, 8, 8, 0, 4, 0, 0, time.Local)
+				})
+				It("should returns correct Ming Ju", func() {
+					Expect(board.MingJu.JuType).Should(Equal(mingju.Huo))
+					Expect(board.MingJu.Number).Should(Equal(uint(6)))
+				})
+				It("should dispaly in you location", func() {
+					Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.ZiWei,
+						StarType: startype.ZiWei,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+				})
+			})
+			When("given a birthday Tu ju and 12th", func() {
+				BeforeEach(func() {
+					// luna date: 庚子年 6 / 18 子時
+					birthday = time.Date(1990, 8, 8, 0, 4, 0, 0, time.Local)
+				})
+				It("should returns correct Ming Ju", func() {
+					Expect(board.MingJu.JuType).Should(Equal(mingju.Tu))
+					Expect(board.MingJu.Number).Should(Equal(uint(5)))
+				})
+				It("should dispaly in wu location", func() {
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.ZiWei,
+						StarType: startype.ZiWei,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+				})
+			})
+			When("given a birthday Mu ju and 18th", func() {
+				BeforeEach(func() {
+					// luna date: 壬申年 6 / 30 巳時
+					birthday = time.Date(1992, 7, 29, 9, 4, 0, 0, time.Local)
+				})
+				It("should returns correct Ming Ju", func() {
+					Expect(board.MingJu.JuType).Should(Equal(mingju.Jin))
+					Expect(board.MingJu.Number).Should(Equal(uint(4)))
+				})
+				It("should dispaly in xu location", func() {
+					Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.ZiWei,
+						StarType: startype.ZiWei,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+				})
+			})
+			When("given a birthday Mu ju and 18th", func() {
+				BeforeEach(func() {
+					// luna date: 癸酉年 5 / 1 戌時
+					birthday = time.Date(1993, 6, 20, 15, 4, 0, 0, time.Local)
+				})
+				It("should returns correct Ming Ju", func() {
+					Expect(board.MingJu.JuType).Should(Equal(mingju.Shui))
+					Expect(board.MingJu.Number).Should(Equal(uint(2)))
+				})
+				It("should dispaly in xu location", func() {
+					Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.ZiWei,
+						StarType: startype.ZiWei,
+						Location: 0,
+						MiaoXian: nil,
+					}))
 				})
 			})
 		})

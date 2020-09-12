@@ -1,7 +1,6 @@
 package ziwei
 
 import (
-	"fmt"
 	"math"
 	"time"
 
@@ -9,6 +8,8 @@ import (
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/dizhi"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/gong"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/mingju"
+	"github.com/zi-wei-dou-shu-gin/utils/ziwei/stars"
+	"github.com/zi-wei-dou-shu-gin/utils/ziwei/startype"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/tiangan"
 )
 
@@ -19,7 +20,8 @@ func NewBoard(birthday time.Time) *Board {
 	blocks = setupGongWei(lunaDate, blocks)
 	mingGongLocation := getMingGong(lunaDate.Hour, lunaDate.Month)
 	mingJu := getMingJu(mingGongLocation, lunaDate.Year.TianGan)
-	blocks = settZiWeiStar(mingJu, lunaDate.Day, blocks)
+	blocks = setZiWeiStar(mingGongLocation, mingJu, lunaDate.Day, blocks)
+
 	return &Board{
 		Blocks: blocks,
 		MingJu: mingJu,
@@ -57,13 +59,13 @@ func setupGongWei(lunaDate *lunacal.LunaDate, blocks []*Block) []*Block {
 	month := lunaDate.Month
 	mingGongLocation := getMingGong(hour, month)
 	shengGongLocation := getShengGong(hour, month)
-	blocks = setTwelveStars(mingGongLocation, blocks)
+	blocks = setTwelveGongs(mingGongLocation, blocks)
 	_ = shengGongLocation
 
 	return blocks
 }
 
-func setTwelveStars(mingGongLocation *dizhi.DiZhi, blocks []*Block) []*Block {
+func setTwelveGongs(mingGongLocation *dizhi.DiZhi, blocks []*Block) []*Block {
 	for i := range blocks {
 		index := int(*mingGongLocation) + i
 		if index > 11 {
@@ -95,7 +97,7 @@ func getShengGong(hour *dizhi.DiZhi, month uint) *dizhi.DiZhi {
 }
 
 func getMingJu(mingGongLocation *dizhi.DiZhi, lunaBirthYear tiangan.TianGan) *MingJu {
-	totalTianGanIndex := 10 / 2
+	totalTianGanIndex := 5
 	tianGanIndex := 0
 	for i := 0; i < totalTianGanIndex; i++ {
 		idx := int(lunaBirthYear) - (i * 2)
@@ -104,18 +106,19 @@ func getMingJu(mingGongLocation *dizhi.DiZhi, lunaBirthYear tiangan.TianGan) *Mi
 			break
 		}
 	}
-	totalDiZhiIndex := 12 / 2
+	totalDiZhiIndex := 6
 	diZhiIndex := 0
 	for i := 0; i < totalDiZhiIndex; i++ {
 		idx := int(*mingGongLocation) - (i * 2)
 		if idx == 0 || idx == 1 {
-			diZhiIndex = i
+			diZhiIndex = i % 3
 			break
 		}
 	}
-	mingJuIndex := tianGanIndex + (diZhiIndex)%3
-	if mingJuIndex < 0 {
-		mingJuIndex = 4 + mingJuIndex
+
+	mingJuIndex := tianGanIndex + diZhiIndex
+	if mingJuIndex > 4 {
+		mingJuIndex = mingJuIndex - 5
 	}
 
 	juType := mingju.MingJuType(mingJuIndex)
@@ -125,24 +128,29 @@ func getMingJu(mingGongLocation *dizhi.DiZhi, lunaBirthYear tiangan.TianGan) *Mi
 	}
 }
 
-func settZiWeiStar(mingJu *MingJu, birthdate uint, blocks []*Block) []*Block {
-	n := mingJu.Number
-	fmt.Println(birthdate)
-	index := uint(math.Floor(float64(birthdate / n)))
-	backStep := birthdate % n
-	if backStep != 0 {
-		location := int(index) - int(backStep)
-		fmt.Println(birthdate)
-		fmt.Println(n)
-		fmt.Println(backStep)
-		fmt.Println("--------")
-		if location < 0 {
-			location = 12 + location
-		}
+func setZiWeiStar(mingGongLocation *dizhi.DiZhi, mingJu *MingJu, birthdate uint, blocks []*Block) []*Block {
+	steps := int(math.Floor(float64(birthdate / mingJu.Number)))
+	if birthdate%mingJu.Number > 0 {
+		steps = steps + 1
 	}
-	_ = append(blocks[index].Stars, &Star{
-		Name:     "紫微",
-		StarType: "zi_wei",
+
+	stepsRemainder := steps*int(mingJu.Number) - int(birthdate)
+	if (stepsRemainder % 2) == 0 {
+		steps = steps + int(stepsRemainder)
+	} else {
+		steps = steps - int(stepsRemainder)
+	}
+
+	index := steps + 1
+	if index > 11 {
+		index = 12 - index
+	} else if index < 0 {
+		index = 12 + index
+	}
+
+	blocks[index].Stars = append(blocks[index].Stars, &Star{
+		Name:     stars.ZiWei,
+		StarType: startype.ZiWei,
 	})
 	return blocks
 }
