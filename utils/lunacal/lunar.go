@@ -197,7 +197,6 @@ func calculateLunar(date string) *Lunar {
 	}
 
 	offset += day
-	fmt.Println(offset)
 	lunar.month = uint(i)
 	lunar.day = uint(offset)
 	lunar.year = year
@@ -228,8 +227,6 @@ func Solar2Lunar(time time.Time) *LunaDate {
 	lunar := calculateLunar(time.Format(DateFormat))
 	lunaDate.Year = getChineseYear(lunar.year)
 	lunaDate.Month = uint(lunar.month)
-	fmt.Println(lunar.day)
-	fmt.Println(">>>>>>>>>")
 	lunaDate.Day = uint(lunar.day)
 	lunaDate.Hour = convertToChineseHour(lunar.hour)
 	lunaDate.IsLeap = lunar.isLeap()
