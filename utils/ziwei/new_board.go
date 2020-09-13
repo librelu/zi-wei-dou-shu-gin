@@ -1,6 +1,8 @@
 package ziwei
 
 import (
+	"errors"
+	"fmt"
 	"math"
 	"time"
 
@@ -13,19 +15,23 @@ import (
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/tiangan"
 )
 
-func NewBoard(birthday time.Time) *Board {
+func NewBoard(birthday time.Time) (*Board, error) {
+	var err error
 	lunaDate := lunacal.Solar2Lunar(birthday)
 	blocks := setupDiZhi()
 	blocks = setYinShou(&lunaDate.Year.TianGan, blocks)
 	blocks = setupGongWei(lunaDate, blocks)
 	mingGongLocation := getMingGong(lunaDate.Hour, lunaDate.Month)
 	mingJu := getMingJu(mingGongLocation, lunaDate.Year.TianGan)
-	blocks = setZiWeiStar(mingGongLocation, mingJu, lunaDate.Day, blocks)
+	blocks, err = setFourteenMainStars(mingGongLocation, mingJu, lunaDate.Day, blocks)
+	if err != nil {
+		return nil, fmt.Errorf("failed in set fourteen main stars, error: %w", err)
+	}
 
 	return &Board{
 		Blocks: blocks,
 		MingJu: mingJu,
-	}
+	}, nil
 }
 
 func setupDiZhi() []*Block {
@@ -128,7 +134,25 @@ func getMingJu(mingGongLocation *dizhi.DiZhi, lunaBirthYear tiangan.TianGan) *Mi
 	}
 }
 
-func setZiWeiStar(mingGongLocation *dizhi.DiZhi, mingJu *MingJu, birthdate uint, blocks []*Block) []*Block {
+func setFourteenMainStars(mingGongLocation *dizhi.DiZhi, mingJu *MingJu, birthdate uint, blocks []*Block) ([]*Block, error) {
+	ziWeiStarIndex := getZiWeiStarLocation(mingGongLocation, mingJu, birthdate)
+	blocks[ziWeiStarIndex].Stars = append(blocks[ziWeiStarIndex].Stars, &Star{
+		Name:     stars.ZiWei,
+		StarType: startype.FourteenMainStars,
+	})
+	if tianFuIndex, err := setTianFuStarLocation(ziWeiStarIndex); err == nil {
+		blocks[tianFuIndex].Stars = append(blocks[tianFuIndex].Stars, &Star{
+			Name:     stars.TianFu,
+			StarType: startype.FourteenMainStars,
+		})
+	} else {
+		return nil, fmt.Errorf("tian fu star not found, error: %w", err)
+	}
+
+	return blocks, nil
+}
+
+func getZiWeiStarLocation(mingGongLocation *dizhi.DiZhi, mingJu *MingJu, birthdate uint) int {
 	steps := int(math.Floor(float64(birthdate / mingJu.Number)))
 	if birthdate%mingJu.Number > 0 {
 		steps = steps + 1
@@ -148,9 +172,24 @@ func setZiWeiStar(mingGongLocation *dizhi.DiZhi, mingJu *MingJu, birthdate uint,
 		index = 12 + index
 	}
 
-	blocks[index].Stars = append(blocks[index].Stars, &Star{
-		Name:     stars.ZiWei,
-		StarType: startype.ZiWei,
-	})
-	return blocks
+	return index
+}
+
+func setTianFuStarLocation(ziWeiStarIndex int) (int, error) {
+	index := 0
+	if ziWeiStarIndex < 8 {
+		index = 8 + (8 - ziWeiStarIndex)
+	} else if ziWeiStarIndex > 8 {
+		index = 8 - (ziWeiStarIndex - 8)
+	} else if ziWeiStarIndex == 2 || ziWeiStarIndex == 8 {
+		index = ziWeiStarIndex
+	} else {
+		return 0, errors.New("no index found")
+	}
+
+	if index > 11 {
+		index = index - 12
+	}
+
+	return index, nil
 }
