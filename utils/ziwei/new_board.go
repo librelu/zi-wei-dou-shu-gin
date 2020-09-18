@@ -140,7 +140,8 @@ func setFourteenMainStars(mingGongLocation *dizhi.DiZhi, mingJu *MingJu, birthda
 		Name:     stars.ZiWei,
 		StarType: startype.FourteenMainStars,
 	})
-	if tianFuIndex, err := setTianFuStarLocation(ziWeiStarIndex); err == nil {
+	tianFuIndex, err := setTianFuStarLocation(ziWeiStarIndex)
+	if err == nil {
 		blocks[tianFuIndex].Stars = append(blocks[tianFuIndex].Stars, &Star{
 			Name:     stars.TianFu,
 			StarType: startype.FourteenMainStars,
@@ -149,7 +150,59 @@ func setFourteenMainStars(mingGongLocation *dizhi.DiZhi, mingJu *MingJu, birthda
 		return nil, fmt.Errorf("tian fu star not found, error: %w", err)
 	}
 
+	blocks = setStarsBeggingWithZiWei(ziWeiStarIndex, blocks)
+	blocks = setStarsBeggingWithTianFu(tianFuIndex, blocks)
 	return blocks, nil
+}
+
+//setStarsBeggingWithZiWei 逆時針一宮安天機星，跳隔一宮，安太陽星，逆時針一宮安武曲星，逆時針一宮安天同星，跳隔兩宮，安廉貞星
+func setStarsBeggingWithZiWei(ziWeiStarIndex int, blocks []*Block) []*Block {
+	tianJi := ziWeiStarIndex - 1
+	if tianJi < 0 {
+		tianJi = 12 + tianJi
+	}
+	blocks[tianJi].Stars = append(blocks[tianJi].Stars, &Star{
+		Name:     stars.TianJi,
+		StarType: startype.FourteenMainStars,
+	})
+	taiYang := tianJi - 2
+	if taiYang < 0 {
+		taiYang = 12 + taiYang
+	}
+	blocks[taiYang].Stars = append(blocks[taiYang].Stars, &Star{
+		Name:     stars.TaiYang,
+		StarType: startype.FourteenMainStars,
+	})
+	wuQu := taiYang - 1
+	if wuQu < 0 {
+		wuQu = 12 + wuQu
+	}
+	blocks[wuQu].Stars = append(blocks[wuQu].Stars, &Star{
+		Name:     stars.WuQu,
+		StarType: startype.FourteenMainStars,
+	})
+	tianTong := wuQu - 1
+	if tianTong < 0 {
+		tianTong = 12 + tianTong
+	}
+	blocks[tianTong].Stars = append(blocks[tianTong].Stars, &Star{
+		Name:     stars.TianTong,
+		StarType: startype.FourteenMainStars,
+	})
+	lianZhen := tianTong - 3
+	if lianZhen < 0 {
+		lianZhen = 12 + lianZhen
+	}
+	blocks[lianZhen].Stars = append(blocks[lianZhen].Stars, &Star{
+		Name:     stars.LianZhen,
+		StarType: startype.FourteenMainStars,
+	})
+	return blocks
+}
+
+//setStarsBeggingWithTianFu 順時針一宮安太陰星，順時針一宮安貪狼星，順時針一宮安巨門星，順時針一宮安天相星，順時針一宮安天梁星，順時針一宮安七殺星，跳隔三宮，安破軍星
+func setStarsBeggingWithTianFu(tianFuIndex int, blocks []*Block) []*Block {
+	return blocks
 }
 
 func getZiWeiStarLocation(mingGongLocation *dizhi.DiZhi, mingJu *MingJu, birthdate uint) int {
