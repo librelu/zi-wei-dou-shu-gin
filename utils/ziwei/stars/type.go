@@ -10,4 +10,11 @@ const (
 	WuQu
 	TianTong
 	LianZhen
+	TaiYin
+	TanLang
+	JuMen
+	TianXiang
+	TianLiang
+	QiSha
+	PoJun
 )

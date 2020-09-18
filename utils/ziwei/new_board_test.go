@@ -285,6 +285,50 @@ var _ = Describe("ziwei", func() {
 							MiaoXian: nil,
 						}))
 					})
+					It("should display tai yin, tan lang, ju men, tian xiang, tian liang, qi sha, po jun", func() {
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TaiYin,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TanLang,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.JuMen,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TianXiang,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TianLiang,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.QiSha,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.PoJun,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+					})
 				})
 				When("given a birthday Huo ju and 26th", func() {
 					BeforeEach(func() {
@@ -338,6 +382,50 @@ var _ = Describe("ziwei", func() {
 							MiaoXian: nil,
 						}))
 					})
+					It("should display tai yin, tan lang, ju men, tian xiang, tian liang, qi sha, po jun", func() {
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TaiYin,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TanLang,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.JuMen,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TianXiang,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TianLiang,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.QiSha,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.PoJun,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+					})
 				})
 				When("given a birthday Huo ju and 12th", func() {
 					BeforeEach(func() {
@@ -386,6 +474,50 @@ var _ = Describe("ziwei", func() {
 						}))
 						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.LianZhen,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+					})
+					It("should display tai yin, tan lang, ju men, tian xiang, tian liang, qi sha, po jun", func() {
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TaiYin,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TanLang,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.JuMen,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TianXiang,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TianLiang,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.QiSha,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.PoJun,
 							StarType: startype.FourteenMainStars,
 							Location: 0,
 							MiaoXian: nil,
@@ -497,6 +629,50 @@ var _ = Describe("ziwei", func() {
 							MiaoXian: nil,
 						}))
 					})
+					It("should display tai yin, tan lang, ju men, tian xiang, tian liang, qi sha, po jun", func() {
+						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TaiYin,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TanLang,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.JuMen,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TianXiang,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TianLiang,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.QiSha,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.PoJun,
+							StarType: startype.FourteenMainStars,
+							Location: 0,
+							MiaoXian: nil,
+						}))
+					})
 				})
 				When("given a birthday Mu ju and 18th", func() {
 					BeforeEach(func() {
@@ -547,6 +723,50 @@ var _ = Describe("ziwei", func() {
 							MiaoXian: nil,
 						}))
 					})
+				})
+				It("should display tai yin, tan lang, ju men, tian xiang, tian liang, qi sha, po jun", func() {
+					Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TaiYin,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TanLang,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JuMen,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianXiang,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianLiang,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.QiSha,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.PoJun,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
 				})
 			})
 		})
@@ -599,6 +819,50 @@ var _ = Describe("ziwei", func() {
 					}))
 					Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.LianZhen,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+				})
+				It("should display tai yin, tan lang, ju men, tian xiang, tian liang, qi sha, po jun", func() {
+					Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TaiYin,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TanLang,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JuMen,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianXiang,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianLiang,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.QiSha,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.PoJun,
 						StarType: startype.FourteenMainStars,
 						Location: 0,
 						MiaoXian: nil,
@@ -658,6 +922,50 @@ var _ = Describe("ziwei", func() {
 						MiaoXian: nil,
 					}))
 				})
+				It("should display tai yin, tan lang, ju men, tian xiang, tian liang, qi sha, po jun", func() {
+					Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TaiYin,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TanLang,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JuMen,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianXiang,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianLiang,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.QiSha,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.PoJun,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+				})
 			})
 			When("zi wei is in yin location", func() {
 				BeforeEach(func() {
@@ -707,6 +1015,50 @@ var _ = Describe("ziwei", func() {
 					}))
 					Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.LianZhen,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+				})
+				It("should display tai yin, tan lang, ju men, tian xiang, tian liang, qi sha, po jun", func() {
+					Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TaiYin,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TanLang,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JuMen,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianXiang,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianLiang,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.QiSha,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.PoJun,
 						StarType: startype.FourteenMainStars,
 						Location: 0,
 						MiaoXian: nil,
@@ -766,6 +1118,50 @@ var _ = Describe("ziwei", func() {
 						MiaoXian: nil,
 					}))
 				})
+				It("should display tai yin, tan lang, ju men, tian xiang, tian liang, qi sha, po jun", func() {
+					Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TaiYin,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TanLang,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JuMen,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianXiang,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianLiang,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.QiSha,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.PoJun,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+				})
 			})
 			When("zi wei is in chou location", func() {
 				BeforeEach(func() {
@@ -815,6 +1211,50 @@ var _ = Describe("ziwei", func() {
 					}))
 					Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.LianZhen,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+				})
+				It("should display tai yin, tan lang, ju men, tian xiang, tian liang, qi sha, po jun", func() {
+					Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TaiYin,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TanLang,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JuMen,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianXiang,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianLiang,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.QiSha,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.PoJun,
 						StarType: startype.FourteenMainStars,
 						Location: 0,
 						MiaoXian: nil,
@@ -870,6 +1310,51 @@ var _ = Describe("ziwei", func() {
 					}))
 					Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.LianZhen,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+				})
+
+				It("should display tai yin, tan lang, ju men, tian xiang, tian liang, qi sha, po jun", func() {
+					Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TaiYin,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TanLang,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JuMen,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianXiang,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianLiang,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.QiSha,
+						StarType: startype.FourteenMainStars,
+						Location: 0,
+						MiaoXian: nil,
+					}))
+					Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.PoJun,
 						StarType: startype.FourteenMainStars,
 						Location: 0,
 						MiaoXian: nil,

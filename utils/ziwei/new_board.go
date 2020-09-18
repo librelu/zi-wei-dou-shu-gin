@@ -155,7 +155,7 @@ func setFourteenMainStars(mingGongLocation *dizhi.DiZhi, mingJu *MingJu, birthda
 	return blocks, nil
 }
 
-//setStarsBeggingWithZiWei 逆時針一宮安天機星，跳隔一宮，安太陽星，逆時針一宮安武曲星，逆時針一宮安天同星，跳隔兩宮，安廉貞星
+//setStarsBeggingWithZiWei 順時針一宮安天機星，跳隔一宮，安太陽星，順時針一宮安武曲星，順時針一宮安天同星，跳隔兩宮，安廉貞星
 func setStarsBeggingWithZiWei(ziWeiStarIndex int, blocks []*Block) []*Block {
 	tianJi := ziWeiStarIndex - 1
 	if tianJi < 0 {
@@ -200,8 +200,64 @@ func setStarsBeggingWithZiWei(ziWeiStarIndex int, blocks []*Block) []*Block {
 	return blocks
 }
 
-//setStarsBeggingWithTianFu 順時針一宮安太陰星，順時針一宮安貪狼星，順時針一宮安巨門星，順時針一宮安天相星，順時針一宮安天梁星，順時針一宮安七殺星，跳隔三宮，安破軍星
+//setStarsBeggingWithTianFu 逆時針一宮安太陰星，逆時針一宮安貪狼星，逆時針一宮安巨門星，逆時針一宮安天相星，逆時針一宮安天梁星，逆時針一宮安七殺星，跳隔三宮，安破軍星
 func setStarsBeggingWithTianFu(tianFuIndex int, blocks []*Block) []*Block {
+	taiYin := tianFuIndex + 1
+	if taiYin > 11 {
+		taiYin = taiYin - 12
+	}
+	blocks[taiYin].Stars = append(blocks[taiYin].Stars, &Star{
+		Name:     stars.TaiYin,
+		StarType: startype.FourteenMainStars,
+	})
+	tanLang := taiYin + 1
+	if tanLang > 11 {
+		tanLang = tanLang - 12
+	}
+	blocks[tanLang].Stars = append(blocks[tanLang].Stars, &Star{
+		Name:     stars.TanLang,
+		StarType: startype.FourteenMainStars,
+	})
+	juMen := tanLang + 1
+	if juMen > 11 {
+		juMen = juMen - 12
+	}
+	blocks[juMen].Stars = append(blocks[juMen].Stars, &Star{
+		Name:     stars.JuMen,
+		StarType: startype.FourteenMainStars,
+	})
+	tianXiang := juMen + 1
+	if tianXiang > 11 {
+		tianXiang = tianXiang - 12
+	}
+	blocks[tianXiang].Stars = append(blocks[tianXiang].Stars, &Star{
+		Name:     stars.TianXiang,
+		StarType: startype.FourteenMainStars,
+	})
+	tianLiang := tianXiang + 1
+	if tianLiang > 11 {
+		tianLiang = tianLiang - 12
+	}
+	blocks[tianLiang].Stars = append(blocks[tianLiang].Stars, &Star{
+		Name:     stars.TianLiang,
+		StarType: startype.FourteenMainStars,
+	})
+	qiSha := tianLiang + 1
+	if qiSha > 11 {
+		qiSha = qiSha - 12
+	}
+	blocks[qiSha].Stars = append(blocks[qiSha].Stars, &Star{
+		Name:     stars.QiSha,
+		StarType: startype.FourteenMainStars,
+	})
+	poJun := qiSha + 4
+	if poJun > 11 {
+		poJun = poJun - 12
+	}
+	blocks[poJun].Stars = append(blocks[poJun].Stars, &Star{
+		Name:     stars.PoJun,
+		StarType: startype.FourteenMainStars,
+	})
 	return blocks
 }
 
