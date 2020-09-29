@@ -3,6 +3,7 @@ package stars
 type StarName uint
 
 const (
+	//十四主星
 	ZiWei = StarName(iota)
 	TianFu
 	TianJi
@@ -17,4 +18,12 @@ const (
 	TianLiang
 	QiSha
 	PoJun
+	//年干諸星
+	LuCun
+	QingYang
+	TuoLuo
+	TianKui
+	TianYue
+	TianGuan
+	NainGanTianFu
 )
