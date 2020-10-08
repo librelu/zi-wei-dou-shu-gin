@@ -37,4 +37,5 @@ const (
 	TainXi
 	GuChen
 	GuaXiu
+	JieShen
 )
