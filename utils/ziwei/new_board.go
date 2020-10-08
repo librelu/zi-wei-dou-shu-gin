@@ -29,6 +29,8 @@ func NewBoard(birthday time.Time) (*Board, error) {
 	}
 	blocks = setUpNainGanStars(&lunaDate.Year.TianGan, blocks)
 	blocks = setXunKong(lunaDate.Year, blocks)
+	blocks = setJieKong(&lunaDate.Year.TianGan, blocks)
+	blocks = setNianZhiXiZhuXing(&lunaDate.Year.DiZhi, blocks)
 
 	return &Board{
 		Blocks: blocks,
@@ -487,5 +489,31 @@ func setXunKong(birthYear *lunacal.TianGanDiZhi, blocks []*Block) []*Block {
 		StarType: startype.NianGanXiZhuXing,
 	})
 
+	return blocks
+}
+
+// setJieKong 設定截空星
+func setJieKong(birthYear *tiangan.TianGan, blocks []*Block) []*Block {
+	index := int(*birthYear) % 5
+	if index == 0 {
+		index = 5
+	} else {
+		index--
+	}
+	return blocks
+}
+
+// NianZhiXiZhuXing 設定年支系諸星
+func setNianZhiXiZhuXing(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
+	blocks = setTainKu(birthYear, blocks)
+	return blocks
+}
+
+func setTainKu(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
+	index := (11 - int(*birthYear) + 7) % 12
+	blocks[index].Stars = append(blocks[index].Stars, &Star{
+		Name:     stars.TianKu.String(),
+		StarType: startype.NianZhiXiZhuXing,
+	})
 	return blocks
 }

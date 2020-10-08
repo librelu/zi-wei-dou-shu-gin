@@ -6,4 +6,5 @@ const (
 	FourteenMainStars = StarType(iota)
 	NianGanXiZhuXing
 	SiHua
+	NianZhiXiZhuXing
 )

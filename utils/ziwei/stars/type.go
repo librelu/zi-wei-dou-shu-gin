@@ -18,7 +18,7 @@ const (
 	TianLiang
 	QiSha
 	PoJun
-	//年干諸星
+	//年干系諸星
 	LuCun
 	QingYang
 	TuoLuo
@@ -28,4 +28,6 @@ const (
 	NainGanTianFu
 	XunKong
 	JieKong
+	//年支系諸星
+	TianKu
 )
