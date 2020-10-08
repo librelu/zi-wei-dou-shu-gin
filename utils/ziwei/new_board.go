@@ -506,13 +506,25 @@ func setJieKong(birthYear *tiangan.TianGan, blocks []*Block) []*Block {
 // NianZhiXiZhuXing 設定年支系諸星
 func setNianZhiXiZhuXing(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 	blocks = setTainKu(birthYear, blocks)
+	blocks = setTainXu(birthYear, blocks)
 	return blocks
 }
 
+// setTainKu 設定天哭
 func setTainKu(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 	index := (11 - int(*birthYear) + 7) % 12
 	blocks[index].Stars = append(blocks[index].Stars, &Star{
 		Name:     stars.TianKu.String(),
+		StarType: startype.NianZhiXiZhuXing,
+	})
+	return blocks
+}
+
+// setTainXu 設定天虛
+func setTainXu(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
+	index := (int(*birthYear) + 6) % 12
+	blocks[index].Stars = append(blocks[index].Stars, &Star{
+		Name:     stars.TianXu.String(),
 		StarType: startype.NianZhiXiZhuXing,
 	})
 	return blocks
