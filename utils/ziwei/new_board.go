@@ -512,6 +512,7 @@ func setNianZhiXiZhuXing(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 	blocks = setHongLuan(birthYear, blocks)
 	blocks = setTainXi(birthYear, blocks)
 	blocks = setGuChen(birthYear, blocks)
+	blocks = setGuaXiu(birthYear, blocks)
 	return blocks
 }
 
@@ -582,6 +583,18 @@ func setGuChen(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 	index := locations[locationIndex]
 	blocks[index].Stars = append(blocks[index].Stars, &Star{
 		Name:     stars.GuChen.String(),
+		StarType: startype.NianZhiXiZhuXing,
+	})
+	return blocks
+}
+
+// setGuaXiu　設定寡宿
+func setGuaXiu(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
+	locationIndex := (int(*birthYear) + 1) / 3 % 4
+	locations := []dizhi.DiZhi{dizhi.Xu, dizhi.Chou, dizhi.Chen, dizhi.Wei}
+	index := locations[locationIndex]
+	blocks[index].Stars = append(blocks[index].Stars, &Star{
+		Name:     stars.GuaXiu.String(),
 		StarType: startype.NianZhiXiZhuXing,
 	})
 	return blocks

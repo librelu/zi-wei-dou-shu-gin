@@ -36,4 +36,5 @@ const (
 	HongLuan
 	TainXi
 	GuChen
+	GuaXiu
 )
