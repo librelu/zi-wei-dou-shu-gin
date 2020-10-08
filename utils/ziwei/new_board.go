@@ -28,6 +28,7 @@ func NewBoard(birthday time.Time) (*Board, error) {
 		return nil, fmt.Errorf("failed in set fourteen main stars, error: %w", err)
 	}
 	blocks = setUpNainGanStars(&lunaDate.Year.TianGan, blocks)
+	blocks = setXunKong(lunaDate.Year, blocks)
 
 	return &Board{
 		Blocks: blocks,
@@ -153,7 +154,14 @@ func setFourteenMainStars(mingGongLocation *dizhi.DiZhi, mingJu *MingJu, birthda
 
 	blocks = setStarsBeggingWithZiWei(ziWeiStarIndex, blocks)
 	blocks = setStarsBeggingWithTianFu(tianFuIndex, blocks)
+	//TODO: logic missing in setSiHua
+	blocks = setSiHua(blocks)
 	return blocks, nil
+}
+
+//setSiHua TODO: 四化 should set after 安時諸星
+func setSiHua(blocks []*Block) []*Block {
+	return blocks
 }
 
 //setStarsBeggingWithZiWei 順時針一宮安天機星，跳隔一宮，安太陽星，順時針一宮安武曲星，順時針一宮安天同星，跳隔兩宮，安廉貞星
@@ -467,5 +475,17 @@ func setTainFu(tainGan *tiangan.TianGan, blocks []*Block) []*Block {
 		Name:     stars.TianFu.String(),
 		StarType: startype.NianGanXiZhuXing,
 	})
+	return blocks
+}
+
+// setXunKong 設定旬空星
+func setXunKong(birthYear *lunacal.TianGanDiZhi, blocks []*Block) []*Block {
+	xunKongMapXAxis := 6 - int(birthYear.DiZhi/2) - 1
+	xunKongIndex := (xunKongMapXAxis*10 + int(birthYear.TianGan)) % 12
+	blocks[xunKongIndex].Stars = append(blocks[xunKongIndex].Stars, &Star{
+		Name:     stars.XunKong.String(),
+		StarType: startype.NianGanXiZhuXing,
+	})
+
 	return blocks
 }

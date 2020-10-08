@@ -26,4 +26,6 @@ const (
 	TianYue
 	TianGuan
 	NainGanTianFu
+	XunKong
+	JieKong
 )

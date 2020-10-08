@@ -1398,5 +1398,31 @@ var _ = Describe("ziwei", func() {
 				}))
 			})
 		})
+		Context("setXunKong()", func() {
+			When("birth year is in 癸酉", func() {
+				BeforeEach(func() {
+					// luna date: 癸酉年 5 / 25 午時
+					birthday = time.Date(1993, 7, 14, 12, 4, 0, 0, time.Local)
+				})
+				It("should display correct Xun Mong star", func() {
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.XunKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+				})
+			})
+			When("birth year is in 亥乙", func() {
+				BeforeEach(func() {
+					// luna date: 亥乙年 5 / 25 午時
+					birthday = time.Date(1995, 6, 22, 12, 4, 0, 0, time.Local)
+				})
+				It("should display correct Xun Mong star", func() {
+					Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.XunKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+				})
+			})
+		})
 	})
 })

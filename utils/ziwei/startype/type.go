@@ -5,4 +5,5 @@ type StarType uint
 const (
 	FourteenMainStars = StarType(iota)
 	NianGanXiZhuXing
+	SiHua
 )
