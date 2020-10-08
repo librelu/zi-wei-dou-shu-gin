@@ -35,4 +35,5 @@ const (
 	FengGe
 	HongLuan
 	TainXi
+	GuChen
 )
