@@ -33,4 +33,5 @@ const (
 	TianXu
 	LongChi
 	FengGe
+	HongLuan
 )

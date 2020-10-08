@@ -1577,6 +1577,44 @@ var _ = Describe("ziwei", func() {
 					})
 				})
 			})
+			Context("setHongLuan()", func() {
+				When("birth year is in 癸酉", func() {
+					BeforeEach(func() {
+						// luna date: 癸酉年 5 / 25 午時
+						birthday = time.Date(1993, 7, 14, 12, 4, 0, 0, time.Local)
+					})
+					It("should display correct Xun Mong star", func() {
+						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.HongLuan.String(),
+							StarType: startype.NianZhiXiZhuXing,
+						}))
+					})
+				})
+				When("birth year is in 乙亥", func() {
+					BeforeEach(func() {
+						// luna date: 乙亥年 5 / 25 午時
+						birthday = time.Date(1995, 6, 22, 12, 4, 0, 0, time.Local)
+					})
+					It("should display correct Xun Mong star", func() {
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.HongLuan.String(),
+							StarType: startype.NianZhiXiZhuXing,
+						}))
+					})
+				})
+				When("birth year is in 辛巳", func() {
+					BeforeEach(func() {
+						// luna date: 辛巳年 5 / 2 午時
+						birthday = time.Date(2001, 6, 22, 12, 4, 0, 0, time.Local)
+					})
+					It("should display correct Xun Mong star", func() {
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.HongLuan.String(),
+							StarType: startype.NianZhiXiZhuXing,
+						}))
+					})
+				})
+			})
 		})
 	})
 })
