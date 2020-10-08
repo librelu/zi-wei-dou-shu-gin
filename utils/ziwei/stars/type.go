@@ -31,4 +31,5 @@ const (
 	//年支系諸星
 	TianKu
 	TianXu
+	LongChi
 )
