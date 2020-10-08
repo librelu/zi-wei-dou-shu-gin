@@ -34,4 +34,5 @@ const (
 	LongChi
 	FengGe
 	HongLuan
+	TainXi
 )

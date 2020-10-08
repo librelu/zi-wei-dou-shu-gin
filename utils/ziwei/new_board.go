@@ -510,6 +510,7 @@ func setNianZhiXiZhuXing(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 	blocks = setLongChi(birthYear, blocks)
 	blocks = setFengGe(birthYear, blocks)
 	blocks = setHongLuan(birthYear, blocks)
+	blocks = setTainXi(birthYear, blocks)
 	return blocks
 }
 
@@ -558,6 +559,16 @@ func setHongLuan(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 	index := (11 - int(*birthYear) + 4) % 12
 	blocks[index].Stars = append(blocks[index].Stars, &Star{
 		Name:     stars.HongLuan.String(),
+		StarType: startype.NianZhiXiZhuXing,
+	})
+	return blocks
+}
+
+// setTainXi 設定天喜
+func setTainXi(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
+	index := (11 - int(*birthYear) + 10) % 12
+	blocks[index].Stars = append(blocks[index].Stars, &Star{
+		Name:     stars.TainXi.String(),
 		StarType: startype.NianZhiXiZhuXing,
 	})
 	return blocks
