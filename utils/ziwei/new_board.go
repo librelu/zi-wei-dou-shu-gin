@@ -730,6 +730,7 @@ func setTianShou(birthYear *dizhi.DiZhi, shengGongLocation *dizhi.DiZhi, blocks 
 	return blocks
 }
 
+// setTianKong 設定天空
 func setTianKong(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 	index := (int(*birthYear) + 1) % 12
 	blocks[index].Stars = append(blocks[index].Stars, &Star{
