@@ -745,6 +745,7 @@ func setTianKong(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 func setYueXiXing(birthMonth int, blocks []*Block) []*Block {
 	blocks = setZuoFu(birthMonth, blocks)
 	blocks = setYouBi(birthMonth, blocks)
+	blocks = setTianXing(birthMonth, blocks)
 	return blocks
 }
 
@@ -763,6 +764,16 @@ func setYouBi(birthMonth int, blocks []*Block) []*Block {
 	index := ((13 - birthMonth) + 10) % 12
 	blocks[index].Stars = append(blocks[index].Stars, &Star{
 		Name:     stars.YouBi.String(),
+		StarType: startype.YueXiXing,
+	})
+	return blocks
+}
+
+// setTianXing 設定天刑
+func setTianXing(birthMonth int, blocks []*Block) []*Block {
+	index := (birthMonth + 8) % 12
+	blocks[index].Stars = append(blocks[index].Stars, &Star{
+		Name:     stars.TianXing.String(),
 		StarType: startype.YueXiXing,
 	})
 	return blocks

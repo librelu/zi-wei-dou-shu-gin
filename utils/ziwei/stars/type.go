@@ -50,4 +50,5 @@ const (
 	TianKong
 	ZuoFu
 	YouBi
+	TianXing
 )
