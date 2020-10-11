@@ -2089,6 +2089,68 @@ var _ = Describe("ziwei", func() {
 					})
 				})
 			})
+			Context("setHuaGai()", func() {
+				When("birth year is in 癸酉", func() {
+					BeforeEach(func() {
+						// luna date: 癸酉年 5 / 25 午時
+						birthday = time.Date(1993, 7, 14, 12, 4, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.HuaGai.String(),
+							StarType: startype.NianZhiXiZhuXing,
+						}))
+					})
+				})
+				When("birth year is in 乙亥", func() {
+					BeforeEach(func() {
+						// luna date: 乙亥年 5 / 25 午時
+						birthday = time.Date(1995, 6, 22, 12, 4, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.HuaGai.String(),
+							StarType: startype.NianZhiXiZhuXing,
+						}))
+					})
+				})
+				When("birth year is in 辛巳", func() {
+					BeforeEach(func() {
+						// luna date: 辛巳年 5 / 2 午時
+						birthday = time.Date(2001, 6, 22, 12, 4, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.HuaGai.String(),
+							StarType: startype.NianZhiXiZhuXing,
+						}))
+					})
+				})
+				When("birth year is in 庚辰", func() {
+					BeforeEach(func() {
+						// luna date: 庚辰年 9 / 8 午時
+						birthday = time.Date(2000, 10, 5, 12, 4, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.HuaGai.String(),
+							StarType: startype.NianZhiXiZhuXing,
+						}))
+					})
+				})
+				When("birth year is in 庚寅", func() {
+					BeforeEach(func() {
+						// luna date: 庚寅年 8 / 28 午時
+						birthday = time.Date(2010, 10, 5, 12, 4, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.HuaGai.String(),
+							StarType: startype.NianZhiXiZhuXing,
+						}))
+					})
+				})
+			})
 		})
 	})
 })

@@ -43,4 +43,5 @@ const (
 	DaHao
 	TianDe
 	JieSha
+	HuaGai
 )
