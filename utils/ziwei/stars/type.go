@@ -42,4 +42,5 @@ const (
 	TianMa
 	DaHao
 	TianDe
+	JieSha
 )
