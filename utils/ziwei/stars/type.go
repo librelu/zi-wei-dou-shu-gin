@@ -47,4 +47,5 @@ const (
 	XianChi
 	TianCai
 	TianShou
+	TianKong
 )
