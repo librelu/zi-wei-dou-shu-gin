@@ -315,19 +315,19 @@ func setTianFuStarLocation(ziWeiStarIndex int) (int, error) {
 }
 
 // setUpNainGanStars　設定年干系諸星
-func setUpNainGanStars(tainGan *tiangan.TianGan, blocks []*Block) []*Block {
-	setLuCun(tainGan, blocks)
-	setQingYang(tainGan, blocks)
-	setTuoLuo(tainGan, blocks)
-	setTainKui(tainGan, blocks)
-	setTainYue(tainGan, blocks)
-	setTainGuan(tainGan, blocks)
-	setTainFu(tainGan, blocks)
+func setUpNainGanStars(tianGan *tiangan.TianGan, blocks []*Block) []*Block {
+	setLuCun(tianGan, blocks)
+	setQingYang(tianGan, blocks)
+	setTuoLuo(tianGan, blocks)
+	setTianKui(tianGan, blocks)
+	setTianYue(tianGan, blocks)
+	setTianGuan(tianGan, blocks)
+	setTianFu(tianGan, blocks)
 	return blocks
 }
 
 // setLuCun 設定祿存
-func setLuCun(tainGan *tiangan.TianGan, blocks []*Block) []*Block {
+func setLuCun(tianGan *tiangan.TianGan, blocks []*Block) []*Block {
 	luCunMap := []dizhi.DiZhi{
 		dizhi.Yin,
 		dizhi.Mao,
@@ -340,7 +340,7 @@ func setLuCun(tainGan *tiangan.TianGan, blocks []*Block) []*Block {
 		dizhi.Hai,
 		dizhi.Zi,
 	}
-	luCunLocation := luCunMap[int(*tainGan)]
+	luCunLocation := luCunMap[int(*tianGan)]
 	blocks[luCunLocation].Stars = append(blocks[luCunLocation].Stars, &Star{
 		Name:     stars.LuCun.String(),
 		StarType: startype.NianGanXiZhuXing,
@@ -349,7 +349,7 @@ func setLuCun(tainGan *tiangan.TianGan, blocks []*Block) []*Block {
 }
 
 // setQingYang 設定擎羊
-func setQingYang(tainGan *tiangan.TianGan, blocks []*Block) []*Block {
+func setQingYang(tianGan *tiangan.TianGan, blocks []*Block) []*Block {
 	qingYangMap := []dizhi.DiZhi{
 		dizhi.Mao,
 		dizhi.Chen,
@@ -362,7 +362,7 @@ func setQingYang(tainGan *tiangan.TianGan, blocks []*Block) []*Block {
 		dizhi.Zi,
 		dizhi.Chou,
 	}
-	qingYangLocation := qingYangMap[int(*tainGan)]
+	qingYangLocation := qingYangMap[int(*tianGan)]
 	blocks[qingYangLocation].Stars = append(blocks[qingYangLocation].Stars, &Star{
 		Name:     stars.QingYang.String(),
 		StarType: startype.NianGanXiZhuXing,
@@ -371,7 +371,7 @@ func setQingYang(tainGan *tiangan.TianGan, blocks []*Block) []*Block {
 }
 
 // setTuoLuo 設定陀羅
-func setTuoLuo(tainGan *tiangan.TianGan, blocks []*Block) []*Block {
+func setTuoLuo(tianGan *tiangan.TianGan, blocks []*Block) []*Block {
 	tuoLuoMap := []dizhi.DiZhi{
 		dizhi.Chou,
 		dizhi.Yin,
@@ -384,7 +384,7 @@ func setTuoLuo(tainGan *tiangan.TianGan, blocks []*Block) []*Block {
 		dizhi.Xu,
 		dizhi.Hai,
 	}
-	tuoLuoLocation := tuoLuoMap[int(*tainGan)]
+	tuoLuoLocation := tuoLuoMap[int(*tianGan)]
 	blocks[tuoLuoLocation].Stars = append(blocks[tuoLuoLocation].Stars, &Star{
 		Name:     stars.TuoLuo.String(),
 		StarType: startype.NianGanXiZhuXing,
@@ -392,9 +392,9 @@ func setTuoLuo(tainGan *tiangan.TianGan, blocks []*Block) []*Block {
 	return blocks
 }
 
-// setTainKui 設天魁
-func setTainKui(tainGan *tiangan.TianGan, blocks []*Block) []*Block {
-	tainKuiMap := []dizhi.DiZhi{
+// setTianKui 設天魁
+func setTianKui(tianGan *tiangan.TianGan, blocks []*Block) []*Block {
+	tianKuiMap := []dizhi.DiZhi{
 		dizhi.Chou,
 		dizhi.Zi,
 		dizhi.Hai,
@@ -406,17 +406,17 @@ func setTainKui(tainGan *tiangan.TianGan, blocks []*Block) []*Block {
 		dizhi.Mao,
 		dizhi.Mao,
 	}
-	tainKuiLocation := tainKuiMap[int(*tainGan)]
-	blocks[tainKuiLocation].Stars = append(blocks[tainKuiLocation].Stars, &Star{
+	tianKuiLocation := tianKuiMap[int(*tianGan)]
+	blocks[tianKuiLocation].Stars = append(blocks[tianKuiLocation].Stars, &Star{
 		Name:     stars.TianKui.String(),
 		StarType: startype.NianGanXiZhuXing,
 	})
 	return blocks
 }
 
-// setTainYue 設定天鉞
-func setTainYue(tainGan *tiangan.TianGan, blocks []*Block) []*Block {
-	tainYueMap := []dizhi.DiZhi{
+// setTianYue 設定天鉞
+func setTianYue(tianGan *tiangan.TianGan, blocks []*Block) []*Block {
+	tianYueMap := []dizhi.DiZhi{
 		dizhi.Wei,
 		dizhi.Shen,
 		dizhi.You,
@@ -428,17 +428,17 @@ func setTainYue(tainGan *tiangan.TianGan, blocks []*Block) []*Block {
 		dizhi.Si,
 		dizhi.Si,
 	}
-	tainYueLocation := tainYueMap[int(*tainGan)]
-	blocks[tainYueLocation].Stars = append(blocks[tainYueLocation].Stars, &Star{
+	tianYueLocation := tianYueMap[int(*tianGan)]
+	blocks[tianYueLocation].Stars = append(blocks[tianYueLocation].Stars, &Star{
 		Name:     stars.TianYue.String(),
 		StarType: startype.NianGanXiZhuXing,
 	})
 	return blocks
 }
 
-// setTainGuan 設定天官
-func setTainGuan(tainGan *tiangan.TianGan, blocks []*Block) []*Block {
-	tainGuanMap := []dizhi.DiZhi{
+// setTianGuan 設定天官
+func setTianGuan(tianGan *tiangan.TianGan, blocks []*Block) []*Block {
+	tianGuanMap := []dizhi.DiZhi{
 		dizhi.Wei,
 		dizhi.Chen,
 		dizhi.Si,
@@ -450,17 +450,17 @@ func setTainGuan(tainGan *tiangan.TianGan, blocks []*Block) []*Block {
 		dizhi.Xu,
 		dizhi.Wu,
 	}
-	tainGuanLocation := tainGuanMap[int(*tainGan)]
-	blocks[tainGuanLocation].Stars = append(blocks[tainGuanLocation].Stars, &Star{
+	tianGuanLocation := tianGuanMap[int(*tianGan)]
+	blocks[tianGuanLocation].Stars = append(blocks[tianGuanLocation].Stars, &Star{
 		Name:     stars.TianGuan.String(),
 		StarType: startype.NianGanXiZhuXing,
 	})
 	return blocks
 }
 
-// setTainGuan 設定天福
-func setTainFu(tainGan *tiangan.TianGan, blocks []*Block) []*Block {
-	tainFuMap := []dizhi.DiZhi{
+// setTianGuan 設定天福
+func setTianFu(tianGan *tiangan.TianGan, blocks []*Block) []*Block {
+	tianFuMap := []dizhi.DiZhi{
 		dizhi.You,
 		dizhi.Shen,
 		dizhi.Zi,
@@ -472,8 +472,8 @@ func setTainFu(tainGan *tiangan.TianGan, blocks []*Block) []*Block {
 		dizhi.Wu,
 		dizhi.Si,
 	}
-	tainFuLocation := tainFuMap[int(*tainGan)]
-	blocks[tainFuLocation].Stars = append(blocks[tainFuLocation].Stars, &Star{
+	tianFuLocation := tianFuMap[int(*tianGan)]
+	blocks[tianFuLocation].Stars = append(blocks[tianFuLocation].Stars, &Star{
 		Name:     stars.TianFu.String(),
 		StarType: startype.NianGanXiZhuXing,
 	})
@@ -506,12 +506,12 @@ func setJieKong(birthYear *tiangan.TianGan, blocks []*Block) []*Block {
 
 // NianZhiXiZhuXing 設定年支系諸星
 func setNianZhiXiZhuXing(birthYear *dizhi.DiZhi, mingGongLocation *dizhi.DiZhi, shenGongLocation *dizhi.DiZhi, blocks []*Block) []*Block {
-	blocks = setTainKu(birthYear, blocks)
-	blocks = setTainXu(birthYear, blocks)
+	blocks = setTianKu(birthYear, blocks)
+	blocks = setTianXu(birthYear, blocks)
 	blocks = setLongChi(birthYear, blocks)
 	blocks = setFengGe(birthYear, blocks)
 	blocks = setHongLuan(birthYear, blocks)
-	blocks = setTainXi(birthYear, blocks)
+	blocks = setTianXi(birthYear, blocks)
 	blocks = setGuChen(birthYear, blocks)
 	blocks = setGuaXiu(birthYear, blocks)
 	blocks = setJieShen(birthYear, blocks)
@@ -522,12 +522,12 @@ func setNianZhiXiZhuXing(birthYear *dizhi.DiZhi, mingGongLocation *dizhi.DiZhi, 
 	blocks = setJieSha(birthYear, blocks)
 	blocks = setHuaGai(birthYear, blocks)
 	blocks = setXianChi(birthYear, blocks)
-	blocks = setTainCai(birthYear, mingGongLocation, blocks)
+	blocks = setTianCai(birthYear, mingGongLocation, blocks)
 	return blocks
 }
 
-// setTainKu 設定天哭
-func setTainKu(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
+// setTianKu 設定天哭
+func setTianKu(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 	index := (11 - int(*birthYear) + 7) % 12
 	blocks[index].Stars = append(blocks[index].Stars, &Star{
 		Name:     stars.TianKu.String(),
@@ -536,8 +536,8 @@ func setTainKu(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 	return blocks
 }
 
-// setTainXu 設定天虛
-func setTainXu(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
+// setTianXu 設定天虛
+func setTianXu(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 	index := (int(*birthYear) + 6) % 12
 	blocks[index].Stars = append(blocks[index].Stars, &Star{
 		Name:     stars.TianXu.String(),
@@ -576,11 +576,11 @@ func setHongLuan(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 	return blocks
 }
 
-// setTainXi 設定天喜
-func setTainXi(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
+// setTianXi 設定天喜
+func setTianXi(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 	index := (11 - int(*birthYear) + 10) % 12
 	blocks[index].Stars = append(blocks[index].Stars, &Star{
-		Name:     stars.TainXi.String(),
+		Name:     stars.TianXi.String(),
 		StarType: startype.NianZhiXiZhuXing,
 	})
 	return blocks
@@ -704,8 +704,8 @@ func setXianChi(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 	return blocks
 }
 
-// setTainCai 設定天才
-func setTainCai(birthYear *dizhi.DiZhi, mingGongLocation *dizhi.DiZhi, blocks []*Block) []*Block {
+// setTianCai 設定天才
+func setTianCai(birthYear *dizhi.DiZhi, mingGongLocation *dizhi.DiZhi, blocks []*Block) []*Block {
 	index := (*mingGongLocation + *birthYear) % 12
 	blocks[index].Stars = append(
 		blocks[index].Stars, &Star{

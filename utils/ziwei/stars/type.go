@@ -34,7 +34,7 @@ const (
 	LongChi
 	FengGe
 	HongLuan
-	TainXi
+	TianXi
 	GuChen
 	GuaXiu
 	JieShen

@@ -1623,7 +1623,7 @@ var _ = Describe("ziwei", func() {
 					})
 					It("should display correct star location", func() {
 						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
-							Name:     stars.TainXi.String(),
+							Name:     stars.TianXi.String(),
 							StarType: startype.NianZhiXiZhuXing,
 						}))
 					})
@@ -1635,7 +1635,7 @@ var _ = Describe("ziwei", func() {
 					})
 					It("should display correct star location", func() {
 						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
-							Name:     stars.TainXi.String(),
+							Name:     stars.TianXi.String(),
 							StarType: startype.NianZhiXiZhuXing,
 						}))
 					})
@@ -1647,7 +1647,7 @@ var _ = Describe("ziwei", func() {
 					})
 					It("should display correct star location", func() {
 						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
-							Name:     stars.TainXi.String(),
+							Name:     stars.TianXi.String(),
 							StarType: startype.NianZhiXiZhuXing,
 						}))
 					})
