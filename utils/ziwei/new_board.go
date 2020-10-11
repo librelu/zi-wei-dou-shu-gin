@@ -517,6 +517,7 @@ func setNianZhiXiZhuXing(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 	blocks = setPoSui(birthYear, blocks)
 	blocks = setTianMa(birthYear, blocks)
 	blocks = setDaHao(birthYear, blocks)
+	blocks = setTianDe(birthYear, blocks)
 	return blocks
 }
 
@@ -649,5 +650,15 @@ func setDaHao(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 			Name:     stars.DaHao.String(),
 			StarType: startype.NianZhiXiZhuXing,
 		})
+	return blocks
+}
+
+// setTianDe 設定天德
+func setTianDe(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
+	index := (int(*birthYear) + 9) % 12
+	blocks[index].Stars = append(blocks[index].Stars, &Star{
+		Name:     stars.TianDe.String(),
+		StarType: startype.NianZhiXiZhuXing,
+	})
 	return blocks
 }

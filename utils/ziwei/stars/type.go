@@ -41,4 +41,5 @@ const (
 	PoSui
 	TianMa
 	DaHao
+	TianDe
 )
