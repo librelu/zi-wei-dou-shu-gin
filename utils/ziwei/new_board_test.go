@@ -2213,7 +2213,7 @@ var _ = Describe("ziwei", func() {
 					})
 				})
 			})
-			Context("setTainCai()", func() {
+			Context("setTianCai()", func() {
 				When("birth year is in 癸酉", func() {
 					BeforeEach(func() {
 						// luna date: 癸酉年 5 / 25 午時
@@ -2266,6 +2266,64 @@ var _ = Describe("ziwei", func() {
 					It("should display correct star location", func() {
 						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.TianCai.String(),
+							StarType: startype.NianZhiXiZhuXing,
+						}))
+					})
+				})
+			})
+			Context("setTianShou()", func() {
+				When("birth year is in 癸酉", func() {
+					BeforeEach(func() {
+						// luna date: 癸酉年 5 / 25 午時
+						// 命宮: 子
+						// 身宮: 子
+						birthday = time.Date(1993, 7, 14, 12, 4, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TianShou.String(),
+							StarType: startype.NianZhiXiZhuXing,
+						}))
+					})
+				})
+				When("birth year is in 辛巳", func() {
+					BeforeEach(func() {
+						// luna date: 辛巳年 5 / 2 寅時
+						// 命宮: 辰
+						// 身宮: 申
+						birthday = time.Date(2001, 6, 22, 4, 4, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TianShou.String(),
+							StarType: startype.NianZhiXiZhuXing,
+						}))
+					})
+				})
+				When("birth year is in 庚寅", func() {
+					BeforeEach(func() {
+						// luna date: 庚寅年 8 / 28 未時
+						// 命宮: 寅
+						// 身宮: 辰
+						birthday = time.Date(2010, 10, 5, 13, 4, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TianShou.String(),
+							StarType: startype.NianZhiXiZhuXing,
+						}))
+					})
+				})
+				When("birth year is in 辛巳", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 9 / 2 巳時
+						// 命宮: 巳
+						// 身宮: 卯
+						birthday = time.Date(1970, 10, 1, 10, 10, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TianShou.String(),
 							StarType: startype.NianZhiXiZhuXing,
 						}))
 					})

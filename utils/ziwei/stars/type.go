@@ -46,4 +46,5 @@ const (
 	HuaGai
 	XianChi
 	TianCai
+	TianShou
 )
