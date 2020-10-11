@@ -44,4 +44,5 @@ const (
 	TianDe
 	JieSha
 	HuaGai
+	XianChi
 )
