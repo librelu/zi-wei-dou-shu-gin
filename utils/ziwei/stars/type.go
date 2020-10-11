@@ -40,4 +40,5 @@ const (
 	JieShen
 	PoSui
 	TianMa
+	DaHao
 )
