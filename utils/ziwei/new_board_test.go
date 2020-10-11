@@ -1424,6 +1424,168 @@ var _ = Describe("ziwei", func() {
 				})
 			})
 		})
+		Context("setJieKong()", func() {
+			When("birth year is in 甲戌", func() {
+				BeforeEach(func() {
+					// luna date: 甲戌年 5 / 14 午時
+					birthday = time.Date(1994, 6, 22, 12, 4, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JieKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+					Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JieKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+				})
+			})
+			When("birth year is in 乙亥", func() {
+				BeforeEach(func() {
+					// luna date: 乙亥年 5 / 25 午時
+					birthday = time.Date(1995, 6, 22, 12, 4, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JieKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JieKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+				})
+			})
+			When("birth year is in 丙子", func() {
+				BeforeEach(func() {
+					// luna date: 丙子年 5 / 7 午時
+					birthday = time.Date(1996, 6, 22, 12, 4, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JieKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+					Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JieKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+				})
+			})
+			When("birth year is in 丁丑", func() {
+				BeforeEach(func() {
+					// luna date: 丁丑年 5 / 18 午時
+					birthday = time.Date(1997, 6, 22, 12, 4, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JieKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+					Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JieKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+				})
+			})
+			When("birth year is in 戊寅", func() {
+				BeforeEach(func() {
+					// luna date: 戊寅年 5 / 28 午時
+					birthday = time.Date(1998, 6, 22, 12, 4, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JieKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+					Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JieKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+				})
+			})
+			When("birth year is in 己卯", func() {
+				BeforeEach(func() {
+					// luna date: 己卯年 5 / 9 午時
+					birthday = time.Date(1999, 6, 22, 12, 4, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JieKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+					Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JieKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+				})
+			})
+			When("birth year is in 庚辰", func() {
+				BeforeEach(func() {
+					// luna date: 庚辰年 5 / 21 午時
+					birthday = time.Date(2000, 6, 22, 12, 4, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JieKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JieKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+				})
+			})
+			When("birth year is in 辛巳", func() {
+				BeforeEach(func() {
+					// luna date: 辛巳年 5 / 2 午時
+					birthday = time.Date(2001, 6, 22, 12, 4, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JieKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+					Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JieKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+				})
+			})
+			When("birth year is in 壬午", func() {
+				BeforeEach(func() {
+					// luna date: 壬午年 5 / 12 午時
+					birthday = time.Date(2002, 6, 22, 12, 4, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JieKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+					Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JieKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+				})
+			})
+			When("birth year is in 癸酉", func() {
+				BeforeEach(func() {
+					// luna date: 癸酉年 5 / 25 午時
+					birthday = time.Date(1993, 7, 14, 12, 4, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JieKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+					Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.JieKong.String(),
+						StarType: startype.NianGanXiZhuXing,
+					}))
+				})
+			})
+		})
 		Context("setNianZhiXiZhuXing()", func() {
 			Context("setTainKu()", func() {
 				When("birth year is in 癸酉", func() {
