@@ -30,7 +30,8 @@ func NewBoard(birthday time.Time) (*Board, error) {
 	blocks = setUpNainGanStars(&lunaDate.Year.TianGan, blocks)
 	blocks = setXunKong(lunaDate.Year, blocks)
 	blocks = setJieKong(&lunaDate.Year.TianGan, blocks)
-	blocks = setNianZhiXiZhuXing(&lunaDate.Year.DiZhi, blocks)
+	shenGongLocation := getShengGong(lunaDate.Hour, lunaDate.Month)
+	blocks = setNianZhiXiZhuXing(&lunaDate.Year.DiZhi, mingGongLocation, shenGongLocation, blocks)
 
 	return &Board{
 		Blocks: blocks,
@@ -504,7 +505,7 @@ func setJieKong(birthYear *tiangan.TianGan, blocks []*Block) []*Block {
 }
 
 // NianZhiXiZhuXing 設定年支系諸星
-func setNianZhiXiZhuXing(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
+func setNianZhiXiZhuXing(birthYear *dizhi.DiZhi, mingGongLocation *dizhi.DiZhi, shenGongLocation *dizhi.DiZhi, blocks []*Block) []*Block {
 	blocks = setTainKu(birthYear, blocks)
 	blocks = setTainXu(birthYear, blocks)
 	blocks = setLongChi(birthYear, blocks)
@@ -521,6 +522,7 @@ func setNianZhiXiZhuXing(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 	blocks = setJieSha(birthYear, blocks)
 	blocks = setHuaGai(birthYear, blocks)
 	blocks = setXianChi(birthYear, blocks)
+	blocks = setTainCai(birthYear, mingGongLocation, blocks)
 	return blocks
 }
 
@@ -697,6 +699,17 @@ func setXianChi(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 	blocks[locations[locationIndex]].Stars = append(
 		blocks[locations[locationIndex]].Stars, &Star{
 			Name:     stars.XianChi.String(),
+			StarType: startype.NianZhiXiZhuXing,
+		})
+	return blocks
+}
+
+// setTainCai 設定天才
+func setTainCai(birthYear *dizhi.DiZhi, mingGongLocation *dizhi.DiZhi, blocks []*Block) []*Block {
+	index := (*mingGongLocation + *birthYear) % 12
+	blocks[index].Stars = append(
+		blocks[index].Stars, &Star{
+			Name:     stars.TianCai.String(),
 			StarType: startype.NianZhiXiZhuXing,
 		})
 	return blocks

@@ -45,4 +45,5 @@ const (
 	JieSha
 	HuaGai
 	XianChi
+	TianCai
 )
