@@ -39,4 +39,5 @@ const (
 	GuaXiu
 	JieShen
 	PoSui
+	TianMa
 )

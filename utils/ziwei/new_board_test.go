@@ -1404,7 +1404,7 @@ var _ = Describe("ziwei", func() {
 					// luna date: 癸酉年 5 / 25 午時
 					birthday = time.Date(1993, 7, 14, 12, 4, 0, 0, time.Local)
 				})
-				It("should display correct Xun Mong star", func() {
+				It("should display correct star location", func() {
 					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.XunKong.String(),
 						StarType: startype.NianGanXiZhuXing,
@@ -1416,7 +1416,7 @@ var _ = Describe("ziwei", func() {
 					// luna date: 乙亥年 5 / 25 午時
 					birthday = time.Date(1995, 6, 22, 12, 4, 0, 0, time.Local)
 				})
-				It("should display correct Xun Mong star", func() {
+				It("should display correct star location", func() {
 					Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.XunKong.String(),
 						StarType: startype.NianGanXiZhuXing,
@@ -1431,7 +1431,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 癸酉年 5 / 25 午時
 						birthday = time.Date(1993, 7, 14, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.TianKu.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1443,7 +1443,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 乙亥年 5 / 25 午時
 						birthday = time.Date(1995, 6, 22, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.TianKu.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1455,7 +1455,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 辛巳年 5 / 2 午時
 						birthday = time.Date(2001, 6, 22, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.TianKu.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1469,7 +1469,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 癸酉年 5 / 25 午時
 						birthday = time.Date(1993, 7, 14, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.TianXu.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1481,7 +1481,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 乙亥年 5 / 25 午時
 						birthday = time.Date(1995, 6, 22, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.TianXu.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1493,7 +1493,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 辛巳年 5 / 2 午時
 						birthday = time.Date(2001, 6, 22, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.TianXu.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1507,7 +1507,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 癸酉年 5 / 25 午時
 						birthday = time.Date(1993, 7, 14, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.LongChi.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1519,7 +1519,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 乙亥年 5 / 25 午時
 						birthday = time.Date(1995, 6, 22, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.LongChi.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1531,7 +1531,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 辛巳年 5 / 2 午時
 						birthday = time.Date(2001, 6, 22, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.LongChi.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1545,7 +1545,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 癸酉年 5 / 25 午時
 						birthday = time.Date(1993, 7, 14, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.FengGe.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1557,7 +1557,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 乙亥年 5 / 25 午時
 						birthday = time.Date(1995, 6, 22, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.FengGe.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1569,7 +1569,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 辛巳年 5 / 2 午時
 						birthday = time.Date(2001, 6, 22, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.FengGe.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1583,7 +1583,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 癸酉年 5 / 25 午時
 						birthday = time.Date(1993, 7, 14, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.HongLuan.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1595,7 +1595,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 乙亥年 5 / 25 午時
 						birthday = time.Date(1995, 6, 22, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.HongLuan.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1607,7 +1607,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 辛巳年 5 / 2 午時
 						birthday = time.Date(2001, 6, 22, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.HongLuan.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1621,7 +1621,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 癸酉年 5 / 25 午時
 						birthday = time.Date(1993, 7, 14, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.TainXi.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1633,7 +1633,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 乙亥年 5 / 25 午時
 						birthday = time.Date(1995, 6, 22, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.TainXi.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1645,7 +1645,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 辛巳年 5 / 2 午時
 						birthday = time.Date(2001, 6, 22, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.TainXi.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1659,7 +1659,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 癸酉年 5 / 25 午時
 						birthday = time.Date(1993, 7, 14, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.GuChen.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1671,7 +1671,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 乙亥年 5 / 25 午時
 						birthday = time.Date(1995, 6, 22, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.GuChen.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1683,7 +1683,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 辛巳年 5 / 2 午時
 						birthday = time.Date(2001, 6, 22, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.GuChen.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1695,7 +1695,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 戊寅年 5 / 8 午時
 						birthday = time.Date(1998, 6, 2, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.GuChen.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1707,7 +1707,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 丙戌年 5 / 12 午時
 						birthday = time.Date(2006, 6, 7, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.GuChen.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1721,7 +1721,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 癸酉年 5 / 25 午時
 						birthday = time.Date(1993, 7, 14, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.GuaXiu.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1733,7 +1733,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 乙亥年 5 / 25 午時
 						birthday = time.Date(1995, 6, 22, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.GuaXiu.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1745,7 +1745,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 辛巳年 5 / 2 午時
 						birthday = time.Date(2001, 6, 22, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.GuaXiu.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1757,7 +1757,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 戊寅年 5 / 8 午時
 						birthday = time.Date(1998, 6, 2, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.GuaXiu.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1769,7 +1769,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 丙戌年 5 / 12 午時
 						birthday = time.Date(2006, 6, 7, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.GuaXiu.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1783,7 +1783,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 癸酉年 5 / 25 午時
 						birthday = time.Date(1993, 7, 14, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.JieShen.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1795,7 +1795,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 乙亥年 5 / 25 午時
 						birthday = time.Date(1995, 6, 22, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.JieShen.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1807,7 +1807,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 辛巳年 5 / 2 午時
 						birthday = time.Date(2001, 6, 22, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.JieShen.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1821,7 +1821,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 癸酉年 5 / 25 午時
 						birthday = time.Date(1993, 7, 14, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.PoSui.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1833,7 +1833,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 乙亥年 5 / 25 午時
 						birthday = time.Date(1995, 6, 22, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.PoSui.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1845,7 +1845,7 @@ var _ = Describe("ziwei", func() {
 						// luna date: 辛巳年 5 / 2 午時
 						birthday = time.Date(2001, 6, 22, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.PoSui.String(),
 							StarType: startype.NianZhiXiZhuXing,
@@ -1857,9 +1857,71 @@ var _ = Describe("ziwei", func() {
 						// luna date: 庚辰年 9 / 8 午時
 						birthday = time.Date(2000, 10, 5, 12, 4, 0, 0, time.Local)
 					})
-					It("should display correct Xun Mong star", func() {
+					It("should display correct star location", func() {
 						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.PoSui.String(),
+							StarType: startype.NianZhiXiZhuXing,
+						}))
+					})
+				})
+			})
+			Context("setTianMa()", func() {
+				When("birth year is in 癸酉", func() {
+					BeforeEach(func() {
+						// luna date: 癸酉年 5 / 25 午時
+						birthday = time.Date(1993, 7, 14, 12, 4, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TianMa.String(),
+							StarType: startype.NianZhiXiZhuXing,
+						}))
+					})
+				})
+				When("birth year is in 乙亥", func() {
+					BeforeEach(func() {
+						// luna date: 乙亥年 5 / 25 午時
+						birthday = time.Date(1995, 6, 22, 12, 4, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TianMa.String(),
+							StarType: startype.NianZhiXiZhuXing,
+						}))
+					})
+				})
+				When("birth year is in 辛巳", func() {
+					BeforeEach(func() {
+						// luna date: 辛巳年 5 / 2 午時
+						birthday = time.Date(2001, 6, 22, 12, 4, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TianMa.String(),
+							StarType: startype.NianZhiXiZhuXing,
+						}))
+					})
+				})
+				When("birth year is in 庚辰", func() {
+					BeforeEach(func() {
+						// luna date: 庚辰年 9 / 8 午時
+						birthday = time.Date(2000, 10, 5, 12, 4, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TianMa.String(),
+							StarType: startype.NianZhiXiZhuXing,
+						}))
+					})
+				})
+				When("birth year is in 庚寅", func() {
+					BeforeEach(func() {
+						// luna date: 庚寅年 8 / 28 午時
+						birthday = time.Date(2010, 10, 5, 12, 4, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TianMa.String(),
 							StarType: startype.NianZhiXiZhuXing,
 						}))
 					})

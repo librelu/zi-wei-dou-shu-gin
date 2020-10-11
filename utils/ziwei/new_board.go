@@ -287,11 +287,10 @@ func getZiWeiStarLocation(mingGongLocation *dizhi.DiZhi, mingJu *MingJu, birthda
 
 	index := steps + 1
 	if index > 11 {
-		index = 12 - index
+		index = index - 12
 	} else if index < 0 {
 		index = 12 + index
 	}
-
 	return index
 }
 
@@ -516,6 +515,7 @@ func setNianZhiXiZhuXing(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 	blocks = setGuaXiu(birthYear, blocks)
 	blocks = setJieShen(birthYear, blocks)
 	blocks = setPoSui(birthYear, blocks)
+	blocks = setTianMa(birthYear, blocks)
 	return blocks
 }
 
@@ -620,6 +620,18 @@ func setPoSui(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 	blocks[locations[locationIndex]].Stars = append(
 		blocks[locations[locationIndex]].Stars, &Star{
 			Name:     stars.PoSui.String(),
+			StarType: startype.NianZhiXiZhuXing,
+		})
+	return blocks
+}
+
+// setPoSui 設定天馬
+func setTianMa(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
+	locationIndex := int((int(*birthYear) + 1) % 4)
+	locations := []dizhi.DiZhi{dizhi.Si, dizhi.Yin, dizhi.Hai, dizhi.Shen}
+	blocks[locations[locationIndex]].Stars = append(
+		blocks[locations[locationIndex]].Stars, &Star{
+			Name:     stars.TianMa.String(),
 			StarType: startype.NianZhiXiZhuXing,
 		})
 	return blocks
