@@ -49,4 +49,5 @@ const (
 	TianShou
 	TianKong
 	ZuoFu
+	YouBi
 )
