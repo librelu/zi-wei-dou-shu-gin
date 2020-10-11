@@ -493,6 +493,7 @@ func setXunKong(birthYear *lunacal.TianGanDiZhi, blocks []*Block) []*Block {
 }
 
 // setJieKong 設定截空星
+// TODO setting jie kong in two locations
 func setJieKong(birthYear *tiangan.TianGan, blocks []*Block) []*Block {
 	index := int(*birthYear) % 5
 	if index == 0 {
@@ -514,6 +515,7 @@ func setNianZhiXiZhuXing(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 	blocks = setGuChen(birthYear, blocks)
 	blocks = setGuaXiu(birthYear, blocks)
 	blocks = setJieShen(birthYear, blocks)
+	blocks = setPoSui(birthYear, blocks)
 	return blocks
 }
 
@@ -608,5 +610,17 @@ func setJieShen(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 		Name:     stars.JieShen.String(),
 		StarType: startype.NianZhiXiZhuXing,
 	})
+	return blocks
+}
+
+// setPoSui 設定破碎
+func setPoSui(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
+	locationIndex := int(int(*birthYear) % 3)
+	locations := []dizhi.DiZhi{dizhi.Si, dizhi.Chou, dizhi.You}
+	blocks[locations[locationIndex]].Stars = append(
+		blocks[locations[locationIndex]].Stars, &Star{
+			Name:     stars.PoSui.String(),
+			StarType: startype.NianZhiXiZhuXing,
+		})
 	return blocks
 }

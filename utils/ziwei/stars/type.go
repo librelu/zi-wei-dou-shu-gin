@@ -38,4 +38,5 @@ const (
 	GuChen
 	GuaXiu
 	JieShen
+	PoSui
 )
