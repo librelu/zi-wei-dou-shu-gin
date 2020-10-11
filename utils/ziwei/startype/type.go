@@ -7,4 +7,5 @@ const (
 	NianGanXiZhuXing
 	SiHua
 	NianZhiXiZhuXing
+	YueXiXing
 )

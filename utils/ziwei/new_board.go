@@ -32,6 +32,7 @@ func NewBoard(birthday time.Time) (*Board, error) {
 	blocks = setJieKong(&lunaDate.Year.TianGan, blocks)
 	shenGongLocation := getShengGong(lunaDate.Hour, lunaDate.Month)
 	blocks = setNianZhiXiZhuXing(&lunaDate.Year.DiZhi, mingGongLocation, shenGongLocation, blocks)
+	blocks = setYueXiXing(int(lunaDate.Month), blocks)
 
 	return &Board{
 		Blocks: blocks,
@@ -736,6 +737,22 @@ func setTianKong(birthYear *dizhi.DiZhi, blocks []*Block) []*Block {
 	blocks[index].Stars = append(blocks[index].Stars, &Star{
 		Name:     stars.TianKong.String(),
 		StarType: startype.NianZhiXiZhuXing,
+	})
+	return blocks
+}
+
+// setYueXiXing 安月系星
+func setYueXiXing(birthMonth int, blocks []*Block) []*Block {
+	blocks = setZuoFu(birthMonth, blocks)
+	return blocks
+}
+
+// setZuoFu 設定左輔
+func setZuoFu(birthMonth int, blocks []*Block) []*Block {
+	index := (birthMonth + 3) % 12
+	blocks[index].Stars = append(blocks[index].Stars, &Star{
+		Name:     stars.ZuoFu.String(),
+		StarType: startype.YueXiXing,
 	})
 	return blocks
 }

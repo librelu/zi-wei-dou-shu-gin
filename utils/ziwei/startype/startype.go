@@ -6,5 +6,6 @@ func (sn StarType) String() string {
 		"年干系諸星",
 		"四化",
 		"年支系諸星",
+		"安月系星",
 	}[sn]
 }
