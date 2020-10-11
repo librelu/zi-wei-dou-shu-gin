@@ -51,4 +51,5 @@ const (
 	ZuoFu
 	YouBi
 	TianXing
+	TianYao
 )
