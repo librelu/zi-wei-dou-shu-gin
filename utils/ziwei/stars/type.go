@@ -98,4 +98,6 @@ const (
 	LiuNianTianDe
 	DiKe
 	LiuNianBingFu
+	// 化祿
+	HuaLu
 )

@@ -56,7 +56,10 @@ func NewBoard(birthday time.Time, gender genders.Gender) (*Board, error) {
 	board.setBoShiTwelveStars(luCunLocation)
 	currentLunaDate := lunacal.Solar2Lunar(time.Now())
 	board.setLiuNianSuiQianZhuXing(&currentLunaDate.Year.DiZhi)
-	board.setSiHua(&lunaDate.Year.DiZhi)
+	err = board.setSiHua(&lunaDate.Year.TianGan)
+	if err != nil {
+		return nil, fmt.Errorf("failed in set si hua: %w", err)
+	}
 	return board, nil
 }
 
@@ -187,13 +190,35 @@ func (b *Board) setFourteenMainStars(mingGongLocation *dizhi.DiZhi, mingJu *Ming
 }
 
 //setSiHua 安四化
-func (b *Board) setSiHua(birthYear *dizhi.DiZhi) {
-	b.setHuaLu()
-	return
+func (b *Board) setSiHua(birthYear *tiangan.TianGan) error {
+	if err := b.setHuaLu(birthYear); err != nil {
+		return err
+	}
+	return nil
 }
 
-func (b *Board) setHuaLu() {
-	return
+func (b *Board) setHuaLu(birthYear *tiangan.TianGan) error {
+	starMap := []stars.StarName{
+		stars.LianZhen,
+		stars.TianJi,
+		stars.TianTong,
+		stars.TaiYin,
+		stars.TanLang,
+		stars.WuQu,
+		stars.TaiYang,
+		stars.JuMen,
+		stars.TianLiang,
+		stars.PoJun,
+	}
+	index, ok := b.StarsMap[starMap[*birthYear]]
+	if !ok {
+		return fmt.Errorf("current star not found, current birth year: %d", birthYear)
+	}
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+		Name:     stars.HuaLu.String(),
+		StarType: startype.SiHua,
+	})
+	return nil
 }
 
 //setStarsBeggingWithZiWei 順時針一宮安天機星，跳隔一宮，安太陽星，順時針一宮安武曲星，順時針一宮安天同星，跳隔兩宮，安廉貞星
