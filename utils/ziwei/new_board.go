@@ -39,6 +39,10 @@ func NewBoard(birthday time.Time) (*Board, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed in set ming zhu, error: %w", err)
 	}
+	err = board.setShenZhu(&lunaDate.Year.DiZhi)
+	if err != nil {
+		return nil, fmt.Errorf("failed in set shen zhu, error: %w", err)
+	}
 
 	return board, nil
 }
@@ -1094,7 +1098,35 @@ func (b *Board) setMingZhu(birthYear *dizhi.DiZhi) error {
 	}
 	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
 		Name:     stars.MingZhu.String(),
-		StarType: startype.ShiXiZhuXing,
+		StarType: startype.ShenMing,
+	})
+	return nil
+}
+
+// setShenZhu 設定身主
+func (b *Board) setShenZhu(birthYear *dizhi.DiZhi) error {
+	starMap := []stars.StarName{
+		stars.Ling,
+		stars.TianXiang,
+		stars.TianLiang,
+		stars.TianTong,
+		stars.WenChang,
+		stars.TianJi,
+		stars.Huo,
+		stars.TianXiang,
+		stars.TianLiang,
+		stars.TianTong,
+		stars.WenChang,
+		stars.TianJi,
+	}
+	starName := starMap[*birthYear]
+	index, ok := b.StarsMap[starName]
+	if !ok {
+		return fmt.Errorf("the star name not found in birth year = %d", birthYear)
+	}
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+		Name:     stars.ShenZhu.String(),
+		StarType: startype.ShenMing,
 	})
 	return nil
 }

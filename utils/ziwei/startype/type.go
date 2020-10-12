@@ -9,4 +9,5 @@ const (
 	NianZhiXiZhuXing
 	YueXiXing
 	ShiXiZhuXing
+	ShenMing
 )

@@ -4848,7 +4848,7 @@ var _ = Describe("ziwei", func() {
 				})
 			})
 		})
-		Context("setShenMing()", func() {
+		Context("setMingZhu()", func() {
 			When("birth year is in 子 and birth hour is 亥", func() {
 				BeforeEach(func() {
 					// luna date: 庚子年 2 / 11 亥時
@@ -4857,7 +4857,7 @@ var _ = Describe("ziwei", func() {
 				It("should display correct star location", func() {
 					Expect(board.Blocks[board.StarsMap[stars.TanLang]].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.MingZhu.String(),
-						StarType: startype.ShiXiZhuXing,
+						StarType: startype.ShenMing,
 					}))
 				})
 			})
@@ -4869,7 +4869,7 @@ var _ = Describe("ziwei", func() {
 				It("should display correct star location", func() {
 					Expect(board.Blocks[board.StarsMap[stars.JuMen]].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.MingZhu.String(),
-						StarType: startype.ShiXiZhuXing,
+						StarType: startype.ShenMing,
 					}))
 				})
 			})
@@ -4881,7 +4881,7 @@ var _ = Describe("ziwei", func() {
 				It("should display correct star location", func() {
 					Expect(board.Blocks[board.StarsMap[stars.LuCun]].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.MingZhu.String(),
-						StarType: startype.ShiXiZhuXing,
+						StarType: startype.ShenMing,
 					}))
 				})
 			})
@@ -4893,7 +4893,7 @@ var _ = Describe("ziwei", func() {
 				It("should display correct star location", func() {
 					Expect(board.Blocks[board.StarsMap[stars.WenQu]].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.MingZhu.String(),
-						StarType: startype.ShiXiZhuXing,
+						StarType: startype.ShenMing,
 					}))
 				})
 			})
@@ -4905,7 +4905,7 @@ var _ = Describe("ziwei", func() {
 				It("should display correct star location", func() {
 					Expect(board.Blocks[board.StarsMap[stars.LianZhen]].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.MingZhu.String(),
-						StarType: startype.ShiXiZhuXing,
+						StarType: startype.ShenMing,
 					}))
 				})
 			})
@@ -4917,7 +4917,7 @@ var _ = Describe("ziwei", func() {
 				It("should display correct star location", func() {
 					Expect(board.Blocks[board.StarsMap[stars.WuQu]].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.MingZhu.String(),
-						StarType: startype.ShiXiZhuXing,
+						StarType: startype.ShenMing,
 					}))
 				})
 			})
@@ -4929,7 +4929,7 @@ var _ = Describe("ziwei", func() {
 				It("should display correct star location", func() {
 					Expect(board.Blocks[board.StarsMap[stars.PoJun]].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.MingZhu.String(),
-						StarType: startype.ShiXiZhuXing,
+						StarType: startype.ShenMing,
 					}))
 				})
 			})
@@ -4941,7 +4941,7 @@ var _ = Describe("ziwei", func() {
 				It("should display correct star location", func() {
 					Expect(board.Blocks[board.StarsMap[stars.WuQu]].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.MingZhu.String(),
-						StarType: startype.ShiXiZhuXing,
+						StarType: startype.ShenMing,
 					}))
 				})
 			})
@@ -4953,7 +4953,7 @@ var _ = Describe("ziwei", func() {
 				It("should display correct star location", func() {
 					Expect(board.Blocks[board.StarsMap[stars.LianZhen]].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.MingZhu.String(),
-						StarType: startype.ShiXiZhuXing,
+						StarType: startype.ShenMing,
 					}))
 				})
 			})
@@ -4965,7 +4965,7 @@ var _ = Describe("ziwei", func() {
 				It("should display correct star location", func() {
 					Expect(board.Blocks[board.StarsMap[stars.WenQu]].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.MingZhu.String(),
-						StarType: startype.ShiXiZhuXing,
+						StarType: startype.ShenMing,
 					}))
 				})
 			})
@@ -4977,7 +4977,7 @@ var _ = Describe("ziwei", func() {
 				It("should display correct star location", func() {
 					Expect(board.Blocks[board.StarsMap[stars.LuCun]].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.MingZhu.String(),
-						StarType: startype.ShiXiZhuXing,
+						StarType: startype.ShenMing,
 					}))
 				})
 			})
@@ -4989,7 +4989,153 @@ var _ = Describe("ziwei", func() {
 				It("should display correct star location", func() {
 					Expect(board.Blocks[board.StarsMap[stars.JuMen]].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.MingZhu.String(),
-						StarType: startype.ShiXiZhuXing,
+						StarType: startype.ShenMing,
+					}))
+				})
+			})
+		})
+		Context("setShenZhu()", func() {
+			When("birth year is in 子 and birth hour is 亥", func() {
+				BeforeEach(func() {
+					// luna date: 庚子年 2 / 11 亥時
+					birthday = time.Date(1960, 3, 8, 22, 12, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[board.StarsMap[stars.Ling]].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.ShenZhu.String(),
+						StarType: startype.ShenMing,
+					}))
+				})
+			})
+			When("birth year is in 丑 and birth hour is 巳", func() {
+				BeforeEach(func() {
+					// luna date: 己丑年 2 / 9 巳時
+					birthday = time.Date(1949, 3, 8, 10, 12, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[board.StarsMap[stars.TianXiang]].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.ShenZhu.String(),
+						StarType: startype.ShenMing,
+					}))
+				})
+			})
+			When("birth year is in 寅 and birth hour is 子", func() {
+				BeforeEach(func() {
+					// luna date: 庚寅年 1 / 20 亥時
+					birthday = time.Date(1950, 3, 8, 0, 12, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[board.StarsMap[stars.TianLiang]].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.ShenZhu.String(),
+						StarType: startype.ShenMing,
+					}))
+				})
+			})
+			When("birth year is in 卯 and birth hour is 亥", func() {
+				BeforeEach(func() {
+					// luna date: 癸卯年 1 / 24 亥時
+					birthday = time.Date(1963, 3, 8, 22, 12, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[board.StarsMap[stars.TianTong]].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.ShenZhu.String(),
+						StarType: startype.ShenMing,
+					}))
+				})
+			})
+			When("birth year is in 辰 and birth hour is 巳", func() {
+				BeforeEach(func() {
+					// luna date: 戊辰年 2 / 17 巳時
+					birthday = time.Date(1928, 3, 8, 10, 12, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[board.StarsMap[stars.WenChang]].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.ShenZhu.String(),
+						StarType: startype.ShenMing,
+					}))
+				})
+			})
+			When("birth year is in 巳 and birth hour is 子", func() {
+				BeforeEach(func() {
+					// luna date: 辛巳年 2 / 11 亥時
+					birthday = time.Date(1941, 3, 8, 0, 12, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[board.StarsMap[stars.TianJi]].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.ShenZhu.String(),
+						StarType: startype.ShenMing,
+					}))
+				})
+			})
+			When("birth year is in 午 and birth hour is 亥", func() {
+				BeforeEach(func() {
+					// luna date: 戊午年 1 / 30 亥時
+					birthday = time.Date(1978, 3, 8, 22, 12, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[board.StarsMap[stars.Huo]].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.ShenZhu.String(),
+						StarType: startype.ShenMing,
+					}))
+				})
+			})
+			When("birth year is in 未 and birth hour is 巳", func() {
+				BeforeEach(func() {
+					// luna date: 丁未年 1 / 28 巳時
+					birthday = time.Date(1967, 3, 8, 10, 12, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[board.StarsMap[stars.TianXiang]].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.ShenZhu.String(),
+						StarType: startype.ShenMing,
+					}))
+				})
+			})
+			When("birth year is in 申 and birth hour is 子", func() {
+				BeforeEach(func() {
+					// luna date: 丙申年 1 / 26 亥時
+					birthday = time.Date(1956, 3, 8, 0, 12, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[board.StarsMap[stars.TianLiang]].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.ShenZhu.String(),
+						StarType: startype.ShenMing,
+					}))
+				})
+			})
+			When("birth year is in 酉 and birth hour is 亥", func() {
+				BeforeEach(func() {
+					// luna date: 乙酉年 1 / 24 亥時
+					birthday = time.Date(1945, 3, 8, 22, 12, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[board.StarsMap[stars.TianTong]].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.ShenZhu.String(),
+						StarType: startype.ShenMing,
+					}))
+				})
+			})
+			When("birth year is in 戌 and birth hour is 巳", func() {
+				BeforeEach(func() {
+					// luna date: 庚戌年 12 / 3 巳時
+					birthday = time.Date(1971, 1, 11, 10, 12, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[board.StarsMap[stars.WenChang]].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.ShenZhu.String(),
+						StarType: startype.ShenMing,
+					}))
+				})
+			})
+			When("birth year is in 亥 and birth hour is 子", func() {
+				BeforeEach(func() {
+					// luna date: 己亥年 1 / 29 亥時
+					birthday = time.Date(1959, 3, 8, 0, 12, 0, 0, time.Local)
+				})
+				It("should display correct star location", func() {
+					Expect(board.Blocks[board.StarsMap[stars.TianJi]].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.ShenZhu.String(),
+						StarType: startype.ShenMing,
 					}))
 				})
 			})

@@ -71,4 +71,5 @@ const (
 	TianGui
 	// 安身命
 	MingZhu
+	ShenZhu
 )
