@@ -5,6 +5,7 @@ import (
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/gong"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/miaoxian"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/mingju"
+	"github.com/zi-wei-dou-shu-gin/utils/ziwei/stars"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/startype"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/tiangan"
 )
@@ -53,6 +54,7 @@ type MingJu struct {
 }
 
 type Board struct {
-	Blocks []*Block
-	MingJu *MingJu
+	Blocks   []*Block
+	StarsMap map[stars.StarName]int
+	MingJu   *MingJu
 }
