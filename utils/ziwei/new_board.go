@@ -54,6 +54,8 @@ func NewBoard(birthday time.Time, gender genders.Gender) (*Board, error) {
 		return nil, fmt.Errorf("failed to get lu Cun location")
 	}
 	board.setBoShiTwelveStars(luCunLocation)
+	currentLunaDate := lunacal.Solar2Lunar(time.Now())
+	board.setLiuNianSuiQianZhuXing(&currentLunaDate.Year.DiZhi)
 
 	return board, nil
 }
@@ -1252,5 +1254,94 @@ func (b *Board) setBoShiTwelveStars(LuCunLocation int) {
 		b.Blocks[index].Stars = append(b.Blocks[index].Stars, starsMap[i])
 	}
 
+	return
+}
+
+// setLiuNianSuiQianZhuXing 安流年歲前諸星
+func (b *Board) setLiuNianSuiQianZhuXing(currentDiZhiYear *dizhi.DiZhi) {
+	starsMap := []*Star{
+		{
+			Name:     stars.SuiJian.String(),
+			StarType: startype.LiuNianSuiQianZhuXing,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.HuiQi.String(),
+			StarType: startype.LiuNianSuiQianZhuXing,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.SangMen.String(),
+			StarType: startype.LiuNianSuiQianZhuXing,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.GuanSuo.String(),
+			StarType: startype.LiuNianSuiQianZhuXing,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.GuanFu.String(),
+			StarType: startype.LiuNianSuiQianZhuXing,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.LiuNianXiaoHao.String(),
+			StarType: startype.LiuNianSuiQianZhuXing,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.LiuNianDaHao.String(),
+			StarType: startype.LiuNianSuiQianZhuXing,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.LongDe.String(),
+			StarType: startype.LiuNianSuiQianZhuXing,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.BaiHu.String(),
+			StarType: startype.LiuNianSuiQianZhuXing,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.TianDe.String(),
+			StarType: startype.LiuNianSuiQianZhuXing,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.DiKe.String(),
+			StarType: startype.LiuNianSuiQianZhuXing,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.LiuNianBingFu.String(),
+			StarType: startype.LiuNianSuiQianZhuXing,
+			Location: 0,
+			MiaoXian: nil,
+		},
+	}
+	for i := 0; i < 12; i++ {
+		index := int(*currentDiZhiYear)
+		index += i
+		if index > 11 {
+			index -= 12
+		} else if index < 0 {
+			index += 12
+		}
+		b.Blocks[index].Stars = append(b.Blocks[index].Stars, starsMap[i])
+	}
 	return
 }

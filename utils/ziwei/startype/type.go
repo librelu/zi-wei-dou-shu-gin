@@ -11,4 +11,5 @@ const (
 	ShiXiZhuXing
 	ShenMing
 	BoShiTwelveStars
+	LiuNianSuiQianZhuXing
 )

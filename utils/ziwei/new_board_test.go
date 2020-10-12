@@ -3,6 +3,7 @@ package ziwei_test
 import (
 	"time"
 
+	"bou.ke/monkey"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei"
@@ -6240,6 +6241,729 @@ var _ = Describe("ziwei", func() {
 							StarType: startype.BoShiTwelveStars,
 						}))
 					})
+				})
+			})
+		})
+		Context("setLiuNianSuiQianZhuXing()", func() {
+			var patch *monkey.PatchGuard
+			When("current year is in 子", func() {
+				BeforeEach(func() {
+					// luna date: 庚子年 2 / 11 亥時
+					birthday = time.Date(1960, 3, 8, 22, 12, 0, 0, time.Local)
+					patch = monkey.Patch(time.Now, func() time.Time { return birthday })
+				})
+				AfterEach(func() {
+					patch.Unpatch()
+				})
+				It("should display correct stars", func() {
+					Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SuiJian.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.HuiQi.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SangMen.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanSuo.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianXiaoHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianDaHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LongDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.BaiHu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.DiKe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianBingFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+				})
+			})
+			When("current year is in 丑", func() {
+				BeforeEach(func() {
+					// luna date: 己丑年 2 / 9 巳時
+					birthday = time.Date(1949, 3, 8, 10, 12, 0, 0, time.Local)
+					patch = monkey.Patch(time.Now, func() time.Time { return birthday })
+				})
+				AfterEach(func() {
+					patch.Unpatch()
+				})
+				It("should display correct stars", func() {
+					Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianBingFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SuiJian.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.HuiQi.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SangMen.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanSuo.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianXiaoHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianDaHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LongDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.BaiHu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.DiKe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+				})
+			})
+			When("current year is in 寅", func() {
+				BeforeEach(func() {
+					// luna date: 庚寅年 1 / 20 亥時
+					birthday = time.Date(1950, 3, 8, 0, 12, 0, 0, time.Local)
+					patch = monkey.Patch(time.Now, func() time.Time { return birthday })
+				})
+				AfterEach(func() {
+					patch.Unpatch()
+				})
+				It("should display correct stars", func() {
+					Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.DiKe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianBingFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SuiJian.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.HuiQi.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SangMen.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanSuo.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianXiaoHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianDaHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LongDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.BaiHu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+				})
+			})
+			When("current year is in 卯", func() {
+				BeforeEach(func() {
+					// luna date: 癸卯年 1 / 24 亥時
+					birthday = time.Date(1963, 3, 8, 22, 12, 0, 0, time.Local)
+					patch = monkey.Patch(time.Now, func() time.Time { return birthday })
+				})
+				AfterEach(func() {
+					patch.Unpatch()
+				})
+				It("should display correct stars", func() {
+					Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.DiKe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianBingFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SuiJian.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.HuiQi.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SangMen.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanSuo.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianXiaoHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianDaHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LongDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.BaiHu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+				})
+			})
+			When("current year is in 辰", func() {
+				BeforeEach(func() {
+					// luna date: 戊辰年 2 / 17 巳時
+					birthday = time.Date(1928, 3, 8, 10, 12, 0, 0, time.Local)
+					patch = monkey.Patch(time.Now, func() time.Time { return birthday })
+				})
+				AfterEach(func() {
+					patch.Unpatch()
+				})
+				It("should display correct stars", func() {
+					Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.BaiHu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.DiKe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianBingFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SuiJian.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.HuiQi.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SangMen.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanSuo.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianXiaoHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianDaHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LongDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+				})
+			})
+			When("current year is in 巳", func() {
+				BeforeEach(func() {
+					// luna date: 辛巳年 2 / 11 亥時
+					birthday = time.Date(1941, 3, 8, 0, 12, 0, 0, time.Local)
+					patch = monkey.Patch(time.Now, func() time.Time { return birthday })
+				})
+				AfterEach(func() {
+					patch.Unpatch()
+				})
+				It("should display correct stars", func() {
+					Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LongDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.BaiHu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.DiKe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianBingFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SuiJian.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.HuiQi.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SangMen.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanSuo.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianXiaoHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianDaHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+				})
+			})
+			When("current year is in 午", func() {
+				BeforeEach(func() {
+					// luna date: 戊午年 1 / 30 亥時
+					birthday = time.Date(1978, 3, 8, 22, 12, 0, 0, time.Local)
+					patch = monkey.Patch(time.Now, func() time.Time { return birthday })
+				})
+				AfterEach(func() {
+					patch.Unpatch()
+				})
+				It("should display correct stars", func() {
+					Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianDaHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LongDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.BaiHu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.DiKe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianBingFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SuiJian.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.HuiQi.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SangMen.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanSuo.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianXiaoHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+				})
+			})
+			When("current year is in 未", func() {
+				BeforeEach(func() {
+					// luna date: 丁未年 1 / 28 巳時
+					birthday = time.Date(1967, 3, 8, 10, 12, 0, 0, time.Local)
+					patch = monkey.Patch(time.Now, func() time.Time { return birthday })
+				})
+				AfterEach(func() {
+					patch.Unpatch()
+				})
+				It("should display correct stars", func() {
+					Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianXiaoHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianDaHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LongDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.BaiHu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.DiKe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianBingFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SuiJian.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.HuiQi.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SangMen.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanSuo.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+				})
+			})
+			When("current year is in 申", func() {
+				BeforeEach(func() {
+					// luna date: 丙申年 1 / 26 亥時
+					birthday = time.Date(1956, 3, 8, 0, 12, 0, 0, time.Local)
+					patch = monkey.Patch(time.Now, func() time.Time { return birthday })
+				})
+				AfterEach(func() {
+					patch.Unpatch()
+				})
+				It("should display correct stars", func() {
+					Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianXiaoHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianDaHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LongDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.BaiHu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.DiKe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianBingFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SuiJian.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.HuiQi.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SangMen.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanSuo.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+				})
+			})
+			When("current year is in 酉", func() {
+				BeforeEach(func() {
+					// luna date: 乙酉年 1 / 24 亥時
+					birthday = time.Date(1945, 3, 8, 22, 12, 0, 0, time.Local)
+					patch = monkey.Patch(time.Now, func() time.Time { return birthday })
+				})
+				AfterEach(func() {
+					patch.Unpatch()
+				})
+				It("should display correct stars", func() {
+					Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanSuo.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianXiaoHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianDaHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LongDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.BaiHu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.DiKe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianBingFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SuiJian.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.HuiQi.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SangMen.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+				})
+			})
+			When("current year is in 戌", func() {
+				BeforeEach(func() {
+					// luna date: 庚戌年 12 / 3 巳時
+					birthday = time.Date(1971, 1, 11, 10, 12, 0, 0, time.Local)
+					patch = monkey.Patch(time.Now, func() time.Time { return birthday })
+				})
+				AfterEach(func() {
+					patch.Unpatch()
+				})
+				It("should display correct stars", func() {
+					Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SangMen.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanSuo.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianXiaoHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianDaHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LongDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.BaiHu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.DiKe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianBingFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SuiJian.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.HuiQi.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+				})
+			})
+			When("current year is in 亥", func() {
+				BeforeEach(func() {
+					// luna date: 己亥年 1 / 29 亥時
+					birthday = time.Date(1959, 3, 8, 0, 12, 0, 0, time.Local)
+					patch = monkey.Patch(time.Now, func() time.Time { return birthday })
+				})
+				AfterEach(func() {
+					patch.Unpatch()
+				})
+				It("should display correct stars", func() {
+					Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.HuiQi.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SangMen.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanSuo.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.GuanFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianXiaoHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianDaHao.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LongDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.BaiHu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.TianDe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.DiKe.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.LiuNianBingFu.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
+					Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+						Name:     stars.SuiJian.String(),
+						StarType: startype.LiuNianSuiQianZhuXing,
+					}))
 				})
 			})
 		})

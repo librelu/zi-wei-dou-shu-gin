@@ -85,4 +85,17 @@ const (
 	BoShiDaHao
 	FuBing
 	GuanFu
+	// 流年歲前諸星
+	SuiJian
+	HuiQi
+	SangMen
+	GuanSuo
+	LiuNianGuanFu
+	LiuNianXiaoHao
+	LiuNianDaHao
+	LongDe
+	BaiHu
+	LiuNianTianDe
+	DiKe
+	LiuNianBingFu
 )
