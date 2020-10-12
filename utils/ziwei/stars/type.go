@@ -67,4 +67,5 @@ const (
 	Ling
 	SanTai
 	BaZuo
+	EnGuang
 )
