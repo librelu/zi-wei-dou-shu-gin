@@ -773,12 +773,16 @@ func getZuoFuLocation(birthMonth int) int {
 
 // setYouBi 設定右弼
 func setYouBi(birthMonth int, blocks []*Block) []*Block {
-	index := ((13 - birthMonth) + 10) % 12
+	index := getYouBiLocation(birthMonth)
 	blocks[index].Stars = append(blocks[index].Stars, &Star{
 		Name:     stars.YouBi.String(),
 		StarType: startype.YueXiXing,
 	})
 	return blocks
+}
+
+func getYouBiLocation(birthMonth int) int {
+	return ((13 - birthMonth) + 10) % 12
 }
 
 // setTianXing 設定天刑
@@ -852,6 +856,8 @@ func setShiXiZhuXing(birthYear *dizhi.DiZhi, birthMonth int, birthDate int, birt
 	blocks = setLing(birthYear, birthHour, blocks)
 	zuoFuLocation := getZuoFuLocation(birthMonth)
 	blocks = setSanTai(zuoFuLocation, birthDate, blocks)
+	youBiLocation := getYouBiLocation(birthMonth)
+	blocks = setBaZuo(youBiLocation, birthDate, blocks)
 	return blocks
 }
 
@@ -977,6 +983,19 @@ func setSanTai(zuoFuLocation int, birthDate int, blocks []*Block) []*Block {
 	index := (zuoFuLocation + birthDate - 1) % 12
 	blocks[index].Stars = append(blocks[index].Stars, &Star{
 		Name:     stars.SanTai.String(),
+		StarType: startype.ShiXiZhuXing,
+	})
+	return blocks
+}
+
+// setBaZuo 設定八座
+func setBaZuo(youBiLocation int, birthDate int, blocks []*Block) []*Block {
+	index := (youBiLocation - birthDate + 1) % 12
+	if index < 0 {
+		index += 11
+	}
+	blocks[index].Stars = append(blocks[index].Stars, &Star{
+		Name:     stars.BaZuo.String(),
 		StarType: startype.ShiXiZhuXing,
 	})
 	return blocks

@@ -66,4 +66,5 @@ const (
 	Huo
 	Ling
 	SanTai
+	BaZuo
 )
