@@ -69,4 +69,6 @@ const (
 	BaZuo
 	EnGuang
 	TianGui
+	// 安身命
+	MingZhu
 )

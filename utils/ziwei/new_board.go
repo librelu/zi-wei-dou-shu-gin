@@ -16,7 +16,6 @@ import (
 )
 
 func NewBoard(birthday time.Time) (*Board, error) {
-	var err error
 	board := new(Board)
 	board.StarsMap = make(map[stars.StarName]int)
 	lunaDate := lunacal.Solar2Lunar(birthday)
@@ -25,7 +24,7 @@ func NewBoard(birthday time.Time) (*Board, error) {
 	board.setupGongWei(lunaDate)
 	mingGongLocation := getMingGong(lunaDate.Hour, lunaDate.Month)
 	board.MingJu = getMingJu(mingGongLocation, lunaDate.Year.TianGan)
-	err = board.setFourteenMainStars(mingGongLocation, board.MingJu, lunaDate.Day)
+	err := board.setFourteenMainStars(mingGongLocation, board.MingJu, lunaDate.Day)
 	if err != nil {
 		return nil, fmt.Errorf("failed in set fourteen main stars, error: %w", err)
 	}
@@ -36,6 +35,10 @@ func NewBoard(birthday time.Time) (*Board, error) {
 	board.setNianZhiXiZhuXing(&lunaDate.Year.DiZhi, mingGongLocation, shenGongLocation)
 	board.setYueXiXing(int(lunaDate.Month))
 	board.setShiXiZhuXing(&lunaDate.Year.DiZhi, int(lunaDate.Month), int(lunaDate.Day), lunaDate.Hour)
+	err = board.setShenMing(&lunaDate.Year.DiZhi)
+	if err != nil {
+		return nil, fmt.Errorf("failed in set shen ming, error: %w", err)
+	}
 
 	return board, nil
 }
@@ -1066,4 +1069,31 @@ func (b *Board) setTianGui(wenQuLocation int, birthDate int) {
 		StarType: startype.ShiXiZhuXing,
 	})
 	return
+}
+
+func (b *Board) setShenMing(birthYear *dizhi.DiZhi) error {
+	starMap := []stars.StarName{
+		stars.TanLang,
+		stars.JuMen,
+		stars.LuCun,
+		stars.WenQu,
+		stars.LianZhen,
+		stars.WuQu,
+		stars.PoJun,
+		stars.WuQu,
+		stars.LianZhen,
+		stars.WenQu,
+		stars.LuCun,
+		stars.JuMen,
+	}
+	starName := starMap[*birthYear]
+	index, ok := b.StarsMap[starName]
+	if !ok {
+		return fmt.Errorf("the star name not found in birth year = %d", birthYear)
+	}
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+		Name:     stars.MingZhu.String(),
+		StarType: startype.ShiXiZhuXing,
+	})
+	return nil
 }
