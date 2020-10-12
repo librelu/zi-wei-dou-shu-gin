@@ -56,4 +56,6 @@ const (
 	TianWu
 	YueXiXingTianYue
 	YinSha
+	// 時系諸星
+	WenChang
 )

@@ -8,4 +8,5 @@ const (
 	SiHua
 	NianZhiXiZhuXing
 	YueXiXing
+	ShiXiZhuXing
 )

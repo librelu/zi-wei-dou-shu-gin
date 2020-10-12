@@ -33,6 +33,7 @@ func NewBoard(birthday time.Time) (*Board, error) {
 	shenGongLocation := getShengGong(lunaDate.Hour, lunaDate.Month)
 	blocks = setNianZhiXiZhuXing(&lunaDate.Year.DiZhi, mingGongLocation, shenGongLocation, blocks)
 	blocks = setYueXiXing(int(lunaDate.Month), blocks)
+	blocks = setShiXiZhuXing(lunaDate.Hour, blocks)
 
 	return &Board{
 		Blocks: blocks,
@@ -80,6 +81,7 @@ func setupGongWei(lunaDate *lunacal.LunaDate, blocks []*Block) []*Block {
 func setTwelveGongs(mingGongLocation *dizhi.DiZhi, blocks []*Block) []*Block {
 	for i := range blocks {
 		index := int(*mingGongLocation) + i
+		// fmt.Println(index)
 		if index > 11 {
 			index -= 12
 		}
@@ -93,6 +95,8 @@ func getMingGong(hour *dizhi.DiZhi, month uint) *dizhi.DiZhi {
 	mingGong := int(month-1) - int(hourIndex)
 	if mingGong < 0 {
 		mingGong += 12
+	} else if mingGong > 12 {
+		mingGong = mingGong - 12
 	}
 	mingGongLocation := dizhi.DiZhi(mingGong)
 	return &mingGongLocation
@@ -829,5 +833,21 @@ func setYinSha(birthMonth int, blocks []*Block) []*Block {
 			Name:     stars.YinSha.String(),
 			StarType: startype.YueXiXing,
 		})
+	return blocks
+}
+
+// setShiXiZhuXing 安時系諸星
+func setShiXiZhuXing(birthHour *dizhi.DiZhi, blocks []*Block) []*Block {
+	blocks = setWenChang(birthHour, blocks)
+	return blocks
+}
+
+// setWenChang 設定文昌
+func setWenChang(birthHour *dizhi.DiZhi, blocks []*Block) []*Block {
+	index := (11 - int(*birthHour) + 11) % 12
+	blocks[index].Stars = append(blocks[index].Stars, &Star{
+		Name:     stars.WenChang.String(),
+		StarType: startype.ShiXiZhuXing,
+	})
 	return blocks
 }
