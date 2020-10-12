@@ -65,4 +65,5 @@ const (
 	FengGao
 	Huo
 	Ling
+	SanTai
 )

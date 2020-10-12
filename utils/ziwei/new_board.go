@@ -33,7 +33,7 @@ func NewBoard(birthday time.Time) (*Board, error) {
 	shenGongLocation := getShengGong(lunaDate.Hour, lunaDate.Month)
 	blocks = setNianZhiXiZhuXing(&lunaDate.Year.DiZhi, mingGongLocation, shenGongLocation, blocks)
 	blocks = setYueXiXing(int(lunaDate.Month), blocks)
-	blocks = setShiXiZhuXing(&lunaDate.Year.DiZhi, lunaDate.Hour, blocks)
+	blocks = setShiXiZhuXing(&lunaDate.Year.DiZhi, int(lunaDate.Month), int(lunaDate.Day), lunaDate.Hour, blocks)
 
 	return &Board{
 		Blocks: blocks,
@@ -759,12 +759,16 @@ func setYueXiXing(birthMonth int, blocks []*Block) []*Block {
 
 // setZuoFu 設定左輔
 func setZuoFu(birthMonth int, blocks []*Block) []*Block {
-	index := (birthMonth + 3) % 12
+	index := getZuoFuLocation(birthMonth)
 	blocks[index].Stars = append(blocks[index].Stars, &Star{
 		Name:     stars.ZuoFu.String(),
 		StarType: startype.YueXiXing,
 	})
 	return blocks
+}
+
+func getZuoFuLocation(birthMonth int) int {
+	return (birthMonth + 3) % 12
 }
 
 // setYouBi 設定右弼
@@ -837,7 +841,7 @@ func setYinSha(birthMonth int, blocks []*Block) []*Block {
 }
 
 // setShiXiZhuXing 安時系諸星
-func setShiXiZhuXing(birthYear *dizhi.DiZhi, birthHour *dizhi.DiZhi, blocks []*Block) []*Block {
+func setShiXiZhuXing(birthYear *dizhi.DiZhi, birthMonth int, birthDate int, birthHour *dizhi.DiZhi, blocks []*Block) []*Block {
 	blocks = setWenChang(birthHour, blocks)
 	blocks = setWenQu(birthHour, blocks)
 	blocks = setDiJie(birthHour, blocks)
@@ -846,6 +850,8 @@ func setShiXiZhuXing(birthYear *dizhi.DiZhi, birthHour *dizhi.DiZhi, blocks []*B
 	blocks = setFengGao(birthHour, blocks)
 	blocks = setHuo(birthYear, birthHour, blocks)
 	blocks = setLing(birthYear, birthHour, blocks)
+	zuoFuLocation := getZuoFuLocation(birthMonth)
+	blocks = setSanTai(zuoFuLocation, birthDate, blocks)
 	return blocks
 }
 
@@ -964,4 +970,14 @@ func getHuoLingGroupMap(birthYear *dizhi.DiZhi) int {
 	}
 
 	return birthYearGroup[*birthYear]
+}
+
+// setSanTai 設定三台
+func setSanTai(zuoFuLocation int, birthDate int, blocks []*Block) []*Block {
+	index := (zuoFuLocation + birthDate - 1) % 12
+	blocks[index].Stars = append(blocks[index].Stars, &Star{
+		Name:     stars.SanTai.String(),
+		StarType: startype.ShiXiZhuXing,
+	})
+	return blocks
 }
