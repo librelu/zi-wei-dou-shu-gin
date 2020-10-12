@@ -68,4 +68,5 @@ const (
 	SanTai
 	BaZuo
 	EnGuang
+	TianGui
 )

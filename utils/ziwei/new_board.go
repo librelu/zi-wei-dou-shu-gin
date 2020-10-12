@@ -860,6 +860,8 @@ func setShiXiZhuXing(birthYear *dizhi.DiZhi, birthMonth int, birthDate int, birt
 	blocks = setBaZuo(youBiLocation, birthDate, blocks)
 	wenChangLocation := getWenChangLocation(birthHour)
 	blocks = setEnGuang(wenChangLocation, birthDate, blocks)
+	wenQuLocation := getWenQuLocation(birthHour)
+	blocks = setTianGui(wenQuLocation, birthDate, blocks)
 	return blocks
 }
 
@@ -879,12 +881,16 @@ func getWenChangLocation(birthHour *dizhi.DiZhi) int {
 
 // setWen 設定文曲
 func setWenQu(birthHour *dizhi.DiZhi, blocks []*Block) []*Block {
-	index := (int(*birthHour) + 4) % 12
+	index := getWenQuLocation(birthHour)
 	blocks[index].Stars = append(blocks[index].Stars, &Star{
 		Name:     stars.WenQu.String(),
 		StarType: startype.ShiXiZhuXing,
 	})
 	return blocks
+}
+
+func getWenQuLocation(birthHour *dizhi.DiZhi) int {
+	return (int(*birthHour) + 4) % 12
 }
 
 // setDiJie 設定地劫
@@ -1015,6 +1021,19 @@ func setEnGuang(wenChangLocation int, birthDate int, blocks []*Block) []*Block {
 	}
 	blocks[index].Stars = append(blocks[index].Stars, &Star{
 		Name:     stars.EnGuang.String(),
+		StarType: startype.ShiXiZhuXing,
+	})
+	return blocks
+}
+
+// setTianGui 設定天貴
+func setTianGui(wenQuLocation int, birthDate int, blocks []*Block) []*Block {
+	index := (wenQuLocation + birthDate - 2) % 12
+	if index < 0 {
+		index += 11
+	}
+	blocks[index].Stars = append(blocks[index].Stars, &Star{
+		Name:     stars.TianGui.String(),
 		StarType: startype.ShiXiZhuXing,
 	})
 	return blocks
