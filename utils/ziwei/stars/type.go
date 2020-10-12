@@ -102,4 +102,5 @@ const (
 	HuaLu
 	HuaQuan
 	HuaKe
+	HuaJi
 )
