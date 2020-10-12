@@ -842,6 +842,7 @@ func setShiXiZhuXing(birthHour *dizhi.DiZhi, blocks []*Block) []*Block {
 	blocks = setWenQu(birthHour, blocks)
 	blocks = setDiJie(birthHour, blocks)
 	blocks = setDiKong(birthHour, blocks)
+	blocks = setTaiFu(birthHour, blocks)
 	return blocks
 }
 
@@ -880,6 +881,16 @@ func setDiKong(birthHour *dizhi.DiZhi, blocks []*Block) []*Block {
 	index := (11 - int(*birthHour) + 12) % 12
 	blocks[index].Stars = append(blocks[index].Stars, &Star{
 		Name:     stars.DiKong.String(),
+		StarType: startype.ShiXiZhuXing,
+	})
+	return blocks
+}
+
+// set 設定台輔
+func setTaiFu(birthHour *dizhi.DiZhi, blocks []*Block) []*Block {
+	index := (int(*birthHour) + 6) % 12
+	blocks[index].Stars = append(blocks[index].Stars, &Star{
+		Name:     stars.TaiFu.String(),
 		StarType: startype.ShiXiZhuXing,
 	})
 	return blocks

@@ -4151,6 +4151,152 @@ var _ = Describe("ziwei", func() {
 					})
 				})
 			})
+			Context("setTaiFu()", func() {
+				When("birth hour is in 子時", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 12 / 12 子時
+						birthday = time.Date(1971, 1, 8, 24, 10, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TaiFu.String(),
+							StarType: startype.ShiXiZhuXing,
+						}))
+					})
+				})
+				When("birth hour is in 丑時", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 12 / 12 丑時
+						birthday = time.Date(1971, 1, 8, 2, 10, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TaiFu.String(),
+							StarType: startype.ShiXiZhuXing,
+						}))
+					})
+				})
+				When("birth hour is in 寅時", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 12 / 12 寅時
+						birthday = time.Date(1971, 1, 8, 4, 10, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TaiFu.String(),
+							StarType: startype.ShiXiZhuXing,
+						}))
+					})
+				})
+				When("birth hour is in 卯時", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 12 / 12 卯時
+						birthday = time.Date(1971, 1, 8, 6, 10, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TaiFu.String(),
+							StarType: startype.ShiXiZhuXing,
+						}))
+					})
+				})
+				When("birth hour is in 辰時", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 12 / 12 辰時
+						birthday = time.Date(1971, 1, 8, 8, 10, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TaiFu.String(),
+							StarType: startype.ShiXiZhuXing,
+						}))
+					})
+				})
+				When("birth hour is in 巳時", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 12 / 12 巳時
+						birthday = time.Date(1971, 1, 8, 10, 10, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TaiFu.String(),
+							StarType: startype.ShiXiZhuXing,
+						}))
+					})
+				})
+				When("birth hour is in 午時", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 12 / 12 午時
+						birthday = time.Date(1971, 1, 8, 12, 12, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TaiFu.String(),
+							StarType: startype.ShiXiZhuXing,
+						}))
+					})
+				})
+				When("birth hour is in 未時", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 12 / 12 未時
+						birthday = time.Date(1971, 1, 8, 14, 12, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TaiFu.String(),
+							StarType: startype.ShiXiZhuXing,
+						}))
+					})
+				})
+				When("birth hour is in 申時", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 12 / 12 申時
+						birthday = time.Date(1971, 1, 8, 16, 12, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TaiFu.String(),
+							StarType: startype.ShiXiZhuXing,
+						}))
+					})
+				})
+				When("birth hour is in 酉時", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 12 / 12 酉時
+						birthday = time.Date(1971, 1, 8, 18, 12, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TaiFu.String(),
+							StarType: startype.ShiXiZhuXing,
+						}))
+					})
+				})
+				When("birth hour is in 戌時", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 12 / 12 戌時
+						birthday = time.Date(1971, 1, 8, 20, 12, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TaiFu.String(),
+							StarType: startype.ShiXiZhuXing,
+						}))
+					})
+				})
+				When("birth hour is in 亥時", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 12 / 12 亥時
+						birthday = time.Date(1971, 1, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.TaiFu.String(),
+							StarType: startype.ShiXiZhuXing,
+						}))
+					})
+				})
+			})
 		})
 	})
 })

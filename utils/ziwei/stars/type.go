@@ -61,4 +61,5 @@ const (
 	WenQu
 	DiJie
 	DiKong
+	TaiFu
 )
