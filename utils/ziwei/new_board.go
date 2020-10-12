@@ -35,7 +35,7 @@ func NewBoard(birthday time.Time) (*Board, error) {
 	board.setNianZhiXiZhuXing(&lunaDate.Year.DiZhi, mingGongLocation, shenGongLocation)
 	board.setYueXiXing(int(lunaDate.Month))
 	board.setShiXiZhuXing(&lunaDate.Year.DiZhi, int(lunaDate.Month), int(lunaDate.Day), lunaDate.Hour)
-	err = board.setShenMing(&lunaDate.Year.DiZhi)
+	err = board.setMingZhu(&lunaDate.Year.DiZhi)
 	if err != nil {
 		return nil, fmt.Errorf("failed in set shen ming, error: %w", err)
 	}
@@ -1071,7 +1071,8 @@ func (b *Board) setTianGui(wenQuLocation int, birthDate int) {
 	return
 }
 
-func (b *Board) setShenMing(birthYear *dizhi.DiZhi) error {
+// setMingZhu 設定命主
+func (b *Board) setMingZhu(birthYear *dizhi.DiZhi) error {
 	starMap := []stars.StarName{
 		stars.TanLang,
 		stars.JuMen,
