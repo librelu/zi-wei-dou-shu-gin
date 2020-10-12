@@ -62,4 +62,5 @@ const (
 	DiJie
 	DiKong
 	TaiFu
+	FengGao
 )
