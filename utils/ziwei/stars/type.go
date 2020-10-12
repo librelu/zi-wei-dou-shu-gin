@@ -63,4 +63,5 @@ const (
 	DiKong
 	TaiFu
 	FengGao
+	Huo
 )

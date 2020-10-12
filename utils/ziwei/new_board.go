@@ -33,7 +33,7 @@ func NewBoard(birthday time.Time) (*Board, error) {
 	shenGongLocation := getShengGong(lunaDate.Hour, lunaDate.Month)
 	blocks = setNianZhiXiZhuXing(&lunaDate.Year.DiZhi, mingGongLocation, shenGongLocation, blocks)
 	blocks = setYueXiXing(int(lunaDate.Month), blocks)
-	blocks = setShiXiZhuXing(lunaDate.Hour, blocks)
+	blocks = setShiXiZhuXing(&lunaDate.Year.DiZhi, lunaDate.Hour, blocks)
 
 	return &Board{
 		Blocks: blocks,
@@ -837,13 +837,14 @@ func setYinSha(birthMonth int, blocks []*Block) []*Block {
 }
 
 // setShiXiZhuXing 安時系諸星
-func setShiXiZhuXing(birthHour *dizhi.DiZhi, blocks []*Block) []*Block {
+func setShiXiZhuXing(birthYear *dizhi.DiZhi, birthHour *dizhi.DiZhi, blocks []*Block) []*Block {
 	blocks = setWenChang(birthHour, blocks)
 	blocks = setWenQu(birthHour, blocks)
 	blocks = setDiJie(birthHour, blocks)
 	blocks = setDiKong(birthHour, blocks)
 	blocks = setTaiFu(birthHour, blocks)
 	blocks = setFengGao(birthHour, blocks)
+	blocks = setHuo(birthYear, birthHour, blocks)
 	return blocks
 }
 
@@ -905,4 +906,44 @@ func setFengGao(birthHour *dizhi.DiZhi, blocks []*Block) []*Block {
 		StarType: startype.ShiXiZhuXing,
 	})
 	return blocks
+}
+
+// setHuo　設定火星
+func setHuo(birthYear *dizhi.DiZhi, birthHour *dizhi.DiZhi, blocks []*Block) []*Block {
+	xaxis := getHuoLingGroupMap(birthYear)
+	var index int
+	switch xaxis {
+	case 0:
+		index = (int(*birthHour) + 1) % 12
+	case 1:
+		index = (int(*birthHour) + 2) % 12
+	case 2:
+		index = (int(*birthHour) + 3) % 12
+	case 3:
+		index = (int(*birthHour) + 9) % 12
+	}
+	blocks[index].Stars = append(blocks[index].Stars, &Star{
+		Name:     stars.Huo.String(),
+		StarType: startype.ShiXiZhuXing,
+	})
+	return blocks
+}
+
+func getHuoLingGroupMap(birthYear *dizhi.DiZhi) int {
+	birthYearGroup := map[dizhi.DiZhi]int{
+		dizhi.Yin:  0,
+		dizhi.Wu:   0,
+		dizhi.Xu:   0,
+		dizhi.Shen: 1,
+		dizhi.Zi:   1,
+		dizhi.Chen: 1,
+		dizhi.Si:   2,
+		dizhi.You:  2,
+		dizhi.Chou: 2,
+		dizhi.Hai:  3,
+		dizhi.Mao:  3,
+		dizhi.Wei:  3,
+	}
+
+	return birthYearGroup[*birthYear]
 }
