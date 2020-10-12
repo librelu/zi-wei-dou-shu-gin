@@ -1153,7 +1153,6 @@ func (b *Board) setGender(birthYear *tiangan.TianGan, gender genders.Gender) err
 	default:
 		return fmt.Errorf("please insert male or female index, example: 0 or 1, current=%d", gender)
 	}
-	// b.Gender = genderIndex + 2
 	return nil
 }
 
