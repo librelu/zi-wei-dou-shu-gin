@@ -60,4 +60,5 @@ const (
 	WenChang
 	WenQu
 	DiJie
+	DiKong
 )
