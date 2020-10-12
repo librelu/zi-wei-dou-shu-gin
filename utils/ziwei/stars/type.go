@@ -64,4 +64,5 @@ const (
 	TaiFu
 	FengGao
 	Huo
+	Ling
 )

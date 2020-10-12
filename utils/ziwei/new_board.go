@@ -845,6 +845,7 @@ func setShiXiZhuXing(birthYear *dizhi.DiZhi, birthHour *dizhi.DiZhi, blocks []*B
 	blocks = setTaiFu(birthHour, blocks)
 	blocks = setFengGao(birthHour, blocks)
 	blocks = setHuo(birthYear, birthHour, blocks)
+	blocks = setLing(birthYear, birthHour, blocks)
 	return blocks
 }
 
@@ -924,6 +925,23 @@ func setHuo(birthYear *dizhi.DiZhi, birthHour *dizhi.DiZhi, blocks []*Block) []*
 	}
 	blocks[index].Stars = append(blocks[index].Stars, &Star{
 		Name:     stars.Huo.String(),
+		StarType: startype.ShiXiZhuXing,
+	})
+	return blocks
+}
+
+// setHuo　設定鈴星
+func setLing(birthYear *dizhi.DiZhi, birthHour *dizhi.DiZhi, blocks []*Block) []*Block {
+	xaxis := getHuoLingGroupMap(birthYear)
+	var index int
+	switch xaxis {
+	case 0:
+		index = (int(*birthHour) + 3) % 12
+	default:
+		index = (int(*birthHour) + 10) % 12
+	}
+	blocks[index].Stars = append(blocks[index].Stars, &Star{
+		Name:     stars.Ling.String(),
 		StarType: startype.ShiXiZhuXing,
 	})
 	return blocks
