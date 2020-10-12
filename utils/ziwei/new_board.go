@@ -56,7 +56,7 @@ func NewBoard(birthday time.Time, gender genders.Gender) (*Board, error) {
 	board.setBoShiTwelveStars(luCunLocation)
 	currentLunaDate := lunacal.Solar2Lunar(time.Now())
 	board.setLiuNianSuiQianZhuXing(&currentLunaDate.Year.DiZhi)
-
+	board.setSiHua(&lunaDate.Year.DiZhi)
 	return board, nil
 }
 
@@ -168,25 +168,31 @@ func (b *Board) setFourteenMainStars(mingGongLocation *dizhi.DiZhi, mingJu *Ming
 		Name:     stars.ZiWei.String(),
 		StarType: startype.FourteenMainStars,
 	})
+	b.StarsMap[stars.ZiWei] = ziWeiStarIndex
+
 	tianFuIndex, err := b.setTianFuStarLocation(ziWeiStarIndex)
 	if err == nil {
 		b.Blocks[tianFuIndex].Stars = append(b.Blocks[tianFuIndex].Stars, &Star{
 			Name:     stars.TianFu.String(),
 			StarType: startype.FourteenMainStars,
 		})
+		b.StarsMap[stars.TianFu] = tianFuIndex
 	} else {
 		return fmt.Errorf("tian fu star not found, error: %w", err)
 	}
 
 	b.setStarsBeggingWithZiWei(ziWeiStarIndex)
 	b.setStarsBeggingWithTianFu(tianFuIndex)
-	//TODO: logic missing in setSiHua
-	b.setSiHua()
 	return nil
 }
 
-//setSiHua TODO: 四化 should set after 安時諸星
-func (b *Board) setSiHua() {
+//setSiHua 安四化
+func (b *Board) setSiHua(birthYear *dizhi.DiZhi) {
+	b.setHuaLu()
+	return
+}
+
+func (b *Board) setHuaLu() {
 	return
 }
 
@@ -203,6 +209,7 @@ func (b *Board) setStarsBeggingWithZiWei(ziWeiStarIndex int) {
 	})
 	b.StarsMap[stars.TianJi] = tianJi
 
+	//　設定太陽
 	taiYang := tianJi - 2
 	if taiYang < 0 {
 		taiYang = 12 + taiYang
@@ -211,6 +218,8 @@ func (b *Board) setStarsBeggingWithZiWei(ziWeiStarIndex int) {
 		Name:     stars.TaiYang.String(),
 		StarType: startype.FourteenMainStars,
 	})
+	b.StarsMap[stars.TaiYang] = taiYang
+
 	//　設定武曲
 	wuQu := taiYang - 1
 	if wuQu < 0 {
@@ -249,6 +258,7 @@ func (b *Board) setStarsBeggingWithZiWei(ziWeiStarIndex int) {
 
 //setStarsBeggingWithTianFu 逆時針一宮安太陰星，逆時針一宮安貪狼星，逆時針一宮安巨門星，逆時針一宮安天相星，逆時針一宮安天梁星，逆時針一宮安七殺星，跳隔三宮，安破軍星
 func (b *Board) setStarsBeggingWithTianFu(tianFuIndex int) {
+	// 設定太陰
 	taiYin := tianFuIndex + 1
 	if taiYin > 11 {
 		taiYin = taiYin - 12
@@ -257,6 +267,8 @@ func (b *Board) setStarsBeggingWithTianFu(tianFuIndex int) {
 		Name:     stars.TaiYin.String(),
 		StarType: startype.FourteenMainStars,
 	})
+	b.StarsMap[stars.TaiYin] = taiYin
+
 	// 設定貪狼
 	tanLang := taiYin + 1
 	if tanLang > 11 {
