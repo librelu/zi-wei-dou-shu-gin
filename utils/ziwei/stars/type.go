@@ -59,4 +59,5 @@ const (
 	// 時系諸星
 	WenChang
 	WenQu
+	DiJie
 )

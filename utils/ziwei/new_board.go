@@ -840,6 +840,7 @@ func setYinSha(birthMonth int, blocks []*Block) []*Block {
 func setShiXiZhuXing(birthHour *dizhi.DiZhi, blocks []*Block) []*Block {
 	blocks = setWenChang(birthHour, blocks)
 	blocks = setWenQu(birthHour, blocks)
+	blocks = setDiJi(birthHour, blocks)
 	return blocks
 }
 
@@ -858,6 +859,16 @@ func setWenQu(birthHour *dizhi.DiZhi, blocks []*Block) []*Block {
 	index := (int(*birthHour) + 4) % 12
 	blocks[index].Stars = append(blocks[index].Stars, &Star{
 		Name:     stars.WenQu.String(),
+		StarType: startype.ShiXiZhuXing,
+	})
+	return blocks
+}
+
+// setDiJie 設定地劫
+func setDiJi(birthHour *dizhi.DiZhi, blocks []*Block) []*Block {
+	index := (int(*birthHour) + 11) % 12
+	blocks[index].Stars = append(blocks[index].Stars, &Star{
+		Name:     stars.DiJie.String(),
 		StarType: startype.ShiXiZhuXing,
 	})
 	return blocks
