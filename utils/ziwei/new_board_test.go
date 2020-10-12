@@ -7,6 +7,7 @@ import (
 	. "github.com/onsi/gomega"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/dizhi"
+	"github.com/zi-wei-dou-shu-gin/utils/ziwei/genders"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/gong"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/mingju"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/stars"
@@ -19,10 +20,14 @@ var _ = Describe("ziwei", func() {
 		var (
 			board    *ziwei.Board
 			birthday time.Time
+			gender   genders.Gender
 			err      error
 		)
+		BeforeEach(func() {
+			gender = genders.Male
+		})
 		JustBeforeEach(func() {
-			board, err = ziwei.NewBoard(birthday)
+			board, err = ziwei.NewBoard(birthday, gender)
 		})
 		When("init board", func() {
 			BeforeEach(func() {
@@ -5137,6 +5142,198 @@ var _ = Describe("ziwei", func() {
 						Name:     stars.ShenZhu.String(),
 						StarType: startype.ShenMing,
 					}))
+				})
+			})
+		})
+		Context("setGender()", func() {
+			When("gender is male", func() {
+				BeforeEach(func() {
+					gender = genders.Male
+				})
+				When("birth year is in 甲", func() {
+					BeforeEach(func() {
+						// luna date: 甲午年 2 / 4 亥時
+						birthday = time.Date(1954, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct gender", func() {
+						Expect(board.Gender).Should(Equal(genders.YangMale))
+					})
+				})
+				When("birth year is in 乙", func() {
+					BeforeEach(func() {
+						// luna date: 乙未年 2 / 15 亥時
+						birthday = time.Date(1955, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct gender", func() {
+						Expect(board.Gender).Should(Equal(genders.YinMale))
+					})
+				})
+				When("birth year is in 丙", func() {
+					BeforeEach(func() {
+						// luna date: 丙申年 2 / 7 亥時
+						birthday = time.Date(1956, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct gender", func() {
+						Expect(board.Gender).Should(Equal(genders.YangMale))
+					})
+				})
+				When("birth year is in 丁", func() {
+					BeforeEach(func() {
+						// luna date: 丁酉年 2 / 7 亥時
+						birthday = time.Date(1957, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct gender", func() {
+						Expect(board.Gender).Should(Equal(genders.YinMale))
+					})
+				})
+				When("birth year is in 戊", func() {
+					BeforeEach(func() {
+						// luna date: 戊戌年 1 / 19 亥時
+						birthday = time.Date(1958, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct gender", func() {
+						Expect(board.Gender).Should(Equal(genders.YangMale))
+					})
+				})
+				When("birth year is in 己", func() {
+					BeforeEach(func() {
+						// luna date: 己亥年 1 / 29 亥時
+						birthday = time.Date(1959, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct gender", func() {
+						Expect(board.Gender).Should(Equal(genders.YinMale))
+					})
+				})
+				When("birth year is in 庚", func() {
+					BeforeEach(func() {
+						// luna date: 庚子年 2 / 11 亥時
+						birthday = time.Date(1960, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct gender", func() {
+						Expect(board.Gender).Should(Equal(genders.YangMale))
+					})
+				})
+				When("birth year is in 辛", func() {
+					BeforeEach(func() {
+						// luna date: 辛丑年 1 / 22 亥時
+						birthday = time.Date(1961, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct gender", func() {
+						Expect(board.Gender).Should(Equal(genders.YinMale))
+					})
+				})
+				When("birth year is in 壬", func() {
+					BeforeEach(func() {
+						// luna date: 壬寅年 2 / 3 亥時
+						birthday = time.Date(1962, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct gender", func() {
+						Expect(board.Gender).Should(Equal(genders.YangMale))
+					})
+				})
+				When("birth year is in 癸", func() {
+					BeforeEach(func() {
+						// luna date: 癸卯年 2 / 13 亥時
+						birthday = time.Date(1963, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct gender", func() {
+						Expect(board.Gender).Should(Equal(genders.YinMale))
+					})
+				})
+			})
+			When("gender is female", func() {
+				BeforeEach(func() {
+					gender = genders.Female
+				})
+				When("birth year is in 甲", func() {
+					BeforeEach(func() {
+						// luna date: 甲午年 2 / 4 亥時
+						birthday = time.Date(1954, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct gender", func() {
+						Expect(board.Gender).Should(Equal(genders.YangFemale))
+					})
+				})
+				When("birth year is in 乙", func() {
+					BeforeEach(func() {
+						// luna date: 乙未年 2 / 15 亥時
+						birthday = time.Date(1955, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct gender", func() {
+						Expect(board.Gender).Should(Equal(genders.YinFemale))
+					})
+				})
+				When("birth year is in 丙", func() {
+					BeforeEach(func() {
+						// luna date: 丙申年 2 / 7 亥時
+						birthday = time.Date(1956, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct gender", func() {
+						Expect(board.Gender).Should(Equal(genders.YangFemale))
+					})
+				})
+				When("birth year is in 丁", func() {
+					BeforeEach(func() {
+						// luna date: 丁酉年 2 / 7 亥時
+						birthday = time.Date(1957, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct gender", func() {
+						Expect(board.Gender).Should(Equal(genders.YinFemale))
+					})
+				})
+				When("birth year is in 戊", func() {
+					BeforeEach(func() {
+						// luna date: 戊戌年 1 / 19 亥時
+						birthday = time.Date(1958, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct gender", func() {
+						Expect(board.Gender).Should(Equal(genders.YangFemale))
+					})
+				})
+				When("birth year is in 己", func() {
+					BeforeEach(func() {
+						// luna date: 己亥年 1 / 29 亥時
+						birthday = time.Date(1959, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct gender", func() {
+						Expect(board.Gender).Should(Equal(genders.YinFemale))
+					})
+				})
+				When("birth year is in 庚", func() {
+					BeforeEach(func() {
+						// luna date: 庚子年 2 / 11 亥時
+						birthday = time.Date(1960, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct gender", func() {
+						Expect(board.Gender).Should(Equal(genders.YangFemale))
+					})
+				})
+				When("birth year is in 辛", func() {
+					BeforeEach(func() {
+						// luna date: 辛丑年 1 / 22 亥時
+						birthday = time.Date(1961, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct gender", func() {
+						Expect(board.Gender).Should(Equal(genders.YinFemale))
+					})
+				})
+				When("birth year is in 壬", func() {
+					BeforeEach(func() {
+						// luna date: 壬寅年 2 / 3 亥時
+						birthday = time.Date(1962, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct gender", func() {
+						Expect(board.Gender).Should(Equal(genders.YangFemale))
+					})
+				})
+				When("birth year is in 癸", func() {
+					BeforeEach(func() {
+						// luna date: 癸卯年 2 / 13 亥時
+						birthday = time.Date(1963, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct gender", func() {
+						Expect(board.Gender).Should(Equal(genders.YinFemale))
+					})
 				})
 			})
 		})

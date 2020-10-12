@@ -8,6 +8,7 @@ import (
 
 	"github.com/zi-wei-dou-shu-gin/utils/lunacal"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/dizhi"
+	"github.com/zi-wei-dou-shu-gin/utils/ziwei/genders"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/gong"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/mingju"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/stars"
@@ -15,7 +16,7 @@ import (
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/tiangan"
 )
 
-func NewBoard(birthday time.Time) (*Board, error) {
+func NewBoard(birthday time.Time, gender genders.Gender) (*Board, error) {
 	board := new(Board)
 	board.StarsMap = make(map[stars.StarName]int)
 	lunaDate := lunacal.Solar2Lunar(birthday)
@@ -43,6 +44,11 @@ func NewBoard(birthday time.Time) (*Board, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed in set shen zhu, error: %w", err)
 	}
+	err = board.setGender(&lunaDate.Year.TianGan, gender)
+	if err != nil {
+		return nil, fmt.Errorf("failed in set gender: %w", err)
+	}
+	board.setBoShiTwelveStars()
 
 	return board, nil
 }
@@ -1129,4 +1135,24 @@ func (b *Board) setShenZhu(birthYear *dizhi.DiZhi) error {
 		StarType: startype.ShenMing,
 	})
 	return nil
+}
+
+// setGetGenders
+func (b *Board) setGender(birthYear *tiangan.TianGan, gender genders.Gender) error {
+	genderIndex := int(*birthYear % 2)
+	switch gender {
+	case genders.Male:
+		b.Gender = genders.Gender(genderIndex + 2)
+	case genders.Female:
+		b.Gender = genders.Gender(genderIndex + 4)
+	default:
+		return fmt.Errorf("please insert male or female index, example: 0 or 1, current=%d", gender)
+	}
+	// b.Gender = genderIndex + 2
+	return nil
+}
+
+// setBoShiTwelveStars 安博士十二星
+func (b *Board) setBoShiTwelveStars() {
+	return
 }

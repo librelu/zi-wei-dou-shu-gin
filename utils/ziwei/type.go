@@ -2,6 +2,7 @@ package ziwei
 
 import (
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/dizhi"
+	"github.com/zi-wei-dou-shu-gin/utils/ziwei/genders"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/gong"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/miaoxian"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/mingju"
@@ -56,5 +57,6 @@ type MingJu struct {
 type Board struct {
 	Blocks   []*Block
 	StarsMap map[stars.StarName]int
+	Gender   genders.Gender
 	MingJu   *MingJu
 }
