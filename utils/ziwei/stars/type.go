@@ -48,8 +48,10 @@ const (
 	TianCai
 	TianShou
 	TianKong
+	//月系星
 	ZuoFu
 	YouBi
 	TianXing
 	TianYao
+	TianWu
 )
