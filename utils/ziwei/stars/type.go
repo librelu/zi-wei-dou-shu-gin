@@ -55,4 +55,5 @@ const (
 	TianYao
 	TianWu
 	YueXiXingTianYue
+	YinSha
 )
