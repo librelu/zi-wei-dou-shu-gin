@@ -886,7 +886,7 @@ func setDiKong(birthHour *dizhi.DiZhi, blocks []*Block) []*Block {
 	return blocks
 }
 
-// set 設定台輔
+// setTaiFu 設定台輔
 func setTaiFu(birthHour *dizhi.DiZhi, blocks []*Block) []*Block {
 	index := (int(*birthHour) + 6) % 12
 	blocks[index].Stars = append(blocks[index].Stars, &Star{
