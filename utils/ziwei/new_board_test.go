@@ -3273,6 +3273,152 @@ var _ = Describe("ziwei", func() {
 					})
 				})
 			})
+			Context("setTianWu()", func() {
+				When("birth month is in January", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 1 / 28 巳時
+						birthday = time.Date(1970, 3, 5, 10, 10, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.YueXiXingTianYue.String(),
+							StarType: startype.YueXiXing,
+						}))
+					})
+				})
+				When("birth month is in Febuary", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 2 / 29 巳時
+						birthday = time.Date(1970, 4, 5, 10, 10, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.YueXiXingTianYue.String(),
+							StarType: startype.YueXiXing,
+						}))
+					})
+				})
+				When("birth month is in March", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 3 / 28 巳時
+						birthday = time.Date(1970, 5, 3, 10, 10, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.YueXiXingTianYue.String(),
+							StarType: startype.YueXiXing,
+						}))
+					})
+				})
+				When("birth month is in April", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 4 / 1 巳時
+						birthday = time.Date(1970, 5, 5, 10, 10, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.YueXiXingTianYue.String(),
+							StarType: startype.YueXiXing,
+						}))
+					})
+				})
+				When("birth month is in May", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 5 / 7 巳時
+						birthday = time.Date(1970, 6, 10, 10, 10, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.YueXiXingTianYue.String(),
+							StarType: startype.YueXiXing,
+						}))
+					})
+				})
+				When("birth month is in June", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 6 / 6 巳時
+						birthday = time.Date(1970, 7, 8, 10, 10, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.YueXiXingTianYue.String(),
+							StarType: startype.YueXiXing,
+						}))
+					})
+				})
+				When("birth month is in July", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 7 / 11 巳時
+						birthday = time.Date(1970, 8, 12, 10, 10, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.YueXiXingTianYue.String(),
+							StarType: startype.YueXiXing,
+						}))
+					})
+				})
+				When("birth month is in Auguest", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 8 / 9 巳時
+						birthday = time.Date(1970, 9, 9, 10, 10, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.YueXiXingTianYue.String(),
+							StarType: startype.YueXiXing,
+						}))
+					})
+				})
+				When("birth month is in September", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 9 / 9 巳時
+						birthday = time.Date(1970, 10, 8, 10, 10, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.YueXiXingTianYue.String(),
+							StarType: startype.YueXiXing,
+						}))
+					})
+				})
+				When("birth month is in October", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 10 / 13 巳時
+						birthday = time.Date(1970, 11, 11, 10, 10, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.YueXiXingTianYue.String(),
+							StarType: startype.YueXiXing,
+						}))
+					})
+				})
+				When("birth month is in November", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 11 / 11 巳時
+						birthday = time.Date(1970, 12, 9, 10, 10, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.YueXiXingTianYue.String(),
+							StarType: startype.YueXiXing,
+						}))
+					})
+				})
+				When("birth month is in December", func() {
+					BeforeEach(func() {
+						// luna date: 庚戌年 12 / 12 巳時
+						birthday = time.Date(1971, 1, 8, 9, 10, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.YueXiXingTianYue.String(),
+							StarType: startype.YueXiXing,
+						}))
+					})
+				})
+			})
 		})
 	})
 })

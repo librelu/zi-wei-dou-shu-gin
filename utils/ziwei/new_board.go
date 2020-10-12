@@ -748,6 +748,7 @@ func setYueXiXing(birthMonth int, blocks []*Block) []*Block {
 	blocks = setTianXing(birthMonth, blocks)
 	blocks = setTianYao(birthMonth, blocks)
 	blocks = setTianWu(birthMonth, blocks)
+	blocks = setYueXiXingTianYue(birthMonth, blocks)
 	return blocks
 }
 
@@ -798,6 +799,21 @@ func setTianWu(birthMonth int, blocks []*Block) []*Block {
 	blocks[locations[locationIndex]].Stars = append(
 		blocks[locations[locationIndex]].Stars, &Star{
 			Name:     stars.TianWu.String(),
+			StarType: startype.YueXiXing,
+		})
+	return blocks
+}
+
+// setYueXiXingTianYue 設定天月
+// TODO: refactor Yue Xi Xing to a object
+func setYueXiXingTianYue(birthMonth int, blocks []*Block) []*Block {
+	locationMap := []dizhi.DiZhi{
+		dizhi.Xu, dizhi.Si, dizhi.Chen, dizhi.Yin, dizhi.Wei, dizhi.Mao, dizhi.Hai, dizhi.Wei, dizhi.Yin, dizhi.Wu, dizhi.Xu, dizhi.Yin,
+	}
+	index := locationMap[birthMonth-1]
+	blocks[index].Stars = append(
+		blocks[index].Stars, &Star{
+			Name:     stars.YueXiXingTianYue.String(),
 			StarType: startype.YueXiXing,
 		})
 	return blocks
