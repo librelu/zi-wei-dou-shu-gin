@@ -37,7 +37,7 @@ func NewBoard(birthday time.Time) (*Board, error) {
 	board.setShiXiZhuXing(&lunaDate.Year.DiZhi, int(lunaDate.Month), int(lunaDate.Day), lunaDate.Hour)
 	err = board.setMingZhu(&lunaDate.Year.DiZhi)
 	if err != nil {
-		return nil, fmt.Errorf("failed in set shen ming, error: %w", err)
+		return nil, fmt.Errorf("failed in set ming zhu, error: %w", err)
 	}
 
 	return board, nil
