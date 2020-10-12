@@ -72,4 +72,17 @@ const (
 	// 安身命
 	MingZhu
 	ShenZhu
+	// 博士十二星
+	BoShi
+	LiShi
+	QingLong
+	XiaoHao
+	JiangJun
+	ZouShu
+	FeiLian
+	XiShen
+	BingFu
+	BoShiDaHao
+	FuBing
+	GuanFu
 )

@@ -5337,5 +5337,911 @@ var _ = Describe("ziwei", func() {
 				})
 			})
 		})
+		Context("setBoShiTwelveStars()", func() {
+			When("LuCen is in 寅 and gender", func() {
+				When("gender is YangMale", func() {
+					BeforeEach(func() {
+						// luna date: 甲午年 2 / 4 亥時
+						birthday = time.Date(1954, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct stars", func() {
+						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FuBing.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.GuanFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.LiShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.QingLong.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiaoHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.JiangJun.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.ZouShu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FeiLian.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiShen.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BingFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShiDaHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+					})
+				})
+				When("gender is YangFemale", func() {
+					BeforeEach(func() {
+						gender = genders.Female
+					})
+					It("should display correct stars", func() {
+						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.QingLong.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.LiShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.GuanFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FuBing.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShiDaHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BingFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiShen.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FeiLian.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.ZouShu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.JiangJun.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiaoHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+					})
+				})
+			})
+			When("LuCen is in 卯", func() {
+				BeforeEach(func() {
+					// luna date: 乙未年 2 / 15 亥時
+					birthday = time.Date(1955, 3, 8, 22, 12, 0, 0, time.Local)
+				})
+				When("gender is YingMale", func() {
+					It("should display correct stars", func() {
+						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiaoHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.QingLong.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.LiShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.GuanFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FuBing.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShiDaHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BingFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiShen.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FeiLian.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.ZouShu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.JiangJun.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+					})
+				})
+				When("gender is YingFemale", func() {
+					BeforeEach(func() {
+						gender = genders.Female
+					})
+					It("should display correct stars", func() {
+						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShiDaHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FuBing.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.GuanFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.LiShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.QingLong.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiaoHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.JiangJun.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.ZouShu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FeiLian.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiShen.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BingFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+					})
+				})
+			})
+			When("LuCen is in 巳", func() {
+				BeforeEach(func() {
+					// luna date: 丙申年 2 / 7 亥時
+					birthday = time.Date(1956, 3, 8, 22, 12, 0, 0, time.Local)
+				})
+				When("gender is YingMale", func() {
+					It("should display correct stars", func() {
+						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiShen.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BingFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShiDaHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FuBing.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.GuanFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.LiShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.QingLong.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiaoHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.JiangJun.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.ZouShu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FeiLian.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+					})
+				})
+				When("gender is YangFemale", func() {
+					BeforeEach(func() {
+						gender = genders.Female
+					})
+					It("should display correct stars", func() {
+						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.ZouShu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.JiangJun.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiaoHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.QingLong.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.LiShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.GuanFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FuBing.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShiDaHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BingFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiShen.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FeiLian.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+					})
+				})
+			})
+			When("LuCen is in 午", func() {
+				BeforeEach(func() {
+					// luna date: 丁酉年 2 / 7 亥時
+					birthday = time.Date(1957, 3, 8, 22, 12, 0, 0, time.Local)
+				})
+				When("gender is YingMale", func() {
+					It("should display correct stars", func() {
+						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FeiLian.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.ZouShu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.JiangJun.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiaoHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.QingLong.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.LiShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.GuanFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FuBing.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShiDaHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BingFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiShen.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+					})
+				})
+				When("gender is YingFemale", func() {
+					BeforeEach(func() {
+						gender = genders.Female
+					})
+					It("should display correct stars", func() {
+						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FeiLian.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiShen.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BingFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShiDaHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FuBing.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.GuanFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.LiShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.QingLong.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiaoHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.JiangJun.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.ZouShu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+					})
+				})
+			})
+			When("LuCen is in 申", func() {
+				BeforeEach(func() {
+					// luna date: 庚子年 2 / 11 亥時
+					birthday = time.Date(1960, 3, 8, 22, 12, 0, 0, time.Local)
+				})
+				When("gender is YangMale", func() {
+					It("should display correct stars", func() {
+						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.JiangJun.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.ZouShu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FeiLian.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiShen.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BingFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShiDaHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FuBing.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.GuanFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.LiShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.QingLong.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiaoHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+					})
+				})
+				When("gender is YangFemale", func() {
+					BeforeEach(func() {
+						gender = genders.Female
+					})
+					It("should display correct stars", func() {
+						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BingFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiShen.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FeiLian.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.ZouShu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.JiangJun.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiaoHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.QingLong.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.LiShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.GuanFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FuBing.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShiDaHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+					})
+				})
+			})
+			When("LuCen is in 酉", func() {
+				BeforeEach(func() {
+					// luna date: 辛丑年 1 / 22 亥時
+					birthday = time.Date(1961, 3, 8, 22, 12, 0, 0, time.Local)
+				})
+				When("gender is YingMale", func() {
+					It("should display correct stars", func() {
+						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShiDaHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BingFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiShen.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FeiLian.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.ZouShu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.JiangJun.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiaoHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.QingLong.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.LiShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.GuanFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FuBing.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+					})
+				})
+				When("gender is YingFemale", func() {
+					BeforeEach(func() {
+						gender = genders.Female
+					})
+					It("should display correct stars", func() {
+						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiaoHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.JiangJun.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.ZouShu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FeiLian.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiShen.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BingFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShiDaHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FuBing.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.GuanFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.LiShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.QingLong.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+					})
+				})
+			})
+			When("LuCen is in 亥", func() {
+				BeforeEach(func() {
+					// luna date: 壬寅年 2 / 3 亥時
+					birthday = time.Date(1962, 3, 8, 22, 12, 0, 0, time.Local)
+				})
+				When("gender is YangMale", func() {
+					It("should display correct stars", func() {
+						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.LiShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.QingLong.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiaoHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.JiangJun.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.ZouShu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FeiLian.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiShen.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BingFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShiDaHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FuBing.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.GuanFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+					})
+				})
+				When("gender is YangFemale", func() {
+					BeforeEach(func() {
+						gender = genders.Female
+					})
+					It("should display correct stars", func() {
+						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.GuanFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FuBing.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShiDaHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BingFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiShen.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FeiLian.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.ZouShu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.JiangJun.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiaoHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.QingLong.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.LiShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+					})
+				})
+			})
+			When("LuCen is in　子", func() {
+				BeforeEach(func() {
+					// luna date: 癸卯年 2 / 13 亥時
+					birthday = time.Date(1963, 3, 8, 22, 12, 0, 0, time.Local)
+				})
+				When("gender is YingMale", func() {
+					It("should display correct stars", func() {
+						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.GuanFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FuBing.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShiDaHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BingFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiShen.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FeiLian.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.ZouShu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.JiangJun.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiaoHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.QingLong.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.LiShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+					})
+				})
+				When("gender is YingFemale", func() {
+					BeforeEach(func() {
+						gender = genders.Female
+					})
+					It("should display correct stars", func() {
+						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.LiShi.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.QingLong.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiaoHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.JiangJun.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.ZouShu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FeiLian.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.XiShen.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BingFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BoShiDaHao.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.FuBing.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+						Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.GuanFu.String(),
+							StarType: startype.BoShiTwelveStars,
+						}))
+					})
+				})
+			})
+		})
 	})
 })

@@ -10,4 +10,5 @@ const (
 	YueXiXing
 	ShiXiZhuXing
 	ShenMing
+	BoShiTwelveStars
 )

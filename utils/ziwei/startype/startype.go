@@ -9,5 +9,6 @@ func (sn StarType) String() string {
 		"月系星",
 		"時系諸星",
 		"身命",
+		"博士十二星",
 	}[sn]
 }

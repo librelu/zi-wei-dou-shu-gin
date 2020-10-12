@@ -48,7 +48,12 @@ func NewBoard(birthday time.Time, gender genders.Gender) (*Board, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed in set gender: %w", err)
 	}
-	board.setBoShiTwelveStars()
+
+	luCunLocation, ok := board.StarsMap[stars.LuCun]
+	if !ok {
+		return nil, fmt.Errorf("failed to get lu Cun location")
+	}
+	board.setBoShiTwelveStars(luCunLocation)
 
 	return board, nil
 }
@@ -1153,6 +1158,100 @@ func (b *Board) setGender(birthYear *tiangan.TianGan, gender genders.Gender) err
 }
 
 // setBoShiTwelveStars 安博士十二星
-func (b *Board) setBoShiTwelveStars() {
+func (b *Board) setBoShiTwelveStars(LuCunLocation int) {
+	starsMap := []*Star{
+		{
+			Name:     stars.BoShi.String(),
+			StarType: startype.BoShiTwelveStars,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.LiShi.String(),
+			StarType: startype.BoShiTwelveStars,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.QingLong.String(),
+			StarType: startype.BoShiTwelveStars,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.XiaoHao.String(),
+			StarType: startype.BoShiTwelveStars,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.JiangJun.String(),
+			StarType: startype.BoShiTwelveStars,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.ZouShu.String(),
+			StarType: startype.BoShiTwelveStars,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.FeiLian.String(),
+			StarType: startype.BoShiTwelveStars,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.XiShen.String(),
+			StarType: startype.BoShiTwelveStars,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.BingFu.String(),
+			StarType: startype.BoShiTwelveStars,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.BoShiDaHao.String(),
+			StarType: startype.BoShiTwelveStars,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.FuBing.String(),
+			StarType: startype.BoShiTwelveStars,
+			Location: 0,
+			MiaoXian: nil,
+		},
+		{
+			Name:     stars.GuanFu.String(),
+			StarType: startype.BoShiTwelveStars,
+			Location: 0,
+			MiaoXian: nil,
+		},
+	}
+	for i := 0; i < 12; i++ {
+		index := LuCunLocation
+		switch b.Gender {
+		case genders.YangMale:
+			index += i
+		case genders.YinMale:
+			index -= i
+		case genders.YangFemale:
+			index -= i
+		case genders.YinFemale:
+			index += i
+		}
+		if index > 11 {
+			index -= 12
+		} else if index < 0 {
+			index += 12
+		}
+		b.Blocks[index].Stars = append(b.Blocks[index].Stars, starsMap[i])
+	}
+
 	return
 }
