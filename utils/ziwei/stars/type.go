@@ -101,4 +101,5 @@ const (
 	// 化祿
 	HuaLu
 	HuaQuan
+	HuaKe
 )

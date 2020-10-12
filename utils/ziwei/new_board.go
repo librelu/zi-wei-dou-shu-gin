@@ -197,6 +197,9 @@ func (b *Board) setSiHua(birthYear *tiangan.TianGan) error {
 	if err := b.setHuaQuan(birthYear); err != nil {
 		return err
 	}
+	if err := b.setHuaKe(birthYear); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -225,7 +228,7 @@ func (b *Board) setHuaLu(birthYear *tiangan.TianGan) error {
 	return nil
 }
 
-// setHuaLu 設定化權
+// setHuaQuan 設定化權
 func (b *Board) setHuaQuan(birthYear *tiangan.TianGan) error {
 	starMap := []stars.StarName{
 		stars.PoJun,
@@ -245,6 +248,31 @@ func (b *Board) setHuaQuan(birthYear *tiangan.TianGan) error {
 	}
 	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
 		Name:     stars.HuaQuan.String(),
+		StarType: startype.SiHua,
+	})
+	return nil
+}
+
+// setHuaKe 設定化科
+func (b *Board) setHuaKe(birthYear *tiangan.TianGan) error {
+	starMap := []stars.StarName{
+		stars.WuQu,
+		stars.ZiWei,
+		stars.WenChang,
+		stars.TianJi,
+		stars.TaiYang,
+		stars.TianLiang,
+		stars.TianFu,
+		stars.WenQu,
+		stars.TianFu,
+		stars.TaiYin,
+	}
+	index, ok := b.StarsMap[starMap[*birthYear]]
+	if !ok {
+		return fmt.Errorf("current star not found, current birth year: %d", birthYear)
+	}
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+		Name:     stars.HuaKe.String(),
 		StarType: startype.SiHua,
 	})
 	return nil
