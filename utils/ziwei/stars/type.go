@@ -100,4 +100,5 @@ const (
 	LiuNianBingFu
 	// 化祿
 	HuaLu
+	HuaQuan
 )

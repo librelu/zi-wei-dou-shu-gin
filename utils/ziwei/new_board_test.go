@@ -7090,6 +7090,128 @@ var _ = Describe("ziwei", func() {
 					})
 				})
 			})
+			Context("setHuaQuan()", func() {
+				When("birth year is in 甲", func() {
+					BeforeEach(func() {
+						// luna date: 甲午年 2 / 4 亥時
+						birthday = time.Date(1954, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct hua quan", func() {
+						Expect(board.Blocks[board.StarsMap[stars.PoJun]].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.HuaQuan.String(),
+							StarType: startype.SiHua,
+						}))
+					})
+				})
+				When("birth year is in 乙", func() {
+					BeforeEach(func() {
+						// luna date: 乙未年 2 / 15 亥時
+						birthday = time.Date(1955, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct hua quan", func() {
+						Expect(board.Blocks[board.StarsMap[stars.TianLiang]].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.HuaQuan.String(),
+							StarType: startype.SiHua,
+						}))
+					})
+				})
+				When("birth year is in 丙", func() {
+					BeforeEach(func() {
+						// luna date: 丙申年 2 / 7 亥時
+						birthday = time.Date(1956, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct hua quan", func() {
+						Expect(board.Blocks[board.StarsMap[stars.TianJi]].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.HuaQuan.String(),
+							StarType: startype.SiHua,
+						}))
+					})
+				})
+				When("birth year is in 丁", func() {
+					BeforeEach(func() {
+						// luna date: 丁酉年 2 / 7 亥時
+						birthday = time.Date(1957, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct hua quan", func() {
+						Expect(board.Blocks[board.StarsMap[stars.TianTong]].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.HuaQuan.String(),
+							StarType: startype.SiHua,
+						}))
+					})
+				})
+				When("birth year is in 戊", func() {
+					BeforeEach(func() {
+						// luna date: 戊戌年 1 / 19 亥時
+						birthday = time.Date(1958, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct hua quan", func() {
+						Expect(board.Blocks[board.StarsMap[stars.TaiYin]].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.HuaQuan.String(),
+							StarType: startype.SiHua,
+						}))
+					})
+				})
+				When("birth year is in 己", func() {
+					BeforeEach(func() {
+						// luna date: 己亥年 1 / 29 亥時
+						birthday = time.Date(1959, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct hua quan", func() {
+						Expect(board.Blocks[board.StarsMap[stars.TanLang]].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.HuaQuan.String(),
+							StarType: startype.SiHua,
+						}))
+					})
+				})
+				When("birth year is in 庚", func() {
+					BeforeEach(func() {
+						// luna date: 庚子年 2 / 11 亥時
+						birthday = time.Date(1960, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct hua quan", func() {
+						Expect(board.Blocks[board.StarsMap[stars.WuQu]].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.HuaQuan.String(),
+							StarType: startype.SiHua,
+						}))
+					})
+				})
+				When("birth year is in 辛", func() {
+					BeforeEach(func() {
+						// luna date: 辛丑年 1 / 22 亥時
+						birthday = time.Date(1961, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct hua quan", func() {
+						Expect(board.Blocks[board.StarsMap[stars.TaiYang]].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.HuaQuan.String(),
+							StarType: startype.SiHua,
+						}))
+					})
+				})
+				When("birth year is in 壬", func() {
+					BeforeEach(func() {
+						// luna date: 壬寅年 2 / 3 亥時
+						birthday = time.Date(1962, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct hua quan", func() {
+						Expect(board.Blocks[board.StarsMap[stars.ZiWei]].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.HuaQuan.String(),
+							StarType: startype.SiHua,
+						}))
+					})
+				})
+				When("birth year is in 癸", func() {
+					BeforeEach(func() {
+						// luna date: 癸卯年 2 / 13 亥時
+						birthday = time.Date(1963, 3, 8, 22, 12, 0, 0, time.Local)
+					})
+					It("should display correct hua quan", func() {
+						Expect(board.Blocks[board.StarsMap[stars.JuMen]].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.HuaQuan.String(),
+							StarType: startype.SiHua,
+						}))
+					})
+				})
+			})
 		})
 	})
 })
