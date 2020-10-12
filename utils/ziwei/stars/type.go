@@ -58,4 +58,5 @@ const (
 	YinSha
 	// 時系諸星
 	WenChang
+	WenQu
 )
