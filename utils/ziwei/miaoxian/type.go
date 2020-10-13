@@ -9,4 +9,5 @@ const (
 	Wang
 	Xian
 	Xian2
+	Di
 )
