@@ -534,6 +534,7 @@ func (b *Board) setLuCun(tianGan *tiangan.TianGan) {
 	b.Blocks[luCunLocation].Stars = append(b.Blocks[luCunLocation].Stars, &Star{
 		Name:     stars.LuCun.String(),
 		StarType: startype.NianGanXiZhuXing,
+		MiaoXian: getLuCunMiaoXian(int(luCunLocation)),
 	})
 	b.StarsMap[stars.LuCun] = int(luCunLocation)
 	return
@@ -1717,6 +1718,25 @@ func getPoJunMiaoXian(index int) miaoxian.MiaoXian {
 		miaoxian.Xian,
 		miaoxian.Wang,
 		miaoxian.Ping,
+	}
+	return miaoXianMap[index]
+}
+
+// getLuCunMiaoXian 得祿存廟陷
+func getLuCunMiaoXian(index int) miaoxian.MiaoXian {
+	miaoXianMap := []miaoxian.MiaoXian{
+		miaoxian.Wang,
+		miaoxian.None,
+		miaoxian.Miao,
+		miaoxian.Wang,
+		miaoxian.None,
+		miaoxian.Miao,
+		miaoxian.Wang,
+		miaoxian.None,
+		miaoxian.Miao,
+		miaoxian.Wang,
+		miaoxian.None,
+		miaoxian.Miao,
 	}
 	return miaoXianMap[index]
 }

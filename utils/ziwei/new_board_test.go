@@ -1222,6 +1222,7 @@ var _ = Describe("ziwei", func() {
 				Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
 					Name:     stars.LuCun.String(),
 					StarType: startype.NianGanXiZhuXing,
+					MiaoXian: miaoxian.Wang,
 				}))
 				Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
 					Name:     stars.QingYang.String(),
