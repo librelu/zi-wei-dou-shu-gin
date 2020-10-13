@@ -1095,6 +1095,7 @@ func (b *Board) setWenQu(birthHour *dizhi.DiZhi) {
 	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
 		Name:     stars.WenQu.String(),
 		StarType: startype.ShiXiZhuXing,
+		MiaoXian: getWenQuMiaoXian(index),
 	})
 	b.StarsMap[stars.WenQu] = index
 	return
@@ -1974,6 +1975,25 @@ func getWenChangMiaoXian(index int) miaoxian.MiaoXian {
 		miaoxian.Miao,
 		miaoxian.Ping,
 		miaoxian.Wang,
+		miaoxian.Miao,
+		miaoxian.Xian,
+		miaoxian.Wang,
+	}
+	return miaoXianMap[index]
+}
+
+// getWenQuMiaoXian 得文曲廟陷
+func getWenQuMiaoXian(index int) miaoxian.MiaoXian {
+	miaoXianMap := []miaoxian.MiaoXian{
+		miaoxian.Miao,
+		miaoxian.Miao,
+		miaoxian.Ping,
+		miaoxian.Wang,
+		miaoxian.Miao,
+		miaoxian.Miao,
+		miaoxian.Xian,
+		miaoxian.Wang,
+		miaoxian.Ping,
 		miaoxian.Miao,
 		miaoxian.Xian,
 		miaoxian.Wang,
