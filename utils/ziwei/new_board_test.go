@@ -4475,6 +4475,7 @@ var _ = Describe("ziwei", func() {
 						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.Ling.String(),
 							StarType: startype.ShiXiZhuXing,
+							MiaoXian: miaoxian.Miao,
 						}))
 					})
 				})
@@ -4487,6 +4488,7 @@ var _ = Describe("ziwei", func() {
 						Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.Ling.String(),
 							StarType: startype.ShiXiZhuXing,
+							MiaoXian: miaoxian.Miao,
 						}))
 					})
 				})
@@ -4499,6 +4501,7 @@ var _ = Describe("ziwei", func() {
 						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.Ling.String(),
 							StarType: startype.ShiXiZhuXing,
+							MiaoXian: miaoxian.Wang,
 						}))
 					})
 				})
@@ -4512,6 +4515,7 @@ var _ = Describe("ziwei", func() {
 						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.Ling.String(),
 							StarType: startype.ShiXiZhuXing,
+							MiaoXian: miaoxian.Miao,
 						}))
 					})
 				})
@@ -4524,6 +4528,7 @@ var _ = Describe("ziwei", func() {
 						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.Ling.String(),
 							StarType: startype.ShiXiZhuXing,
+							MiaoXian: miaoxian.Xian,
 						}))
 					})
 				})
@@ -4536,6 +4541,7 @@ var _ = Describe("ziwei", func() {
 						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.Ling.String(),
 							StarType: startype.ShiXiZhuXing,
+							MiaoXian: miaoxian.Miao,
 						}))
 					})
 				})
@@ -4549,6 +4555,7 @@ var _ = Describe("ziwei", func() {
 						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.Ling.String(),
 							StarType: startype.ShiXiZhuXing,
+							MiaoXian: miaoxian.Miao,
 						}))
 					})
 				})
@@ -4561,6 +4568,7 @@ var _ = Describe("ziwei", func() {
 						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.Ling.String(),
 							StarType: startype.ShiXiZhuXing,
+							MiaoXian: miaoxian.Xian,
 						}))
 					})
 				})
@@ -4573,6 +4581,7 @@ var _ = Describe("ziwei", func() {
 						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.Ling.String(),
 							StarType: startype.ShiXiZhuXing,
+							MiaoXian: miaoxian.Miao,
 						}))
 					})
 				})
@@ -4586,6 +4595,7 @@ var _ = Describe("ziwei", func() {
 						Expect(board.Blocks[10].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.Ling.String(),
 							StarType: startype.ShiXiZhuXing,
+							MiaoXian: miaoxian.Miao,
 						}))
 					})
 				})
@@ -4598,6 +4608,7 @@ var _ = Describe("ziwei", func() {
 						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.Ling.String(),
 							StarType: startype.ShiXiZhuXing,
+							MiaoXian: miaoxian.Xian,
 						}))
 					})
 				})
@@ -4610,6 +4621,7 @@ var _ = Describe("ziwei", func() {
 						Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.Ling.String(),
 							StarType: startype.ShiXiZhuXing,
+							MiaoXian: miaoxian.Miao,
 						}))
 					})
 				})
