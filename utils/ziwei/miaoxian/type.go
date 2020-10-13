@@ -3,8 +3,10 @@ package miaoxian
 type MiaoXian uint
 
 const (
-	Ping = MiaoXian(iota)
+	None = MiaoXian(iota)
+	Ping
 	Miao
 	Wang
 	Xian
+	Xian2
 )

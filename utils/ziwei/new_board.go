@@ -10,6 +10,7 @@ import (
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/dizhi"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/genders"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/gong"
+	"github.com/zi-wei-dou-shu-gin/utils/ziwei/miaoxian"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/mingju"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/stars"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/startype"
@@ -171,6 +172,7 @@ func (b *Board) setFourteenMainStars(mingGongLocation *dizhi.DiZhi, mingJu *Ming
 	b.Blocks[ziWeiStarIndex].Stars = append(b.Blocks[ziWeiStarIndex].Stars, &Star{
 		Name:     stars.ZiWei.String(),
 		StarType: startype.FourteenMainStars,
+		MiaoXian: getZiWeiMiaoXian(ziWeiStarIndex),
 	})
 	b.StarsMap[stars.ZiWei] = ziWeiStarIndex
 
@@ -1306,74 +1308,50 @@ func (b *Board) setBoShiTwelveStars(LuCunLocation int) {
 		{
 			Name:     stars.BoShi.String(),
 			StarType: startype.BoShiTwelveStars,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.LiShi.String(),
 			StarType: startype.BoShiTwelveStars,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.QingLong.String(),
 			StarType: startype.BoShiTwelveStars,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.XiaoHao.String(),
 			StarType: startype.BoShiTwelveStars,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.JiangJun.String(),
 			StarType: startype.BoShiTwelveStars,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.ZouShu.String(),
 			StarType: startype.BoShiTwelveStars,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.FeiLian.String(),
 			StarType: startype.BoShiTwelveStars,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.XiShen.String(),
 			StarType: startype.BoShiTwelveStars,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.BingFu.String(),
 			StarType: startype.BoShiTwelveStars,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.BoShiDaHao.String(),
 			StarType: startype.BoShiTwelveStars,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.FuBing.String(),
 			StarType: startype.BoShiTwelveStars,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.GuanFu.String(),
 			StarType: startype.BoShiTwelveStars,
-			Location: 0,
-			MiaoXian: nil,
 		},
 	}
 	for i := 0; i < 12; i++ {
@@ -1405,74 +1383,50 @@ func (b *Board) setLiuNianSuiQianZhuXing(currentDiZhiYear *dizhi.DiZhi) {
 		{
 			Name:     stars.SuiJian.String(),
 			StarType: startype.LiuNianSuiQianZhuXing,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.HuiQi.String(),
 			StarType: startype.LiuNianSuiQianZhuXing,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.SangMen.String(),
 			StarType: startype.LiuNianSuiQianZhuXing,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.GuanSuo.String(),
 			StarType: startype.LiuNianSuiQianZhuXing,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.GuanFu.String(),
 			StarType: startype.LiuNianSuiQianZhuXing,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.LiuNianXiaoHao.String(),
 			StarType: startype.LiuNianSuiQianZhuXing,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.LiuNianDaHao.String(),
 			StarType: startype.LiuNianSuiQianZhuXing,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.LongDe.String(),
 			StarType: startype.LiuNianSuiQianZhuXing,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.BaiHu.String(),
 			StarType: startype.LiuNianSuiQianZhuXing,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.TianDe.String(),
 			StarType: startype.LiuNianSuiQianZhuXing,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.DiKe.String(),
 			StarType: startype.LiuNianSuiQianZhuXing,
-			Location: 0,
-			MiaoXian: nil,
 		},
 		{
 			Name:     stars.LiuNianBingFu.String(),
 			StarType: startype.LiuNianSuiQianZhuXing,
-			Location: 0,
-			MiaoXian: nil,
 		},
 	}
 	for i := 0; i < 12; i++ {
@@ -1486,4 +1440,23 @@ func (b *Board) setLiuNianSuiQianZhuXing(currentDiZhiYear *dizhi.DiZhi) {
 		b.Blocks[index].Stars = append(b.Blocks[index].Stars, starsMap[i])
 	}
 	return
+}
+
+// getZiWeiMiaoXian 得紫微廟陷
+func getZiWeiMiaoXian(index int) miaoxian.MiaoXian {
+	miaoXianMap := []miaoxian.MiaoXian{
+		miaoxian.Ping,
+		miaoxian.Miao,
+		miaoxian.Miao,
+		miaoxian.Wang,
+		miaoxian.Xian,
+		miaoxian.Wang,
+		miaoxian.Miao,
+		miaoxian.Miao,
+		miaoxian.Wang,
+		miaoxian.Ping,
+		miaoxian.Xian2,
+		miaoxian.Wang,
+	}
+	return miaoXianMap[index]
 }

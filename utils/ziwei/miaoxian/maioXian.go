@@ -1,5 +1,5 @@
 package miaoxian
 
 func (m MiaoXian) String() string {
-	return []string{"平", "廟", "旺", "陷"}[m]
+	return []string{"", "平", "廟", "旺", "陷", "閑"}[m]
 }

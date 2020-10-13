@@ -14,8 +14,7 @@ import (
 type Block struct {
 	GongWei     tiangan.TianGan
 	GongWeiName gong.Gong
-	XiaoXian    bool
-	DaXian      string
+	MiaoXian    miaoxian.MiaoXian
 	Stars       []*Star
 	Location    *Location
 }
@@ -24,7 +23,7 @@ type Star struct {
 	Name     string
 	StarType startype.StarType
 	Location tiangan.TianGan
-	MiaoXian *miaoxian.MiaoXian
+	MiaoXian miaoxian.MiaoXian
 }
 
 type Location struct {
