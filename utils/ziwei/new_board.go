@@ -965,6 +965,7 @@ func (b *Board) setZuoFu(birthMonth int) {
 	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
 		Name:     stars.ZuoFu.String(),
 		StarType: startype.YueXiXing,
+		MiaoXian: getZuoFuMiaoXian(index),
 	})
 	b.StarsMap[stars.ZuoFu] = index
 	return
@@ -1917,6 +1918,25 @@ func getTianYueMiaoXian(index int) miaoxian.MiaoXian {
 		miaoxian.Miao,
 		miaoxian.None,
 		miaoxian.None,
+	}
+	return miaoXianMap[index]
+}
+
+// getZuoFuMiaoXian 得左輔廟陷
+func getZuoFuMiaoXian(index int) miaoxian.MiaoXian {
+	miaoXianMap := []miaoxian.MiaoXian{
+		miaoxian.Wang,
+		miaoxian.Miao,
+		miaoxian.Miao,
+		miaoxian.Xian,
+		miaoxian.Miao,
+		miaoxian.Ping,
+		miaoxian.Wang,
+		miaoxian.Miao,
+		miaoxian.Ping,
+		miaoxian.Xian,
+		miaoxian.Miao,
+		miaoxian.Xian2,
 	}
 	return miaoXianMap[index]
 }
