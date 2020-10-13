@@ -981,6 +981,7 @@ func (b *Board) setYouBi(birthMonth int) {
 	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
 		Name:     stars.YouBi.String(),
 		StarType: startype.YueXiXing,
+		MiaoXian: getYouBiMiaoXian(index),
 	})
 	b.StarsMap[stars.YouBi] = index
 	return
@@ -1937,6 +1938,25 @@ func getZuoFuMiaoXian(index int) miaoxian.MiaoXian {
 		miaoxian.Xian,
 		miaoxian.Miao,
 		miaoxian.Xian2,
+	}
+	return miaoXianMap[index]
+}
+
+// getYouBiMiaoXian 得右弼廟陷
+func getYouBiMiaoXian(index int) miaoxian.MiaoXian {
+	miaoXianMap := []miaoxian.MiaoXian{
+		miaoxian.Miao,
+		miaoxian.Miao,
+		miaoxian.Wang,
+		miaoxian.Xian,
+		miaoxian.Miao,
+		miaoxian.Ping,
+		miaoxian.Wang,
+		miaoxian.Miao,
+		miaoxian.Xian2,
+		miaoxian.Xian,
+		miaoxian.Miao,
+		miaoxian.Ping,
 	}
 	return miaoXianMap[index]
 }
