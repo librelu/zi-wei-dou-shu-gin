@@ -182,6 +182,7 @@ func (b *Board) setFourteenMainStars(mingGongLocation *dizhi.DiZhi, mingJu *Ming
 		b.Blocks[tianFuIndex].Stars = append(b.Blocks[tianFuIndex].Stars, &Star{
 			Name:     stars.TianFu.String(),
 			StarType: startype.FourteenMainStars,
+			MiaoXian: getTianFuMiaoXian(tianFuIndex),
 		})
 		b.StarsMap[stars.TianFu] = tianFuIndex
 	} else {
@@ -661,7 +662,7 @@ func (b *Board) setTianFu(tianGan *tiangan.TianGan) {
 	}
 	tianFuLocation := tianFuMap[int(*tianGan)]
 	b.Blocks[tianFuLocation].Stars = append(b.Blocks[tianFuLocation].Stars, &Star{
-		Name:     stars.TianFu.String(),
+		Name:     stars.NainGanTianFu.String(),
 		StarType: startype.NianGanXiZhuXing,
 	})
 	return
@@ -1557,6 +1558,25 @@ func getLianZhenMiaoXian(index int) miaoxian.MiaoXian {
 		miaoxian.Ping,
 		miaoxian.Wang,
 		miaoxian.Xian,
+	}
+	return miaoXianMap[index]
+}
+
+// getTianFuMiaoXian 得天府廟陷
+func getTianFuMiaoXian(index int) miaoxian.MiaoXian {
+	miaoXianMap := []miaoxian.MiaoXian{
+		miaoxian.Miao,
+		miaoxian.Miao,
+		miaoxian.Miao,
+		miaoxian.Ping,
+		miaoxian.Miao,
+		miaoxian.Ping,
+		miaoxian.Wang,
+		miaoxian.Miao,
+		miaoxian.Ping,
+		miaoxian.Xian,
+		miaoxian.Miao,
+		miaoxian.Wang,
 	}
 	return miaoXianMap[index]
 }

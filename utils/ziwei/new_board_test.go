@@ -255,6 +255,7 @@ var _ = Describe("ziwei", func() {
 						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.TianFu.String(),
 							StarType: startype.FourteenMainStars,
+							MiaoXian: miaoxian.Xian,
 						}))
 					})
 					It("should display tian ji, tai yang, wu qu, tian tong, lian zhen", func() {
@@ -686,6 +687,7 @@ var _ = Describe("ziwei", func() {
 					Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.TianFu.String(),
 						StarType: startype.FourteenMainStars,
+						MiaoXian: miaoxian.Wang,
 					}))
 				})
 				It("should display tian ji, tai yang, wu qu, tian tong, lian zhen", func() {
@@ -762,6 +764,7 @@ var _ = Describe("ziwei", func() {
 					Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.TianFu.String(),
 						StarType: startype.FourteenMainStars,
+						MiaoXian: miaoxian.Ping,
 					}))
 				})
 				It("should display tian ji, tai yang, wu qu, tian tong, lian zhen", func() {
@@ -838,6 +841,7 @@ var _ = Describe("ziwei", func() {
 					Expect(board.Blocks[2].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.TianFu.String(),
 						StarType: startype.FourteenMainStars,
+						MiaoXian: miaoxian.Miao,
 					}))
 				})
 				It("should display tian ji, tai yang, wu qu, tian tong, lian zhen", func() {
@@ -914,6 +918,7 @@ var _ = Describe("ziwei", func() {
 					Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.TianFu.String(),
 						StarType: startype.FourteenMainStars,
+						MiaoXian: miaoxian.Ping,
 					}))
 				})
 				It("should display tian ji, tai yang, wu qu, tian tong, lian zhen", func() {
@@ -990,6 +995,7 @@ var _ = Describe("ziwei", func() {
 					Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.TianFu.String(),
 						StarType: startype.FourteenMainStars,
+						MiaoXian: miaoxian.Ping,
 					}))
 				})
 				It("should display tian ji, tai yang, wu qu, tian tong, lian zhen", func() {
@@ -1066,6 +1072,7 @@ var _ = Describe("ziwei", func() {
 					Expect(board.Blocks[4].Stars).Should(ContainElement(&ziwei.Star{
 						Name:     stars.TianFu.String(),
 						StarType: startype.FourteenMainStars,
+						MiaoXian: miaoxian.Miao,
 					}))
 				})
 
@@ -1160,7 +1167,7 @@ var _ = Describe("ziwei", func() {
 					StarType: startype.NianGanXiZhuXing,
 				}))
 				Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
-					Name:     stars.TianFu.String(),
+					Name:     stars.NainGanTianFu.String(),
 					StarType: startype.NianGanXiZhuXing,
 				}))
 			})
