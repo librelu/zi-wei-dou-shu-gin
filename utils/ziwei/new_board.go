@@ -332,6 +332,7 @@ func (b *Board) setStarsBeggingWithZiWei(ziWeiStarIndex int) {
 	b.Blocks[taiYang].Stars = append(b.Blocks[taiYang].Stars, &Star{
 		Name:     stars.TaiYang.String(),
 		StarType: startype.FourteenMainStars,
+		MiaoXian: getTaiYangMiaoXian(taiYang),
 	})
 	b.StarsMap[stars.TaiYang] = taiYang
 
@@ -1477,6 +1478,25 @@ func getTianJiMiaoXian(index int) miaoxian.MiaoXian {
 		miaoxian.Wang,
 		miaoxian.Miao,
 		miaoxian.Ping,
+	}
+	return miaoXianMap[index]
+}
+
+// getTaiYangMiaoXian 得太陽廟陷
+func getTaiYangMiaoXian(index int) miaoxian.MiaoXian {
+	miaoXianMap := []miaoxian.MiaoXian{
+		miaoxian.Xian,
+		miaoxian.Xian,
+		miaoxian.Wang,
+		miaoxian.Miao,
+		miaoxian.Miao,
+		miaoxian.Ping,
+		miaoxian.Miao,
+		miaoxian.Ping,
+		miaoxian.Xian2,
+		miaoxian.Xian2,
+		miaoxian.Xian,
+		miaoxian.Xian,
 	}
 	return miaoXianMap[index]
 }
