@@ -1116,6 +1116,7 @@ func (b *Board) setDiKong(birthHour *dizhi.DiZhi) {
 	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
 		Name:     stars.DiKong.String(),
 		StarType: startype.ShiXiZhuXing,
+		MiaoXian: getDiKongMiaoXian(index),
 	})
 	b.StarsMap[stars.DiKong] = index
 	return
@@ -1837,6 +1838,25 @@ func getLingMiaoXian(index int) miaoxian.MiaoXian {
 		miaoxian.Xian,
 		miaoxian.Miao,
 		miaoxian.Miao,
+	}
+	return miaoXianMap[index]
+}
+
+// getDiKongMiaoXian 得地空廟陷
+func getDiKongMiaoXian(index int) miaoxian.MiaoXian {
+	miaoXianMap := []miaoxian.MiaoXian{
+		miaoxian.Ping,
+		miaoxian.Xian,
+		miaoxian.Xian,
+		miaoxian.Ping,
+		miaoxian.Xian,
+		miaoxian.Miao,
+		miaoxian.Miao,
+		miaoxian.Ping,
+		miaoxian.Miao,
+		miaoxian.Miao,
+		miaoxian.Xian,
+		miaoxian.Xian,
 	}
 	return miaoXianMap[index]
 }
