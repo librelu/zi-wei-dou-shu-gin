@@ -999,6 +999,7 @@ func (b *Board) setTianXing(birthMonth int) {
 	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
 		Name:     stars.TianXing.String(),
 		StarType: startype.YueXiXing,
+		MiaoXian: getTianXingMiaoXian(index),
 	})
 	b.StarsMap[stars.TianXing] = index
 	return
@@ -2037,6 +2038,25 @@ func getTianXiMiaoXian(index int) miaoxian.MiaoXian {
 		miaoxian.Miao,
 		miaoxian.Xian,
 		miaoxian.Wang,
+	}
+	return miaoXianMap[index]
+}
+
+// getTianXingMiaoXian 得天刑廟陷
+func getTianXingMiaoXian(index int) miaoxian.MiaoXian {
+	miaoXianMap := []miaoxian.MiaoXian{
+		miaoxian.Ping,
+		miaoxian.Xian,
+		miaoxian.Miao,
+		miaoxian.Miao,
+		miaoxian.Ping,
+		miaoxian.Xian,
+		miaoxian.Ping,
+		miaoxian.Xian,
+		miaoxian.Xian,
+		miaoxian.Miao,
+		miaoxian.Miao,
+		miaoxian.Xian,
 	}
 	return miaoXianMap[index]
 }
