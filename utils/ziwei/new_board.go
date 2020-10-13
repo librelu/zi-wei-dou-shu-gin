@@ -386,6 +386,7 @@ func (b *Board) setStarsBeggingWithTianFu(tianFuIndex int) {
 	b.Blocks[taiYin].Stars = append(b.Blocks[taiYin].Stars, &Star{
 		Name:     stars.TaiYin.String(),
 		StarType: startype.FourteenMainStars,
+		MiaoXian: getTaiYinMiaoXian(taiYin),
 	})
 	b.StarsMap[stars.TaiYin] = taiYin
 
@@ -1577,6 +1578,25 @@ func getTianFuMiaoXian(index int) miaoxian.MiaoXian {
 		miaoxian.Xian,
 		miaoxian.Miao,
 		miaoxian.Wang,
+	}
+	return miaoXianMap[index]
+}
+
+// getTaiYinMiaoXian 得太陰廟陷
+func getTaiYinMiaoXian(index int) miaoxian.MiaoXian {
+	miaoXianMap := []miaoxian.MiaoXian{
+		miaoxian.Miao,
+		miaoxian.Miao,
+		miaoxian.Xian2,
+		miaoxian.Xian,
+		miaoxian.Xian2,
+		miaoxian.Xian,
+		miaoxian.Xian,
+		miaoxian.Ping,
+		miaoxian.Ping,
+		miaoxian.Wang,
+		miaoxian.Wang,
+		miaoxian.Miao,
 	}
 	return miaoXianMap[index]
 }
