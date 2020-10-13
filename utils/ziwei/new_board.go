@@ -778,6 +778,7 @@ func (b *Board) setHongLuan(birthYear *dizhi.DiZhi) {
 	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
 		Name:     stars.HongLuan.String(),
 		StarType: startype.NianZhiXiZhuXing,
+		MiaoXian: getHongLuanMiaoXian(index),
 	})
 	b.StarsMap[stars.HongLuan] = index
 	return
@@ -1997,6 +1998,25 @@ func getWenQuMiaoXian(index int) miaoxian.MiaoXian {
 		miaoxian.Miao,
 		miaoxian.Xian,
 		miaoxian.Wang,
+	}
+	return miaoXianMap[index]
+}
+
+// getHongLuanMiaoXian 得紅鸞廟陷
+func getHongLuanMiaoXian(index int) miaoxian.MiaoXian {
+	miaoXianMap := []miaoxian.MiaoXian{
+		miaoxian.Miao,
+		miaoxian.Xian,
+		miaoxian.Wang,
+		miaoxian.Miao,
+		miaoxian.Miao,
+		miaoxian.Wang,
+		miaoxian.Wang,
+		miaoxian.Xian,
+		miaoxian.Miao,
+		miaoxian.Wang,
+		miaoxian.Xian,
+		miaoxian.Miao,
 	}
 	return miaoXianMap[index]
 }
