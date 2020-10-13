@@ -558,6 +558,7 @@ func (b *Board) setQingYang(tianGan *tiangan.TianGan) {
 	b.Blocks[qingYangLocation].Stars = append(b.Blocks[qingYangLocation].Stars, &Star{
 		Name:     stars.QingYang.String(),
 		StarType: startype.NianGanXiZhuXing,
+		MiaoXian: getQingYangMiaoXian(int(qingYangLocation)),
 	})
 	b.StarsMap[stars.QingYang] = int(qingYangLocation)
 	return
@@ -1757,6 +1758,25 @@ func getTianMaMiaoXian(index int) miaoxian.MiaoXian {
 		miaoxian.None,
 		miaoxian.None,
 		miaoxian.Ping,
+	}
+	return miaoXianMap[index]
+}
+
+// getQingYangMiaoXian 得擎羊廟陷
+func getQingYangMiaoXian(index int) miaoxian.MiaoXian {
+	miaoXianMap := []miaoxian.MiaoXian{
+		miaoxian.Xian,
+		miaoxian.Miao,
+		miaoxian.None,
+		miaoxian.Xian,
+		miaoxian.Miao,
+		miaoxian.None,
+		miaoxian.Ping,
+		miaoxian.Miao,
+		miaoxian.None,
+		miaoxian.Xian,
+		miaoxian.Miao,
+		miaoxian.None,
 	}
 	return miaoXianMap[index]
 }
