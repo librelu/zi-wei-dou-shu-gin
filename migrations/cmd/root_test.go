@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-var _ = Describe("db", func() {
+var _ = PDescribe("db", func() {
 	Describe("root", func() {
 		var (
 			output             *bytes.Buffer

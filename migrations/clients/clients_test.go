@@ -7,7 +7,7 @@ import (
 	migrations "github.com/zi-wei-dou-shu-gin/migrations/clients"
 )
 
-var _ = Describe("clients", func() {
+var _ = PDescribe("clients", func() {
 	Describe("NewDBMigration", func() {
 		var (
 			err               error

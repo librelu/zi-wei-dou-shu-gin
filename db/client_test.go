@@ -6,7 +6,7 @@ import (
 	"github.com/zi-wei-dou-shu-gin/db"
 )
 
-var _ = Describe("db", func() {
+var _ = PDescribe("db", func() {
 	Describe("NewDBClient", func() {
 		var (
 			host     string
