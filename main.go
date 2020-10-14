@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/zi-wei-dou-shu-gin/services/boards"
 )
 
 type clients struct {
@@ -27,5 +28,5 @@ func initClients() *clients {
 func initEndpoints(engine *gin.Engine) {
 	groupAPI := engine.Group("/api")
 	v1 := groupAPI.Group("/v1")
-	_ = v1
+	boards.BoardRegister(v1, boards.NewBoardHandler())
 }

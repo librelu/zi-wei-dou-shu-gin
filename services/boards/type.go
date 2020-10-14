@@ -7,6 +7,9 @@ type handler struct {
 
 type Handler interface {
 	GetBoard(c *gin.Context)
-	CreateBoard(c *gin.Context)
-	UpdateBoard(c *gin.Context)
+}
+
+type GetBoardRequest struct {
+	Birthday int64 `form:"birthday" binding:"required"`
+	Gender   int   `form:"gender"`
 }
