@@ -13,6 +13,15 @@ jobs:
     services:
       db:
         image: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
     steps:
       - name: Set up Go 1.x
         uses: actions/setup-go@v2
