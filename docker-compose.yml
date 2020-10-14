@@ -1,18 +1,18 @@
-version: "3.8"
+version: '3.8'
 services:
   bearners-backend:
     build: .
     ports:
-      - "8080:8080"
+      - '8080:8080'
     command: /go/src/github.com/zi-wei-dou-shu-gin/watch.sh'
     links:
-      - "db"
+      - 'db'
     volumes:
-      - ".:/go/src/github.com/bearners-backend"
+      - '.:/go/src/github.com/bearners-backend'
   db:
     image: postgres:latest
     restart: always
     ports:
-      - "5432:5432"
+      - '5432:5432'
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
