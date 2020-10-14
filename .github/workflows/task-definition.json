@@ -1,12 +1,13 @@
 {
   "family": "zi-wei-dou-shu",
   "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": 1024,
+  "memory": 1024,
   "containerDefinitions": [
     {
       "name": "zi-wei-dou-shu-gin",
       "image": "502266988632.dkr.ecr.ap-southeast-1.amazonaws.com/zi-wei-dou-shu-gin:lasted",
-      "cpu": 1024,
-      "memory": 1024,
       "portMappings": [
         {
           "containerPort": 8080,
@@ -14,8 +15,7 @@
           "protocol": "tcp"
         }
       ],
-      "command": ["zi-wei-dou-shu-gin"],
-      "requiresCompatibilities": ["FARGATE"]
+      "command": ["zi-wei-dou-shu-gin"]
     }
   ]
 }
