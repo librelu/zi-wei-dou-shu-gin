@@ -36,3 +36,6 @@ test:
 
 vet:
 	go vet ./
+
+start-prod:
+	docker run -d -p 8080:8080 zi-wei-dou-shu-gin zi-wei-dou-shu-gin
