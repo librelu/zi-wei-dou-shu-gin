@@ -3,27 +3,21 @@ package ziwei
 import (
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/dizhi"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/genders"
-	"github.com/zi-wei-dou-shu-gin/utils/ziwei/gong"
-	"github.com/zi-wei-dou-shu-gin/utils/ziwei/miaoxian"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/mingju"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/stars"
-	"github.com/zi-wei-dou-shu-gin/utils/ziwei/startype"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/tiangan"
 )
 
 type Block struct {
-	GongWei     tiangan.TianGan
-	GongWeiName gong.Gong
-	MiaoXian    miaoxian.MiaoXian
+	GongWeiName string
 	Stars       []*Star
 	Location    *Location
 }
 
 type Star struct {
 	Name     string
-	StarType startype.StarType
-	Location tiangan.TianGan
-	MiaoXian miaoxian.MiaoXian
+	StarType string
+	MiaoXian string
 }
 
 type Location struct {
