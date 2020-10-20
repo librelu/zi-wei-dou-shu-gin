@@ -47,15 +47,15 @@ var _ = Describe("ziwei", func() {
 		Context("testing Yin Shou", func() {
 			When("given a birthday with Jia year", func() {
 				BeforeEach(func() {
-					// luna date: 丙寅年 7 / 3 子時
+					// luna date: 甲子年 7 / 12 子時
 					birthday = time.Date(1984, 8, 8, 0, 4, 0, 0, time.Local)
 				})
 				It("shouldn't returns any errors", func() {
 					Expect(err).Should(BeNil())
 				})
 				It("should display Yin Shou by birthday", func() {
-					Expect(board.Blocks[0].Location.TianGan).Should(Equal(tiangan.Jia.String()))
-					Expect(board.Blocks[1].Location.TianGan).Should(Equal(tiangan.Yi.String()))
+					Expect(board.Blocks[0].Location.TianGan).Should(Equal(tiangan.Bing.String()))
+					Expect(board.Blocks[1].Location.TianGan).Should(Equal(tiangan.Ding.String()))
 					Expect(board.Blocks[2].Location.TianGan).Should(Equal(tiangan.Bing.String()))
 					Expect(board.Blocks[3].Location.TianGan).Should(Equal(tiangan.Ding.String()))
 					Expect(board.Blocks[4].Location.TianGan).Should(Equal(tiangan.Wu.String()))
@@ -122,18 +122,18 @@ var _ = Describe("ziwei", func() {
 					Expect(err).Should(BeNil())
 				})
 				It("should display Yin Shou by birthday", func() {
-					Expect(board.Blocks[8].Location.TianGan).Should(Equal(tiangan.Bing.String()))
-					Expect(board.Blocks[9].Location.TianGan).Should(Equal(tiangan.Ding.String()))
-					Expect(board.Blocks[10].Location.TianGan).Should(Equal(tiangan.Wu.String()))
-					Expect(board.Blocks[11].Location.TianGan).Should(Equal(tiangan.Ji.String()))
-					Expect(board.Blocks[0].Location.TianGan).Should(Equal(tiangan.Wu.String()))
-					Expect(board.Blocks[1].Location.TianGan).Should(Equal(tiangan.Ji.String()))
+					Expect(board.Blocks[0].Location.TianGan).Should(Equal(tiangan.Geng.String()))
+					Expect(board.Blocks[1].Location.TianGan).Should(Equal(tiangan.Xin.String()))
 					Expect(board.Blocks[2].Location.TianGan).Should(Equal(tiangan.Geng.String()))
 					Expect(board.Blocks[3].Location.TianGan).Should(Equal(tiangan.Xin.String()))
 					Expect(board.Blocks[4].Location.TianGan).Should(Equal(tiangan.Ren.String()))
 					Expect(board.Blocks[5].Location.TianGan).Should(Equal(tiangan.Gui.String()))
 					Expect(board.Blocks[6].Location.TianGan).Should(Equal(tiangan.Jia.String()))
 					Expect(board.Blocks[7].Location.TianGan).Should(Equal(tiangan.Yi.String()))
+					Expect(board.Blocks[8].Location.TianGan).Should(Equal(tiangan.Bing.String()))
+					Expect(board.Blocks[9].Location.TianGan).Should(Equal(tiangan.Ding.String()))
+					Expect(board.Blocks[10].Location.TianGan).Should(Equal(tiangan.Wu.String()))
+					Expect(board.Blocks[11].Location.TianGan).Should(Equal(tiangan.Ji.String()))
 				})
 				It("should returns correct Ming Ju", func() {
 					Expect(board.MingJu.JuType).Should(Equal(mingju.Huo))

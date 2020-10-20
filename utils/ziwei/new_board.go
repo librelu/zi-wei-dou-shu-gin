@@ -22,7 +22,7 @@ func NewBoard(birthday time.Time, gender genders.Gender) (*Board, error) {
 	board.StarsMap = make(map[stars.StarName]int)
 	lunaDate := lunacal.Solar2Lunar(birthday)
 	board.setupDiZhi()
-	board.setYinShou(&lunaDate.Year.TianGan)
+	board.setYinShouAndTianGanLocation(&lunaDate.Year.TianGan)
 	board.setupGongWei(lunaDate)
 	mingGongLocation := getMingGong(lunaDate.Hour, lunaDate.Month)
 	board.MingJu = getMingJu(mingGongLocation, lunaDate.Year.TianGan)
@@ -77,16 +77,12 @@ func (b *Board) setupDiZhi() {
 }
 
 // 設定寅首
-func (b *Board) setYinShou(birthYear *tiangan.TianGan) {
+func (b *Board) setYinShouAndTianGanLocation(birthYear *tiangan.TianGan) {
 	yinShou := yinShouMap[*birthYear]
-	for i := range b.Blocks {
-		index := i + int(yinShou) - 2
-		if index < 0 {
-			index = index + 2
-		} else if index > 9 {
-			index -= 10
-		}
-		b.Blocks[i].Location.TianGan = tiangan.TianGan(index).String()
+	for i := 0; i < 12; i++ {
+		blockIndex := (i + 2) % 12
+		tainGanName := (int(yinShou) + i) % 10
+		b.Blocks[blockIndex].Location.TianGan = tiangan.TianGan(tainGanName).String()
 	}
 	return
 }
