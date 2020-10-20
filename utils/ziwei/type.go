@@ -1,7 +1,6 @@
 package ziwei
 
 import (
-	"github.com/zi-wei-dou-shu-gin/utils/ziwei/dizhi"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/genders"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/mingju"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/stars"
@@ -21,8 +20,8 @@ type Star struct {
 }
 
 type Location struct {
-	TianGan tiangan.TianGan
-	DiZhi   dizhi.DiZhi
+	TianGan string
+	DiZhi   string
 }
 
 const (
@@ -48,10 +47,11 @@ type MingJu struct {
 }
 
 type Board struct {
-	Blocks   []*Block
-	StarsMap map[stars.StarName]int
-	Gender   genders.Gender
-	MingJu   *MingJu
-	ShenZhu  string
-	MingZhu  string
+	Blocks          []*Block
+	StarsMap        map[stars.StarName]int
+	Gender          genders.Gender
+	MingJu          *MingJu
+	ShenZhu         string
+	MingZhu         string
+	LocationTainGan string
 }

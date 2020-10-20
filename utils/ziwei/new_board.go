@@ -69,13 +69,14 @@ func (b *Board) setupDiZhi() {
 	for i := range b.Blocks {
 		b.Blocks[i] = &Block{
 			Location: &Location{
-				DiZhi: dizhi.DiZhi(i),
+				DiZhi: dizhi.DiZhi(i).String(),
 			},
 		}
 	}
 	return
 }
 
+// 設定寅首
 func (b *Board) setYinShou(birthYear *tiangan.TianGan) {
 	yinShou := yinShouMap[*birthYear]
 	for i := range b.Blocks {
@@ -85,7 +86,7 @@ func (b *Board) setYinShou(birthYear *tiangan.TianGan) {
 		} else if index > 9 {
 			index -= 10
 		}
-		b.Blocks[i].Location.TianGan = tiangan.TianGan(index)
+		b.Blocks[i].Location.TianGan = tiangan.TianGan(index).String()
 	}
 	return
 }
