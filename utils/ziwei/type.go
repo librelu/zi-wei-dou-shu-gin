@@ -52,4 +52,6 @@ type Board struct {
 	StarsMap map[stars.StarName]int
 	Gender   genders.Gender
 	MingJu   *MingJu
+	ShenZhu  string
+	MingZhu  string
 }
