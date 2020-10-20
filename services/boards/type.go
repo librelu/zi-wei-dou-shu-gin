@@ -24,4 +24,6 @@ type GetBoardResponse struct {
 	Gender       string
 	MingJu       string
 	MingJuValue  int
+	ShenZhu      string
+	MingZhu      string
 }
