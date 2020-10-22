@@ -27,14 +27,20 @@ func (h handler) GetBoard(c *gin.Context) {
 	}
 	lunaDate := lunacal.Solar2Lunar(birthday)
 	resp := &GetBoardResponse{
-		Blocks:       board.Blocks,
-		BirthDay:     fmt.Sprintf("%d年%d月%d日%d時", birthday.Year(), birthday.Month(), birthday.Day(), birthday.Hour()),
-		LunaBirthDay: fmt.Sprintf("%s%s年%d月%d日%s時", lunaDate.Year.TianGan.String(), lunaDate.Year.DiZhi.String(), lunaDate.Month, lunaDate.Day, lunaDate.Hour),
-		Gender:       board.Gender.String(),
-		MingJu:       board.MingJu.JuType.String(),
-		MingJuValue:  int(board.MingJu.Number),
-		ShenZhu:      board.ShenZhu,
-		MingZhu:      board.MingZhu,
+		Blocks:   board.Blocks,
+		BirthDay: fmt.Sprintf("%d年%d月%d日%d時", birthday.Year(), birthday.Month(), birthday.Day(), birthday.Hour()),
+		LunaBirthDay: fmt.Sprintf("%s%s年%s月%s日%s時",
+			lunaDate.Year.TianGan.String(),
+			lunaDate.Year.DiZhi.String(),
+			toChineseNums(int(lunaDate.Month)),
+			toChineseNums(int(lunaDate.Day)),
+			lunaDate.Hour,
+		),
+		Gender:      board.Gender.String(),
+		MingJu:      board.MingJu.JuType.String(),
+		MingJuValue: int(board.MingJu.Number),
+		ShenZhu:     board.ShenZhu,
+		MingZhu:     board.MingZhu,
 	}
 	c.JSON(200, resp)
 }
@@ -52,4 +58,24 @@ func validate(c *gin.Context, req *GetBoardRequest) error {
 func handleError(c *gin.Context, err error) {
 	c.String(http.StatusBadRequest, err.Error())
 	c.Abort()
+}
+
+func toChineseNums(number int) string {
+	result := ""
+	for number > 0 {
+		i := number / 10
+		if number <= 10 {
+			return result + numberMap[number]
+		}
+		if i == 1 {
+			result = result + numberMap[10]
+		} else {
+			result = result + numberMap[i]
+		}
+		number = number - (i * 10)
+		if number == 0 && len(result) > 0 {
+			result = result + numberMap[10]
+		}
+	}
+	return result
 }
