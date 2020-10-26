@@ -18,14 +18,15 @@ type GetBoardRequest struct {
 }
 
 type GetBoardResponse struct {
-	Blocks       []*ziwei.Block
-	BirthDay     string
-	LunaBirthDay string
-	Gender       string
-	MingJu       string
-	MingJuValue  int
-	ShenZhu      string
-	MingZhu      string
+	Blocks           []*ziwei.Block
+	BirthDay         string
+	LunaBirthDay     string
+	Gender           string
+	MingJu           string
+	MingJuValue      int
+	ShenZhu          string
+	MingZhu          string
+	ShenGongLocation int
 }
 
 var numberMap = []string{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"}

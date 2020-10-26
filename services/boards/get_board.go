@@ -36,11 +36,12 @@ func (h handler) GetBoard(c *gin.Context) {
 			toChineseNums(int(lunaDate.Day)),
 			lunaDate.Hour,
 		),
-		Gender:      board.Gender.String(),
-		MingJu:      board.MingJu.JuType.String(),
-		MingJuValue: int(board.MingJu.Number),
-		ShenZhu:     board.ShenZhu,
-		MingZhu:     board.MingZhu,
+		Gender:           board.Gender.String(),
+		MingJu:           board.MingJu.JuType.String(),
+		MingJuValue:      int(board.MingJu.Number),
+		ShenZhu:          board.ShenZhu,
+		MingZhu:          board.MingZhu,
+		ShenGongLocation: board.ShenGongLocation,
 	}
 	c.JSON(200, resp)
 }

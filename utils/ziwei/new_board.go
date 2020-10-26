@@ -93,7 +93,7 @@ func (b *Board) setupGongWei(lunaDate *lunacal.LunaDate) {
 	mingGongLocation := getMingGong(hour, month)
 	shengGongLocation := getShengGong(hour, month)
 	b.setTwelveGongs(mingGongLocation)
-	_ = shengGongLocation
+	b.ShenGongLocation = int(*shengGongLocation)
 
 	return
 }

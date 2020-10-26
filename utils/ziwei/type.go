@@ -47,11 +47,12 @@ type MingJu struct {
 }
 
 type Board struct {
-	Blocks          []*Block
-	StarsMap        map[stars.StarName]int
-	Gender          genders.Gender
-	MingJu          *MingJu
-	ShenZhu         string
-	MingZhu         string
-	LocationTainGan string
+	Blocks           []*Block
+	StarsMap         map[stars.StarName]int
+	Gender           genders.Gender
+	MingJu           *MingJu
+	ShenZhu          string
+	MingZhu          string
+	LocationTainGan  string
+	ShenGongLocation int
 }
