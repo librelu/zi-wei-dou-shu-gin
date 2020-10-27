@@ -1231,17 +1231,17 @@ var _ = Describe("ziwei", func() {
 				}))
 				Expect(board.Blocks[11].Stars).Should(ContainElement(&ziwei.Star{
 					Name:     stars.TuoLuo.String(),
-					StarType: startype.ShiSiFuXing.String(),
+					StarType: startype.RightFuXing.String(),
 					MiaoXian: miaoxian.Xian.String(),
 				}))
 				Expect(board.Blocks[3].Stars).Should(ContainElement(&ziwei.Star{
 					Name:     stars.TianKui.String(),
-					StarType: startype.ShiSiFuXing.String(),
+					StarType: startype.LeftFuXing.String(),
 					MiaoXian: miaoxian.Miao.String(),
 				}))
 				Expect(board.Blocks[5].Stars).Should(ContainElement(&ziwei.Star{
 					Name:     stars.TianYue.String(),
-					StarType: startype.ShiSiFuXing.String(),
+					StarType: startype.LeftFuXing.String(),
 					MiaoXian: miaoxian.Wang.String(),
 				}))
 				Expect(board.Blocks[6].Stars).Should(ContainElement(&ziwei.Star{
