@@ -13,4 +13,6 @@ const (
 	BoShiTwelveStars
 	LiuNianSuiQianZhuXing
 	ShiSiFuXing
+	LeftFuXing
+	RightFuXing
 )
