@@ -1,6 +1,10 @@
 package ziwei
 
 import (
+	"time"
+
+	"github.com/zi-wei-dou-shu-gin/utils/lunacal"
+	"github.com/zi-wei-dou-shu-gin/utils/ziwei/dizhi"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/genders"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/mingju"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/stars"
@@ -20,8 +24,8 @@ type Star struct {
 }
 
 type Location struct {
-	TianGan string
-	DiZhi   string
+	TianGan tiangan.TianGan
+	DiZhi   dizhi.DiZhi
 }
 
 const (
@@ -47,6 +51,8 @@ type MingJu struct {
 }
 
 type Board struct {
+	Birthday         time.Time
+	LunaBirthday     *lunacal.LunaDate
 	Blocks           []*Block
 	StarsMap         map[stars.StarName]int
 	Gender           genders.Gender

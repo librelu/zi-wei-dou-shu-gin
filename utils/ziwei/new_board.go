@@ -20,12 +20,15 @@ import (
 func NewBoard(birthday time.Time, gender genders.Gender) (*Board, error) {
 	board := new(Board)
 	board.StarsMap = make(map[stars.StarName]int)
+	// TODO: remove luna Date
 	lunaDate := lunacal.Solar2Lunar(birthday)
+	board.Birthday = birthday
+	board.LunaBirthday = lunacal.Solar2Lunar(birthday)
 	board.setupDiZhi()
 	board.setYinShouAndTianGanLocation(&lunaDate.Year.TianGan)
 	board.setupGongWei(lunaDate)
 	mingGongLocation := getMingGong(lunaDate.Hour, lunaDate.Month)
-	board.MingJu = getMingJu(mingGongLocation, lunaDate.Year.TianGan)
+	board.setMingJu(mingGongLocation)
 	err := board.setFourteenMainStars(mingGongLocation, board.MingJu, lunaDate.Day)
 	if err != nil {
 		return nil, fmt.Errorf("failed in set fourteen main stars, error: %w", err)
@@ -69,7 +72,7 @@ func (b *Board) setupDiZhi() {
 	for i := range b.Blocks {
 		b.Blocks[i] = &Block{
 			Location: &Location{
-				DiZhi: dizhi.DiZhi(i).String(),
+				DiZhi: dizhi.DiZhi(i),
 			},
 		}
 	}
@@ -82,7 +85,7 @@ func (b *Board) setYinShouAndTianGanLocation(birthYear *tiangan.TianGan) {
 	for i := 0; i < 12; i++ {
 		blockIndex := (i + 2) % 12
 		tainGanName := (int(yinShou) + i) % 10
-		b.Blocks[blockIndex].Location.TianGan = tiangan.TianGan(tainGanName).String()
+		b.Blocks[blockIndex].Location.TianGan = tiangan.TianGan(tainGanName)
 	}
 	return
 }
@@ -114,7 +117,7 @@ func getMingGong(hour *dizhi.DiZhi, month uint) *dizhi.DiZhi {
 	mingGong := int(month-1) - int(hourIndex)
 	if mingGong < 0 {
 		mingGong += 12
-	} else if mingGong > 12 {
+	} else if mingGong > 11 {
 		mingGong = mingGong - 12
 	}
 	mingGongLocation := dizhi.DiZhi(mingGong)
@@ -131,33 +134,17 @@ func getShengGong(hour *dizhi.DiZhi, month uint) *dizhi.DiZhi {
 	return &shengGongLocation
 }
 
-func getMingJu(mingGongLocation *dizhi.DiZhi, lunaBirthYear tiangan.TianGan) *MingJu {
-	totalTianGanIndex := 5
-	tianGanIndex := 0
-	for i := 0; i < totalTianGanIndex; i++ {
-		idx := int(lunaBirthYear) - (i * 2)
-		if idx == 0 || idx == 1 {
-			tianGanIndex = i
-			break
-		}
-	}
-	totalDiZhiIndex := 6
-	diZhiIndex := 0
-	for i := 0; i < totalDiZhiIndex; i++ {
-		idx := int(*mingGongLocation) - (i * 2)
-		if idx == 0 || idx == 1 {
-			diZhiIndex = i % 3
-			break
-		}
-	}
-
+func (b *Board) setMingJu(mingGongLocation *dizhi.DiZhi) {
+	minGongTainGan := b.Blocks[*mingGongLocation].Location.TianGan
+	tianGanIndex := int((minGongTainGan)/2) % 5
+	diZhiIndex := int((*mingGongLocation)/2) % 3
 	mingJuIndex := tianGanIndex + diZhiIndex
 	if mingJuIndex > 4 {
 		mingJuIndex = mingJuIndex - 5
 	}
 
 	juType := mingju.MingJuType(mingJuIndex)
-	return &MingJu{
+	b.MingJu = &MingJu{
 		JuType: juType,
 		Number: mingju.JuShuMap[juType],
 	}
