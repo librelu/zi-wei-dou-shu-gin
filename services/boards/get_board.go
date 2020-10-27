@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/zi-wei-dou-shu-gin/utils/lunacal"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/genders"
 )
@@ -25,16 +24,32 @@ func (h handler) GetBoard(c *gin.Context) {
 		handleError(c, err)
 		return
 	}
-	lunaDate := lunacal.Solar2Lunar(birthday)
-	resp := &GetBoardResponse{
-		Blocks:   board.Blocks,
+	resp := convertBoardToReponse(board, birthday)
+	c.JSON(200, resp)
+}
+
+func convertBoardToReponse(board *ziwei.Board, birthday time.Time) *GetBoardResponse {
+	// convert blocks
+	blocks := make([]*Block, len(board.Blocks))
+	for i, b := range board.Blocks {
+		blocks[i] = &Block{
+			GongWeiName: b.GongWeiName,
+			Stars:       b.Stars,
+			Location: &Location{
+				TianGan: b.Location.TianGan.String(),
+				DiZhi:   b.Location.DiZhi.String(),
+			},
+		}
+	}
+	return &GetBoardResponse{
+		Blocks:   blocks,
 		BirthDay: fmt.Sprintf("%d年%d月%d日%d時", birthday.Year(), birthday.Month(), birthday.Day(), birthday.Hour()),
 		LunaBirthDay: fmt.Sprintf("%s%s年%s月%s日%s時",
-			lunaDate.Year.TianGan.String(),
-			lunaDate.Year.DiZhi.String(),
-			toChineseNums(int(lunaDate.Month)),
-			toChineseNums(int(lunaDate.Day)),
-			lunaDate.Hour,
+			board.LunaBirthday.Year.TianGan.String(),
+			board.LunaBirthday.Year.DiZhi.String(),
+			toChineseNums(int(board.LunaBirthday.Month)),
+			toChineseNums(int(board.LunaBirthday.Day)),
+			board.LunaBirthday.Hour,
 		),
 		Gender:           board.Gender.String(),
 		MingJu:           board.MingJu.JuType.String(),
@@ -43,7 +58,6 @@ func (h handler) GetBoard(c *gin.Context) {
 		MingZhu:          board.MingZhu,
 		ShenGongLocation: board.ShenGongLocation,
 	}
-	c.JSON(200, resp)
 }
 
 func validate(c *gin.Context, req *GetBoardRequest) error {
