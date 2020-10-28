@@ -1238,9 +1238,9 @@ func (b *Board) setSanTai(zuoFuLocation int, birthDate int) {
 
 // setBaZuo 設定八座
 func (b *Board) setBaZuo(youBiLocation int, birthDate int) {
-	index := (youBiLocation - birthDate) % 12
+	index := (youBiLocation - (birthDate - 1)) % 12
 	if index < 0 {
-		index += 11
+		index += 12
 	}
 	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
 		Name:     stars.BaZuo.String(),

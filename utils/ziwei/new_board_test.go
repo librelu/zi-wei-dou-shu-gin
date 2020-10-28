@@ -4542,7 +4542,7 @@ var _ = Describe("ziwei", func() {
 						birthday = time.Date(1970, 10, 1, 10, 10, 0, 0, time.Local)
 					})
 					It("should display correct star location", func() {
-						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.BaZuo.String(),
 							StarType: startype.ShiXiZhuXing.String(),
 						}))
@@ -4550,11 +4550,23 @@ var _ = Describe("ziwei", func() {
 				})
 				When("birth year is in 卯 and birth hour is 亥", func() {
 					BeforeEach(func() {
-						// luna date: 癸卯年 1 / 13 亥時
+						// luna date: 癸卯年 2 / 13 亥時
 						birthday = time.Date(1963, 3, 8, 22, 12, 0, 0, time.Local)
 					})
 					It("should display correct star location", func() {
-						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
+						Expect(board.Blocks[9].Stars).Should(ContainElement(&ziwei.Star{
+							Name:     stars.BaZuo.String(),
+							StarType: startype.ShiXiZhuXing.String(),
+						}))
+					})
+				})
+				When("birth year is in 己 and birth hour is 戌", func() {
+					BeforeEach(func() {
+						// luna date: 己亥年 8 / 15 戌時
+						birthday = time.Date(2019, 9, 13, 19, 12, 0, 0, time.Local)
+					})
+					It("should display correct star location", func() {
+						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.BaZuo.String(),
 							StarType: startype.ShiXiZhuXing.String(),
 						}))
