@@ -692,14 +692,39 @@ func (b *Board) setTianFu(tianGan *tiangan.TianGan) {
 
 // setXunKong 設定旬空星
 func (b *Board) setXunKong(birthYear *lunacal.TianGanDiZhi) {
-	xunKongMapXAxis := 6 - int(birthYear.DiZhi/2) - 1
-	xunKongIndex := (xunKongMapXAxis*10 + int(birthYear.TianGan)) % 12
-	b.Blocks[xunKongIndex].Stars = append(b.Blocks[xunKongIndex].Stars, &Star{
-		Name:     stars.XunKong.String(),
-		StarType: startype.NianGanXiZhuXing.String(),
-	})
+	dizhi := int(birthYear.DiZhi)
+	if int(birthYear.TianGan) > dizhi {
+		dizhi += 11
+	}
+	idx := dizhi - int(birthYear.TianGan) - 1
+	if idx < 0 {
+		idx += 11
+	}
 
-	return
+	if (idx % 2) == 0 {
+		b.Blocks[idx].Stars = append(b.Blocks[idx].Stars, &Star{
+			Name:     stars.XunKong.String(),
+			StarType: startype.NianGanXiZhuXing.String(),
+		})
+
+		idx++
+		b.Blocks[idx].Stars = append(b.Blocks[idx].Stars, &Star{
+			Name:     stars.XunKong.String(),
+			StarType: startype.NianGanXiZhuXing.String(),
+		})
+	} else {
+		b.Blocks[idx].Stars = append(b.Blocks[idx].Stars, &Star{
+			Name:     stars.XunKong.String(),
+			StarType: startype.NianGanXiZhuXing.String(),
+		})
+
+		idx--
+		b.Blocks[idx].Stars = append(b.Blocks[idx].Stars, &Star{
+			Name:     stars.XunKong.String(),
+			StarType: startype.NianGanXiZhuXing.String(),
+		})
+	}
+
 }
 
 // setJieKong 設定截空星
