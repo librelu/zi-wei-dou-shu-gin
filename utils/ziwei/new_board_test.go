@@ -7144,6 +7144,28 @@ var _ = Describe("ziwei", func() {
 					})
 				})
 			})
+			Context("setTenYearsRound", func() {
+				When("ming gong is 申, ming ju is 金四局", func() {
+					BeforeEach(func() {
+						// luna date: 甲子年 7 / 12 子時
+						birthday = time.Date(1984, 8, 8, 0, 4, 0, 0, time.Local)
+					})
+					It("should display correct ten round years", func() {
+						Expect(board.Blocks[0].TenYearsRound).Should(Equal("44-53"))
+						Expect(board.Blocks[1].TenYearsRound).Should(Equal("54-63"))
+						Expect(board.Blocks[2].TenYearsRound).Should(Equal("64-73"))
+						Expect(board.Blocks[3].TenYearsRound).Should(Equal("74-83"))
+						Expect(board.Blocks[4].TenYearsRound).Should(Equal("84-93"))
+						Expect(board.Blocks[5].TenYearsRound).Should(Equal("94-103"))
+						Expect(board.Blocks[6].TenYearsRound).Should(Equal("104-113"))
+						Expect(board.Blocks[7].TenYearsRound).Should(Equal("114-123"))
+						Expect(board.Blocks[8].TenYearsRound).Should(Equal("4-13"))
+						Expect(board.Blocks[9].TenYearsRound).Should(Equal("14-23"))
+						Expect(board.Blocks[10].TenYearsRound).Should(Equal("24-33"))
+						Expect(board.Blocks[11].TenYearsRound).Should(Equal("34-43"))
+					})
+				})
+			})
 		})
 	})
 })

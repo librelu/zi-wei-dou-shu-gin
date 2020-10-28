@@ -36,6 +36,7 @@ func NewBoard(birthday time.Time, gender genders.Gender) (*Board, error) {
 	board.setUpNainGanStars(&lunaDate.Year.TianGan)
 	board.setXunKong(lunaDate.Year)
 	board.setJieKong(&lunaDate.Year.TianGan)
+	board.setTenYearsRound(mingGongLocation)
 	shenGongLocation := getShengGong(lunaDate.Hour, lunaDate.Month)
 	board.setNianZhiXiZhuXing(&lunaDate.Year.DiZhi, mingGongLocation, shenGongLocation)
 	board.setYueXiXing(int(lunaDate.Month))
@@ -65,6 +66,17 @@ func NewBoard(birthday time.Time, gender genders.Gender) (*Board, error) {
 		return nil, fmt.Errorf("failed in set si hua: %w", err)
 	}
 	return board, nil
+}
+
+func (b *Board) setTenYearsRound(mingGongLocation *dizhi.DiZhi) {
+	number := int(b.MingJu.Number)
+	tenYearsRoundFormat := "%d-%d"
+	for i := range b.Blocks {
+		idx := (i + int(*mingGongLocation)) % 12
+		startYear := number + i*10
+		endYear := number + 9 + i*10
+		b.Blocks[idx].TenYearsRound = fmt.Sprintf(tenYearsRoundFormat, startYear, endYear)
+	}
 }
 
 func (b *Board) setupDiZhi() {

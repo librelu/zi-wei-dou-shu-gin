@@ -30,9 +30,10 @@ type GetBoardResponse struct {
 }
 
 type Block struct {
-	GongWeiName string
-	Stars       []*ziwei.Star
-	Location    *Location
+	GongWeiName   string
+	Stars         []*ziwei.Star
+	Location      *Location
+	TenYearsRound string
 }
 
 type Location struct {

@@ -39,6 +39,7 @@ func convertBoardToReponse(board *ziwei.Board, birthday time.Time) *GetBoardResp
 				TianGan: b.Location.TianGan.String(),
 				DiZhi:   b.Location.DiZhi.String(),
 			},
+			TenYearsRound: b.TenYearsRound,
 		}
 	}
 	return &GetBoardResponse{

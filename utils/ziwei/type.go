@@ -12,9 +12,10 @@ import (
 )
 
 type Block struct {
-	GongWeiName string
-	Stars       []*Star
-	Location    *Location
+	GongWeiName   string
+	Stars         []*Star
+	Location      *Location
+	TenYearsRound string
 }
 
 type Star struct {
