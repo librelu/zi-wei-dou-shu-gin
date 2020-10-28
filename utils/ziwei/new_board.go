@@ -36,7 +36,6 @@ func NewBoard(birthday time.Time, gender genders.Gender) (*Board, error) {
 	board.setUpNainGanStars(&lunaDate.Year.TianGan)
 	board.setXunKong(lunaDate.Year)
 	board.setJieKong(&lunaDate.Year.TianGan)
-	board.setTenYearsRound(mingGongLocation)
 	shenGongLocation := getShengGong(lunaDate.Hour, lunaDate.Month)
 	board.setNianZhiXiZhuXing(&lunaDate.Year.DiZhi, mingGongLocation, shenGongLocation)
 	board.setYueXiXing(int(lunaDate.Month))
@@ -65,18 +64,33 @@ func NewBoard(birthday time.Time, gender genders.Gender) (*Board, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed in set si hua: %w", err)
 	}
+	board.setTenYearsRound(mingGongLocation)
 	return board, nil
 }
 
 func (b *Board) setTenYearsRound(mingGongLocation *dizhi.DiZhi) {
 	number := int(b.MingJu.Number)
 	tenYearsRoundFormat := "%d-%d"
-	for i := range b.Blocks {
-		idx := (i + int(*mingGongLocation)) % 12
-		startYear := number + i*10
-		endYear := number + 9 + i*10
-		b.Blocks[idx].TenYearsRound = fmt.Sprintf(tenYearsRoundFormat, startYear, endYear)
+	if b.Gender == genders.YangFemale || b.Gender == genders.YangMale {
+		for i := range b.Blocks {
+			idx := (i + int(*mingGongLocation)) % 12
+			startYear := number + i*10
+			endYear := number + 9 + i*10
+			b.Blocks[idx].TenYearsRound = fmt.Sprintf(tenYearsRoundFormat, startYear, endYear)
+		}
 	}
+	if b.Gender == genders.YinFemale || b.Gender == genders.YinMale {
+		for i := range b.Blocks {
+			idx := (int(*mingGongLocation) - i) % 12
+			if idx < 0 {
+				idx = 12 + idx
+			}
+			startYear := number + i*10
+			endYear := number + 9 + i*10
+			b.Blocks[idx].TenYearsRound = fmt.Sprintf(tenYearsRoundFormat, startYear, endYear)
+		}
+	}
+
 }
 
 func (b *Board) setupDiZhi() {
@@ -1224,7 +1238,7 @@ func (b *Board) setSanTai(zuoFuLocation int, birthDate int) {
 
 // setBaZuo 設定八座
 func (b *Board) setBaZuo(youBiLocation int, birthDate int) {
-	index := (youBiLocation - birthDate + 1) % 12
+	index := (youBiLocation - birthDate) % 12
 	if index < 0 {
 		index += 11
 	}

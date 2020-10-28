@@ -4542,7 +4542,7 @@ var _ = Describe("ziwei", func() {
 						birthday = time.Date(1970, 10, 1, 10, 10, 0, 0, time.Local)
 					})
 					It("should display correct star location", func() {
-						Expect(board.Blocks[1].Stars).Should(ContainElement(&ziwei.Star{
+						Expect(board.Blocks[0].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.BaZuo.String(),
 							StarType: startype.ShiXiZhuXing.String(),
 						}))
@@ -4554,7 +4554,7 @@ var _ = Describe("ziwei", func() {
 						birthday = time.Date(1963, 3, 8, 22, 12, 0, 0, time.Local)
 					})
 					It("should display correct star location", func() {
-						Expect(board.Blocks[8].Stars).Should(ContainElement(&ziwei.Star{
+						Expect(board.Blocks[7].Stars).Should(ContainElement(&ziwei.Star{
 							Name:     stars.BaZuo.String(),
 							StarType: startype.ShiXiZhuXing.String(),
 						}))
@@ -7149,6 +7149,7 @@ var _ = Describe("ziwei", func() {
 					BeforeEach(func() {
 						// luna date: 甲子年 7 / 12 子時
 						birthday = time.Date(1984, 8, 8, 0, 4, 0, 0, time.Local)
+						gender = genders.Male
 					})
 					It("should display correct ten round years", func() {
 						Expect(board.Blocks[0].TenYearsRound).Should(Equal("44-53"))
@@ -7163,6 +7164,69 @@ var _ = Describe("ziwei", func() {
 						Expect(board.Blocks[9].TenYearsRound).Should(Equal("14-23"))
 						Expect(board.Blocks[10].TenYearsRound).Should(Equal("24-33"))
 						Expect(board.Blocks[11].TenYearsRound).Should(Equal("34-43"))
+					})
+				})
+				When("ming gong is 申, ming ju is 火六局", func() {
+					BeforeEach(func() {
+						// luna date: 己亥年 8 / 15 戌時
+						birthday = time.Date(2019, 9, 13, 19, 4, 0, 0, time.Local)
+						gender = genders.Male
+					})
+					It("should display correct ten round years", func() {
+						Expect(board.Blocks[0].TenYearsRound).Should(Equal("116-125"))
+						Expect(board.Blocks[1].TenYearsRound).Should(Equal("106-115"))
+						Expect(board.Blocks[2].TenYearsRound).Should(Equal("96-105"))
+						Expect(board.Blocks[3].TenYearsRound).Should(Equal("86-95"))
+						Expect(board.Blocks[4].TenYearsRound).Should(Equal("76-85"))
+						Expect(board.Blocks[5].TenYearsRound).Should(Equal("66-75"))
+						Expect(board.Blocks[6].TenYearsRound).Should(Equal("56-65"))
+						Expect(board.Blocks[7].TenYearsRound).Should(Equal("46-55"))
+						Expect(board.Blocks[8].TenYearsRound).Should(Equal("36-45"))
+						Expect(board.Blocks[9].TenYearsRound).Should(Equal("26-35"))
+						Expect(board.Blocks[10].TenYearsRound).Should(Equal("16-25"))
+						Expect(board.Blocks[11].TenYearsRound).Should(Equal("6-15"))
+					})
+				})
+				When("ming gong is 申, ming ju is 火六局", func() {
+					BeforeEach(func() {
+						// luna date: 己亥年 8 / 15 戌時
+						birthday = time.Date(2019, 9, 13, 19, 4, 0, 0, time.Local)
+						gender = genders.Male
+					})
+					It("should display correct ten round years", func() {
+						Expect(board.Blocks[0].TenYearsRound).Should(Equal("116-125"))
+						Expect(board.Blocks[1].TenYearsRound).Should(Equal("106-115"))
+						Expect(board.Blocks[2].TenYearsRound).Should(Equal("96-105"))
+						Expect(board.Blocks[3].TenYearsRound).Should(Equal("86-95"))
+						Expect(board.Blocks[4].TenYearsRound).Should(Equal("76-85"))
+						Expect(board.Blocks[5].TenYearsRound).Should(Equal("66-75"))
+						Expect(board.Blocks[6].TenYearsRound).Should(Equal("56-65"))
+						Expect(board.Blocks[7].TenYearsRound).Should(Equal("46-55"))
+						Expect(board.Blocks[8].TenYearsRound).Should(Equal("36-45"))
+						Expect(board.Blocks[9].TenYearsRound).Should(Equal("26-35"))
+						Expect(board.Blocks[10].TenYearsRound).Should(Equal("16-25"))
+						Expect(board.Blocks[11].TenYearsRound).Should(Equal("6-15"))
+					})
+				})
+				When("ming gong is 子, ming ju is 火六局", func() {
+					BeforeEach(func() {
+						// luna date: 乙丑年 6 / 22 未時
+						birthday = time.Date(1985, 8, 8, 13, 4, 0, 0, time.Local)
+						gender = genders.Male
+					})
+					It("should display correct ten round years", func() {
+						Expect(board.Blocks[0].TenYearsRound).Should(Equal("6-15"))
+						Expect(board.Blocks[1].TenYearsRound).Should(Equal("116-125"))
+						Expect(board.Blocks[2].TenYearsRound).Should(Equal("106-115"))
+						Expect(board.Blocks[3].TenYearsRound).Should(Equal("96-105"))
+						Expect(board.Blocks[4].TenYearsRound).Should(Equal("86-95"))
+						Expect(board.Blocks[5].TenYearsRound).Should(Equal("76-85"))
+						Expect(board.Blocks[6].TenYearsRound).Should(Equal("66-75"))
+						Expect(board.Blocks[7].TenYearsRound).Should(Equal("56-65"))
+						Expect(board.Blocks[8].TenYearsRound).Should(Equal("46-55"))
+						Expect(board.Blocks[9].TenYearsRound).Should(Equal("36-45"))
+						Expect(board.Blocks[10].TenYearsRound).Should(Equal("26-35"))
+						Expect(board.Blocks[11].TenYearsRound).Should(Equal("16-25"))
 					})
 				})
 			})
