@@ -235,14 +235,21 @@ func (b *Board) setHuaLu(birthYear *tiangan.TianGan) error {
 		stars.TianLiang,
 		stars.PoJun,
 	}
-	index, ok := b.StarsMap[starMap[*birthYear]]
+	starName := starMap[*birthYear]
+	index, ok := b.StarsMap[starName]
 	if !ok {
 		return fmt.Errorf("current star not found, current birth year: %d", birthYear)
 	}
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
-		Name:     stars.HuaLu.String(),
-		StarType: startype.SiHua.String(),
-	})
+	hasFound := false
+	for i, s := range b.Blocks[index].Stars {
+		if s.Name == starName.String() {
+			b.Blocks[index].Stars[i].FourStar = stars.HuaLu.String()
+			hasFound = true
+		}
+	}
+	if !hasFound {
+		return fmt.Errorf("stars %s doesn't located in %d block", starName, index)
+	}
 	return nil
 }
 
@@ -260,14 +267,21 @@ func (b *Board) setHuaQuan(birthYear *tiangan.TianGan) error {
 		stars.ZiWei,
 		stars.JuMen,
 	}
-	index, ok := b.StarsMap[starMap[*birthYear]]
+	starName := starMap[*birthYear]
+	index, ok := b.StarsMap[starName]
 	if !ok {
 		return fmt.Errorf("current star not found, current birth year: %d", birthYear)
 	}
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
-		Name:     stars.HuaQuan.String(),
-		StarType: startype.SiHua.String(),
-	})
+	hasFound := false
+	for i, s := range b.Blocks[index].Stars {
+		if s.Name == starName.String() {
+			b.Blocks[index].Stars[i].FourStar = stars.HuaQuan.String()
+			hasFound = true
+		}
+	}
+	if !hasFound {
+		return fmt.Errorf("stars %s doesn't located in %d block", starName, index)
+	}
 	return nil
 }
 
@@ -285,14 +299,21 @@ func (b *Board) setHuaKe(birthYear *tiangan.TianGan) error {
 		stars.TianFu,
 		stars.TaiYin,
 	}
-	index, ok := b.StarsMap[starMap[*birthYear]]
+	starName := starMap[*birthYear]
+	index, ok := b.StarsMap[starName]
 	if !ok {
 		return fmt.Errorf("current star not found, current birth year: %d", birthYear)
 	}
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
-		Name:     stars.HuaKe.String(),
-		StarType: startype.SiHua.String(),
-	})
+	hasFound := false
+	for i, s := range b.Blocks[index].Stars {
+		if s.Name == starName.String() {
+			b.Blocks[index].Stars[i].FourStar = stars.HuaKe.String()
+			hasFound = true
+		}
+	}
+	if !hasFound {
+		return fmt.Errorf("stars %s doesn't located in %d block", starName, index)
+	}
 	return nil
 }
 
@@ -310,14 +331,21 @@ func (b *Board) setHuaJi(birthYear *tiangan.TianGan) error {
 		stars.WuQu,
 		stars.TanLang,
 	}
-	index, ok := b.StarsMap[starMap[*birthYear]]
+	starName := starMap[*birthYear]
+	index, ok := b.StarsMap[starName]
 	if !ok {
 		return fmt.Errorf("current star not found, current birth year: %d", birthYear)
 	}
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
-		Name:     stars.HuaJi.String(),
-		StarType: startype.SiHua.String(),
-	})
+	hasFound := false
+	for i, s := range b.Blocks[index].Stars {
+		if s.Name == starName.String() {
+			b.Blocks[index].Stars[i].FourStar = stars.HuaJi.String()
+			hasFound = true
+		}
+	}
+	if !hasFound {
+		return fmt.Errorf("stars %s doesn't located in %d block", starName, index)
+	}
 	return nil
 }
 

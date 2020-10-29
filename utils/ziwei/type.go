@@ -22,6 +22,7 @@ type Star struct {
 	Name     string
 	StarType string
 	MiaoXian string
+	FourStar string
 }
 
 type Location struct {
