@@ -20,10 +20,9 @@ import (
 func NewBoard(birthday time.Time, gender genders.Gender) (*Board, error) {
 	board := new(Board)
 	board.StarsMap = make(map[stars.StarName]int)
-	// TODO: remove luna Date
 	lunaDate := lunacal.Solar2Lunar(birthday)
 	board.Birthday = birthday
-	board.LunaBirthday = lunacal.Solar2Lunar(birthday)
+	board.LunaBirthday = lunaDate
 	board.setupDiZhi()
 	board.setYinShouAndTianGanLocation(&lunaDate.Year.TianGan)
 	board.setupGongWei(lunaDate)
@@ -58,8 +57,8 @@ func NewBoard(birthday time.Time, gender genders.Gender) (*Board, error) {
 		return nil, fmt.Errorf("failed to get lu Cun location")
 	}
 	board.setBoShiTwelveStars(luCunLocation)
-	currentLunaDate := lunacal.Solar2Lunar(time.Now())
-	board.setLiuNianSuiQianZhuXing(&currentLunaDate.Year.DiZhi)
+	todaysLunaDate := lunacal.Solar2Lunar(time.Now())
+	board.setLiuNianSuiQianZhuXing(&todaysLunaDate.Year.DiZhi)
 	err = board.setSiHua(&lunaDate.Year.TianGan)
 	if err != nil {
 		return nil, fmt.Errorf("failed in set si hua: %w", err)

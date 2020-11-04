@@ -64,3 +64,7 @@ type Board struct {
 	LocationTainGan  string
 	ShenGongLocation int
 }
+
+type YearBoard struct {
+	*Board
+}

@@ -18,6 +18,15 @@ import (
 )
 
 var _ = Describe("ziwei", func() {
+	Measure("it should do new board efficiently", func(b Benchmarker) {
+		runtime := b.Time("runtime", func() {
+			birthday := time.Date(1984, 8, 8, 0, 4, 0, 0, time.Local)
+			_, err := ziwei.NewBoard(birthday, genders.Male)
+			Expect(err).To(BeNil())
+		})
+		Expect(runtime.Milliseconds()).Should(BeNumerically("<", 500), "NewBoard() shouldn't take too long.")
+	}, 10000)
+
 	Describe("NewBoard", func() {
 		var (
 			board    *ziwei.Board
