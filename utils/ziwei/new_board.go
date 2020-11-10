@@ -17,54 +17,59 @@ import (
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/tiangan"
 )
 
-func NewBoard(birthday time.Time, gender genders.Gender) (*Board, error) {
+func NewBoard(birthday time.Time, gender genders.Gender) *Board {
 	board := new(Board)
-	board.StarsMap = make(map[stars.StarName]int)
-	lunaDate := lunacal.Solar2Lunar(birthday)
 	board.Birthday = birthday
+	board.Gender = gender
+	lunaDate := lunacal.Solar2Lunar(birthday)
 	board.LunaBirthday = lunaDate
+	board.StarsMap = make(map[stars.StarName]int)
 	board.setupDiZhi()
-	board.setYinShouAndTianGanLocation(&lunaDate.Year.TianGan)
-	board.setupGongWei(lunaDate)
-	mingGongLocation := getMingGong(lunaDate.Hour, lunaDate.Month)
-	board.setMingJu(mingGongLocation)
-	err := board.setFourteenMainStars(mingGongLocation, board.MingJu, lunaDate.Day)
+	board.setupGongWei(board.LunaBirthday)
+	board.setYinShouAndTianGanLocation(&board.LunaBirthday.Year.TianGan)
+	return board
+}
+
+func (b *Board) CreateTianBoard() (*Board, error) {
+	mingGongLocation := b.getMingGong(b.LunaBirthday.Hour, b.LunaBirthday.Month)
+	b.setMingJu(mingGongLocation)
+	err := b.setFourteenMainStars(mingGongLocation, b.MingJu, b.LunaBirthday.Day)
 	if err != nil {
 		return nil, fmt.Errorf("failed in set fourteen main stars, error: %w", err)
 	}
-	board.setUpNainGanStars(&lunaDate.Year.TianGan)
-	board.setXunKong(lunaDate.Year)
-	board.setJieKong(&lunaDate.Year.TianGan)
-	shenGongLocation := getShengGong(lunaDate.Hour, lunaDate.Month)
-	board.setNianZhiXiZhuXing(&lunaDate.Year.DiZhi, mingGongLocation, shenGongLocation)
-	board.setYueXiXing(int(lunaDate.Month))
-	board.setShiXiZhuXing(&lunaDate.Year.DiZhi, int(lunaDate.Month), int(lunaDate.Day), lunaDate.Hour)
-	err = board.setMingZhu(&lunaDate.Year.DiZhi)
+	b.setUpNainGanStars(&b.LunaBirthday.Year.TianGan)
+	b.setXunKong(b.LunaBirthday.Year)
+	b.setJieKong(&b.LunaBirthday.Year.TianGan)
+	shenGongLocation := b.getShengGong(b.LunaBirthday.Hour, b.LunaBirthday.Month)
+	b.setNianZhiXiZhuXing(&b.LunaBirthday.Year.DiZhi, mingGongLocation, shenGongLocation)
+	b.setYueXiXing(int(b.LunaBirthday.Month))
+	b.setShiXiZhuXing(&b.LunaBirthday.Year.DiZhi, int(b.LunaBirthday.Month), int(b.LunaBirthday.Day), b.LunaBirthday.Hour)
+	err = b.setMingZhu(&b.LunaBirthday.Year.DiZhi)
 	if err != nil {
 		return nil, fmt.Errorf("failed in set ming zhu, error: %w", err)
 	}
-	err = board.setShenZhu(&lunaDate.Year.DiZhi)
+	err = b.setShenZhu(&b.LunaBirthday.Year.DiZhi)
 	if err != nil {
 		return nil, fmt.Errorf("failed in set shen zhu, error: %w", err)
 	}
-	err = board.setGender(&lunaDate.Year.TianGan, gender)
+	err = b.setGender(&b.LunaBirthday.Year.TianGan, b.Gender)
 	if err != nil {
 		return nil, fmt.Errorf("failed in set gender: %w", err)
 	}
 
-	luCunLocation, ok := board.StarsMap[stars.LuCun]
+	luCunLocation, ok := b.StarsMap[stars.LuCun]
 	if !ok {
 		return nil, fmt.Errorf("failed to get lu Cun location")
 	}
-	board.setBoShiTwelveStars(luCunLocation)
+	b.setBoShiTwelveStars(luCunLocation)
 	todaysLunaDate := lunacal.Solar2Lunar(time.Now())
-	board.setLiuNianSuiQianZhuXing(&todaysLunaDate.Year.DiZhi)
-	err = board.setSiHua(&lunaDate.Year.TianGan)
+	b.setLiuNianSuiQianZhuXing(&todaysLunaDate.Year.DiZhi)
+	err = b.setSiHua(&b.LunaBirthday.Year.TianGan)
 	if err != nil {
 		return nil, fmt.Errorf("failed in set si hua: %w", err)
 	}
-	board.setTenYearsRound(mingGongLocation)
-	return board, nil
+	b.setTenYearsRound(mingGongLocation)
+	return b, nil
 }
 
 func (b *Board) setTenYearsRound(mingGongLocation *dizhi.DiZhi) {
@@ -118,8 +123,8 @@ func (b *Board) setYinShouAndTianGanLocation(birthYear *tiangan.TianGan) {
 func (b *Board) setupGongWei(lunaDate *lunacal.LunaDate) {
 	hour := lunaDate.Hour
 	month := lunaDate.Month
-	mingGongLocation := getMingGong(hour, month)
-	shengGongLocation := getShengGong(hour, month)
+	mingGongLocation := b.getMingGong(hour, month)
+	shengGongLocation := b.getShengGong(hour, month)
 	b.setTwelveGongs(mingGongLocation)
 	b.ShenGongLocation = int(*shengGongLocation)
 
@@ -137,7 +142,7 @@ func (b *Board) setTwelveGongs(mingGongLocation *dizhi.DiZhi) {
 	return
 }
 
-func getMingGong(hour *dizhi.DiZhi, month uint) *dizhi.DiZhi {
+func (b *Board) getMingGong(hour *dizhi.DiZhi, month uint) *dizhi.DiZhi {
 	hourIndex := int(*hour) - 2
 	mingGong := int(month-1) - int(hourIndex)
 	if mingGong < 0 {
@@ -149,7 +154,7 @@ func getMingGong(hour *dizhi.DiZhi, month uint) *dizhi.DiZhi {
 	return &mingGongLocation
 }
 
-func getShengGong(hour *dizhi.DiZhi, month uint) *dizhi.DiZhi {
+func (b *Board) getShengGong(hour *dizhi.DiZhi, month uint) *dizhi.DiZhi {
 	hourIndex := int(*hour) - 10
 	shengGong := int(month-1) + int(hourIndex)
 	if shengGong < 0 {
@@ -218,6 +223,90 @@ func (b *Board) setSiHua(birthYear *tiangan.TianGan) error {
 		return err
 	}
 	return nil
+}
+
+func (b *Board) getHuaLuLocation(birthYear *tiangan.TianGan) (int, error) {
+	starMap := []stars.StarName{
+		stars.LianZhen,
+		stars.TianJi,
+		stars.TianTong,
+		stars.TaiYin,
+		stars.TanLang,
+		stars.WuQu,
+		stars.TaiYang,
+		stars.JuMen,
+		stars.TianLiang,
+		stars.PoJun,
+	}
+	starName := starMap[*birthYear]
+	index, ok := b.StarsMap[starName]
+	if !ok {
+		return 0, fmt.Errorf("current star not found, current birth year: %d", birthYear)
+	}
+	return index, nil
+}
+
+func (b *Board) getHuaQuanLocation(birthYear *tiangan.TianGan) (int, error) {
+	starMap := []stars.StarName{
+		stars.PoJun,
+		stars.TianLiang,
+		stars.TianJi,
+		stars.TianTong,
+		stars.TaiYin,
+		stars.TanLang,
+		stars.WuQu,
+		stars.TaiYang,
+		stars.ZiWei,
+		stars.JuMen,
+	}
+	starName := starMap[*birthYear]
+	index, ok := b.StarsMap[starName]
+	if !ok {
+		return 0, fmt.Errorf("current star not found, current birth year: %d", birthYear)
+	}
+	return index, nil
+}
+
+func (b *Board) getHuaKeLocation(birthYear *tiangan.TianGan) (int, error) {
+	starMap := []stars.StarName{
+		stars.WuQu,
+		stars.ZiWei,
+		stars.WenChang,
+		stars.TianJi,
+		stars.TaiYang,
+		stars.TianLiang,
+		stars.TianFu,
+		stars.WenQu,
+		stars.TianFu,
+		stars.TaiYin,
+	}
+	starName := starMap[*birthYear]
+	index, ok := b.StarsMap[starName]
+	if !ok {
+		return 0, fmt.Errorf("current star not found, current birth year: %d", birthYear)
+	}
+	return index, nil
+}
+
+func (b *Board) getHuaJiLocation(birthYear *tiangan.TianGan) (int, error) {
+	starMap := []stars.StarName{
+		stars.TaiYang,
+		stars.TaiYin,
+		stars.LianZhen,
+		stars.JuMen,
+		stars.TianJi,
+		stars.WenQu,
+		stars.TianTong,
+		stars.WenChang,
+		stars.WuQu,
+		stars.TanLang,
+	}
+	starName := starMap[*birthYear]
+	index, ok := b.StarsMap[starName]
+	if !ok {
+		return 0, fmt.Errorf("current star not found, current birth year: %d", birthYear)
+	}
+	return index, nil
 }
 
 // setHuaLu 設定化祿

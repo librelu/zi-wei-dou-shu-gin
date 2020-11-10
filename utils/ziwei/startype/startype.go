@@ -14,5 +14,6 @@ func (sn StarType) String() string {
 		"十四輔星",
 		"左輔星",
 		"右輔星",
+		"流年干星",
 	}[sn]
 }

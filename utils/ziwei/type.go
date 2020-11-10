@@ -67,4 +67,5 @@ type Board struct {
 
 type YearBoard struct {
 	*Board
+	mingGongLocation *dizhi.DiZhi
 }

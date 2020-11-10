@@ -21,7 +21,7 @@ var _ = Describe("ziwei", func() {
 	Measure("it should do new board efficiently", func(b Benchmarker) {
 		runtime := b.Time("runtime", func() {
 			birthday := time.Date(1984, 8, 8, 0, 4, 0, 0, time.Local)
-			_, err := ziwei.NewBoard(birthday, genders.Male)
+			_, err := ziwei.NewBoard(birthday, genders.Male).CreateTianBoard()
 			Expect(err).To(BeNil())
 		})
 		Expect(runtime.Milliseconds()).Should(BeNumerically("<", 500), "NewBoard() shouldn't take too long.")
@@ -38,7 +38,7 @@ var _ = Describe("ziwei", func() {
 			gender = genders.Male
 		})
 		JustBeforeEach(func() {
-			board, err = ziwei.NewBoard(birthday, gender)
+			board, err = ziwei.NewBoard(birthday, gender).CreateTianBoard()
 		})
 		When("init board", func() {
 			BeforeEach(func() {

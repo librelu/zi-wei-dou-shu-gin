@@ -12,15 +12,15 @@ import (
 
 var _ = Describe("ziwei", func() {
 	var (
-		birthday    time.Time
-		yearBoard   *ziwei.YearBoard
-		originboard *ziwei.Board
-		err         error
-		index       int
-		gender      genders.Gender
+		birthday  time.Time
+		yearBoard *ziwei.YearBoard
+		board     *ziwei.Board
+		err       error
+		index     int
+		gender    genders.Gender
 	)
 	JustBeforeEach(func() {
-		originboard, err = ziwei.NewBoard(birthday, gender)
+		board, err = ziwei.NewBoard(birthday, gender).CreateTianBoard()
 		if err != nil {
 			panic(err)
 		}
@@ -43,10 +43,10 @@ var _ = Describe("ziwei", func() {
 		actualBlocksShouldMatchOriginWithIndex := func(index int) bool {
 			for i, actualBlock := range yearBoard.Blocks {
 				idx := i + index
-				if idx >= len(originboard.Blocks) {
-					idx = idx - len(originboard.Blocks)
+				if idx >= len(board.Blocks) {
+					idx = idx - len(board.Blocks)
 				}
-				if !Expect(actualBlock.GongWeiName).To(Equal(originboard.Blocks[idx].GongWeiName),
+				if !Expect(actualBlock.GongWeiName).To(Equal(board.Blocks[idx].GongWeiName),
 					fmt.Sprintf("testing input: %d, actual block index:%d, current block index:%d", index, i, idx),
 				) {
 					return false
@@ -68,7 +68,7 @@ var _ = Describe("ziwei", func() {
 			})
 		})
 
-		When("given an index 1", func() {
+		When("given an index 2", func() {
 			BeforeEach(func() {
 				index = 2
 			})
@@ -77,7 +77,7 @@ var _ = Describe("ziwei", func() {
 			})
 		})
 
-		When("given an index 1", func() {
+		When("given an index 3", func() {
 			BeforeEach(func() {
 				index = 3
 			})
@@ -86,7 +86,7 @@ var _ = Describe("ziwei", func() {
 			})
 		})
 
-		When("given an index 1", func() {
+		When("given an index 4", func() {
 			BeforeEach(func() {
 				index = 4
 			})
@@ -94,7 +94,7 @@ var _ = Describe("ziwei", func() {
 				Expect(actualBlocksShouldMatchOriginWithIndex(index)).To(BeTrue())
 			})
 		})
-		When("given an index 1", func() {
+		When("given an index 5", func() {
 			BeforeEach(func() {
 				index = 5
 			})
@@ -103,7 +103,7 @@ var _ = Describe("ziwei", func() {
 			})
 		})
 
-		When("given an index 1", func() {
+		When("given an index 6", func() {
 			BeforeEach(func() {
 				index = 6
 			})
@@ -112,7 +112,7 @@ var _ = Describe("ziwei", func() {
 			})
 		})
 
-		When("given an index 1", func() {
+		When("given an index 7", func() {
 			BeforeEach(func() {
 				index = 7
 			})
@@ -121,7 +121,7 @@ var _ = Describe("ziwei", func() {
 			})
 		})
 
-		When("given an index 1", func() {
+		When("given an index 8", func() {
 			BeforeEach(func() {
 				index = 8
 			})
@@ -130,7 +130,7 @@ var _ = Describe("ziwei", func() {
 			})
 		})
 
-		When("given an index 1", func() {
+		When("given an index 9", func() {
 			BeforeEach(func() {
 				index = 9
 			})
@@ -139,7 +139,7 @@ var _ = Describe("ziwei", func() {
 			})
 		})
 
-		When("given an index 1", func() {
+		When("given an index 10", func() {
 			BeforeEach(func() {
 				index = 10
 			})
@@ -148,7 +148,7 @@ var _ = Describe("ziwei", func() {
 			})
 		})
 
-		When("given an index 1", func() {
+		When("given an index 11", func() {
 			BeforeEach(func() {
 				index = 11
 			})
@@ -157,7 +157,7 @@ var _ = Describe("ziwei", func() {
 			})
 		})
 
-		When("given an index 1", func() {
+		When("given an index 12", func() {
 			BeforeEach(func() {
 				index = 12
 			})

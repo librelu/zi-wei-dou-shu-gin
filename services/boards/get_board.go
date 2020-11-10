@@ -19,7 +19,7 @@ func (h handler) GetBoard(c *gin.Context) {
 	}
 	birthday := time.Unix(req.Birthday, 0)
 	gender := genders.Gender(req.Gender)
-	board, err := ziwei.NewBoard(birthday, gender)
+	board, err := ziwei.NewBoard(birthday, gender).CreateTianBoard()
 	if err != nil {
 		handleError(c, err)
 		return

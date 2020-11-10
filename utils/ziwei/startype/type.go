@@ -15,4 +15,5 @@ const (
 	ShiSiFuXing
 	LeftFuXing
 	RightFuXing
+	LiuNianGanXing
 )
