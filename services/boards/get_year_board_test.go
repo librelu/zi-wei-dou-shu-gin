@@ -17,7 +17,7 @@ var _ = Describe("BoardHandler()", func() {
 	BeforeEach(func() {
 		engine = buildTestingServer()
 	})
-	Context("GetBoard()", func() {
+	Context("GetYearBoard()", func() {
 		var (
 			path     string
 			recorder *httptest.ResponseRecorder
@@ -38,7 +38,7 @@ var _ = Describe("BoardHandler()", func() {
 		})
 		When("in success", func() {
 			BeforeEach(func() {
-				path = "/board?birthday=1602658277&gender=0"
+				path = "/year-board?birthday=1602658277&gender=0&index=1"
 			})
 			It("should returns correct response", func() {
 				Expect(recorder.Code).Should(Equal(http.StatusOK))
@@ -47,7 +47,7 @@ var _ = Describe("BoardHandler()", func() {
 		When("in invalidate request", func() {
 			When("given wrong gender number", func() {
 				BeforeEach(func() {
-					path = "/board?birthday=1602658277&gender=3"
+					path = "/year-board?birthday=1602658277&gender=3"
 				})
 				It("should returns correct response", func() {
 					Expect(recorder.Code).Should(Equal(http.StatusBadRequest))
@@ -55,7 +55,7 @@ var _ = Describe("BoardHandler()", func() {
 			})
 			When("given none query string", func() {
 				BeforeEach(func() {
-					path = "/board"
+					path = "/year-board"
 				})
 				It("should returns correct response", func() {
 					Expect(recorder.Code).Should(Equal(http.StatusBadRequest))

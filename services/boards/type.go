@@ -10,6 +10,7 @@ type handler struct {
 
 type Handler interface {
 	GetBoard(c *gin.Context)
+	GetYearBoard(c *gin.Context)
 }
 
 type GetBoardRequest struct {
@@ -18,6 +19,24 @@ type GetBoardRequest struct {
 }
 
 type GetBoardResponse struct {
+	Blocks           []*Block
+	BirthDay         string
+	LunaBirthDay     string
+	Gender           string
+	MingJu           string
+	MingJuValue      int
+	ShenZhu          string
+	MingZhu          string
+	ShenGongLocation int
+}
+
+type GetYearBoardRequest struct {
+	Birthday int64 `form:"birthday" binding:"required"`
+	Gender   int   `form:"gender"`
+	Index    int   `form:"index"`
+}
+
+type GetYearBoardResponse struct {
 	Blocks           []*Block
 	BirthDay         string
 	LunaBirthDay     string

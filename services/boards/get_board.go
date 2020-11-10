@@ -13,7 +13,7 @@ import (
 // GetBoard get board handler
 func (h handler) GetBoard(c *gin.Context) {
 	req := new(GetBoardRequest)
-	if err := validate(c, req); err != nil {
+	if err := validateGetBoardRequest(c, req); err != nil {
 		handleError(c, err)
 		return
 	}
@@ -24,11 +24,11 @@ func (h handler) GetBoard(c *gin.Context) {
 		handleError(c, err)
 		return
 	}
-	resp := convertBoardToReponse(board, birthday)
+	resp := convertBoardToGetBoardReponse(board, birthday)
 	c.JSON(200, resp)
 }
 
-func convertBoardToReponse(board *ziwei.Board, birthday time.Time) *GetBoardResponse {
+func convertBoardToGetBoardReponse(board *ziwei.Board, birthday time.Time) *GetBoardResponse {
 	// convert blocks
 	blocks := make([]*Block, len(board.Blocks))
 	for i, b := range board.Blocks {
@@ -61,7 +61,7 @@ func convertBoardToReponse(board *ziwei.Board, birthday time.Time) *GetBoardResp
 	}
 }
 
-func validate(c *gin.Context, req *GetBoardRequest) error {
+func validateGetBoardRequest(c *gin.Context, req *GetBoardRequest) error {
 	if err := c.ShouldBindQuery(req); err != nil {
 		return err
 	}
