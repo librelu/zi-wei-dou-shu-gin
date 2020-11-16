@@ -29,6 +29,9 @@ func initClients() *clients {
 }
 
 func initEndpoints(engine *gin.Engine) {
+	engine.GET("/healthcheck", func(c *gin.Context) {
+		c.Status(http.StatusOK)
+	})
 	groupAPI := engine.Group("/api")
 	v1 := groupAPI.Group("/v1")
 	v1.Use(cors.New(cors.Config{
