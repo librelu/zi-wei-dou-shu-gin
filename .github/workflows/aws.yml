@@ -76,5 +76,5 @@ jobs:
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: zi-wei-dou-shu
-          cluster: zi-wei-dou-shu-gin
+          cluster: zi-wei-dou-shu
           wait-for-service-stability: true
