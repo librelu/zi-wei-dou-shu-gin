@@ -2,10 +2,12 @@ package boards
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/zi-wei-dou-shu-gin/db/dao"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei"
 )
 
 type handler struct {
+	dao dao.DaoHandler
 }
 
 type Handler interface {
@@ -46,6 +48,12 @@ type GetYearBoardResponse struct {
 	ShenZhu          string
 	MingZhu          string
 	ShenGongLocation int
+}
+
+type SaveBoardRequest struct {
+	Birthday int64  `form:"birthday" binding:"required"`
+	Gender   int    `form:"gender"`
+	Name     string `form:"name" binding:"required"`
 }
 
 type Block struct {

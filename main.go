@@ -6,6 +6,9 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/zi-wei-dou-shu-gin/configs"
+	"github.com/zi-wei-dou-shu-gin/db"
+	"github.com/zi-wei-dou-shu-gin/db/dao"
 	"github.com/zi-wei-dou-shu-gin/services/boards"
 )
 
@@ -16,20 +19,34 @@ func main() {
 	engine := gin.New()
 	engine.Use(gin.Logger())
 	engine.Use(gin.Recovery())
-
+	config, err := configs.NewConfigs(
+		configs.DefaultConfigYamlPath,
+		configs.DefaultConfigType,
+	)
+	if err != nil {
+		panic(err)
+	}
+	dbClient, err := db.NewDBClient(
+		config.DB.Host,
+		config.DB.User,
+		config.DB.Password,
+		config.DB.Database,
+		config.DB.SSLMode,
+		config.DB.Port,
+	)
+	if err != nil {
+		panic(err)
+	}
+	dao := dao.NewDao(dbClient)
 	// init clients
 	// init endpoints
-	initEndpoints(engine)
+	initEndpoints(engine, dao)
 	// startup gin server
 	// close connection if server down
 	engine.Run()
 }
 
-func initClients() *clients {
-	return nil
-}
-
-func initEndpoints(engine *gin.Engine) {
+func initEndpoints(engine *gin.Engine, dao dao.DaoHandler) {
 	engine.GET("/healthcheck", func(c *gin.Context) {
 		c.Status(http.StatusOK)
 	})
@@ -44,5 +61,5 @@ func initEndpoints(engine *gin.Engine) {
 		MaxAge:           12 * time.Hour,
 	}))
 
-	boards.BoardRegister(v1, boards.NewBoardHandler())
+	boards.BoardRegister(v1, boards.NewBoardHandler(dao))
 }

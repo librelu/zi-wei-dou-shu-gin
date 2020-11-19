@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/zi-wei-dou-shu-gin/db/dao"
 	"github.com/zi-wei-dou-shu-gin/services/boards"
 )
 
@@ -22,11 +23,12 @@ var _ = Describe("BoardHandler()", func() {
 			path     string
 			recorder *httptest.ResponseRecorder
 			method   string
+			dbClient dao.DaoHandler
 			handler  boards.Handler
 		)
 		BeforeEach(func() {
 			method = http.MethodGet
-			handler = boards.NewBoardHandler()
+			handler = boards.NewBoardHandler(dbClient)
 			boards.BoardRegister(engine.Group(""), handler)
 		})
 		JustBeforeEach(func() {
