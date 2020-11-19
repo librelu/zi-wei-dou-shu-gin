@@ -20,7 +20,7 @@
       "cpu": "512",
       "memory": "1024",
       "essential": true,
-      "command": ["CMD-SHELL", "run.sh"]
+      "command": ["/bin/sh -c ./run.sh"]
     }
   ]
 }
