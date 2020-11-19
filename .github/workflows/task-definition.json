@@ -20,7 +20,7 @@
       "cpu": "512",
       "memory": "1024",
       "essential": true,
-      "command": ["make start-prod"]
+      "command": ["$WORKDIR/run.sh"]
     }
   ]
 }
