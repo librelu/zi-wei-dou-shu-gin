@@ -3,6 +3,7 @@ package migrations
 import (
 	"database/sql"
 	"fmt"
+	"time"
 
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
@@ -23,7 +24,7 @@ func NewDBMigration(host, user, password, database, sslmode, migrationFilePath, 
 	}
 	driver, err := postgres.WithInstance(db, &postgres.Config{
 		DatabaseName:     database,
-		StatementTimeout: defaultTimeout,
+		StatementTimeout: defaultTimeout * time.Millisecond,
 	})
 	if err != nil {
 		return nil, utilerrors.Wrap(err, "failed when init driver")
