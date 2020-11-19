@@ -20,7 +20,7 @@
       "cpu": "512",
       "memory": "1024",
       "essential": true,
-      "command": ["/bin/sh", "-c", "/zi-wei-dou-shu-gin/run.sh"]
+      "command": ["zi-wei-dou-shu-gin"]
     }
   ]
 }
