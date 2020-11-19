@@ -20,7 +20,7 @@
       "cpu": "512",
       "memory": "1024",
       "essential": true,
-      "command": ["CMD-SHELL", "/bin/sh -c $WORKDIR/run.sh"]
+      "command": ["/bin/sh -c $WORKDIR/run.sh"]
     }
   ]
 }
