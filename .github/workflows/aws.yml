@@ -59,8 +59,7 @@ jobs:
           # Build a docker container and
           # push it to ECR so that it can
           # be deployed to ECS.
-          touch ./configs/yaml/release-config.yml
-          wget https://zi-wei-dou-shu-config.s3-ap-southeast-1.amazonaws.com/env.yaml --output-document=./configs/yaml/release-config.yml
+          aws s3 cp s3://zi-wei-dou-shu-config/env.yaml ./configs/yaml/release-config.yml
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
