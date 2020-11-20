@@ -24,11 +24,11 @@ func (h handler) GetBoard(c *gin.Context) {
 		handleError(c, err)
 		return
 	}
-	resp := convertBoardToGetBoardReponse(board, birthday)
+	resp := convertBoardToGetBoardResponse(board, birthday)
 	c.JSON(200, resp)
 }
 
-func convertBoardToGetBoardReponse(board *ziwei.Board, birthday time.Time) *GetBoardResponse {
+func convertBoardToGetBoardResponse(board *ziwei.Board, birthday time.Time) *GetBoardResponse {
 	// convert blocks
 	blocks := make([]*Block, len(board.Blocks))
 	for i, b := range board.Blocks {

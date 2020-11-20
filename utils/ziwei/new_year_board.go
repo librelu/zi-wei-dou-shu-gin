@@ -7,6 +7,7 @@ import (
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/genders"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/stars"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/startype"
+	"github.com/zi-wei-dou-shu-gin/utils/ziwei/tiangan"
 )
 
 func NewTenYearsBoard(birthday time.Time, gender genders.Gender, index int) (*YearBoard, error) {
@@ -24,12 +25,13 @@ func NewTenYearsBoard(birthday time.Time, gender genders.Gender, index int) (*Ye
 	}
 	yearBoard.mingGongLocation = board.getMingGong(board.LunaBirthday.Hour, board.LunaBirthday.Month)
 	yearBoard.rotateGongWeiNameByIndex(index)
-	board.setLuCun(&board.LunaBirthday.Year.TianGan)
-	board.setQingYang(&board.LunaBirthday.Year.TianGan)
-	board.setTuoLuo(&board.LunaBirthday.Year.TianGan)
-	board.setTianKui(&board.LunaBirthday.Year.TianGan)
-	board.setTianGuan(&board.LunaBirthday.Year.TianGan)
-	if idx, err := board.getHuaJiLocation(&board.LunaBirthday.Year.TianGan); err == nil {
+	currentTianGan := tiangan.TianGan(int(board.LunaBirthday.Year.TianGan)+index) % 10
+	board.setLuCun(&currentTianGan)
+	board.setQingYang(&currentTianGan)
+	board.setTuoLuo(&currentTianGan)
+	board.setTianKui(&currentTianGan)
+	board.setTianGuan(&currentTianGan)
+	if idx, err := board.getHuaJiLocation(&currentTianGan); err == nil {
 		board.Blocks[idx].Stars = append(board.Blocks[idx].Stars, &Star{
 			Name:     stars.HuaLu.String(),
 			StarType: startype.LiuNianGanXing.String(),
@@ -37,7 +39,7 @@ func NewTenYearsBoard(birthday time.Time, gender genders.Gender, index int) (*Ye
 	} else {
 		return nil, err
 	}
-	if idx, err := board.getHuaKeLocation(&board.LunaBirthday.Year.TianGan); err == nil {
+	if idx, err := board.getHuaKeLocation(&currentTianGan); err == nil {
 		board.Blocks[idx].Stars = append(board.Blocks[idx].Stars, &Star{
 			Name:     stars.HuaKe.String(),
 			StarType: startype.LiuNianGanXing.String(),
@@ -45,7 +47,7 @@ func NewTenYearsBoard(birthday time.Time, gender genders.Gender, index int) (*Ye
 	} else {
 		return nil, err
 	}
-	if idx, err := board.getHuaQuanLocation(&board.LunaBirthday.Year.TianGan); err == nil {
+	if idx, err := board.getHuaQuanLocation(&currentTianGan); err == nil {
 		board.Blocks[idx].Stars = append(board.Blocks[idx].Stars, &Star{
 			Name:     stars.HuaQuan.String(),
 			StarType: startype.LiuNianGanXing.String(),
@@ -53,7 +55,7 @@ func NewTenYearsBoard(birthday time.Time, gender genders.Gender, index int) (*Ye
 	} else {
 		return nil, err
 	}
-	if idx, err := board.getHuaLuLocation(&board.LunaBirthday.Year.TianGan); err == nil {
+	if idx, err := board.getHuaLuLocation(&currentTianGan); err == nil {
 		board.Blocks[idx].Stars = append(board.Blocks[idx].Stars, &Star{
 			Name:     stars.HuaQuan.String(),
 			StarType: startype.LiuNianGanXing.String(),
@@ -61,8 +63,9 @@ func NewTenYearsBoard(birthday time.Time, gender genders.Gender, index int) (*Ye
 	} else {
 		return nil, err
 	}
-	board.setHuo(&board.LunaBirthday.Year.DiZhi, board.LunaBirthday.Hour)
-	board.setLing(&board.LunaBirthday.Year.DiZhi, board.LunaBirthday.Hour)
+	currentDiZhi := dizhi.DiZhi(int(board.LunaBirthday.Year.DiZhi)+index) % 12
+	board.setHuo(&currentDiZhi, board.LunaBirthday.Hour)
+	board.setLing(&currentDiZhi, board.LunaBirthday.Hour)
 	return yearBoard, nil
 }
 

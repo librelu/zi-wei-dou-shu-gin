@@ -24,7 +24,7 @@ func (h handler) GetYearBoard(c *gin.Context) {
 		handleError(c, err)
 		return
 	}
-	resp := convertBoardToGetYearBoardReponse(board.Board, birthday)
+	resp := convertBoardToGetYearBoardResponse(board.Board, birthday)
 	c.JSON(200, resp)
 }
 
@@ -38,8 +38,8 @@ func validateGetYearBoardRequest(c *gin.Context, req *GetYearBoardRequest) error
 	return nil
 }
 
-func convertBoardToGetYearBoardReponse(board *ziwei.Board, birthday time.Time) *GetYearBoardResponse {
-	getBoardResp := convertBoardToGetBoardReponse(board, birthday)
+func convertBoardToGetYearBoardResponse(board *ziwei.Board, birthday time.Time) *GetYearBoardResponse {
+	getBoardResp := convertBoardToGetBoardResponse(board, birthday)
 	return &GetYearBoardResponse{
 		Blocks:           getBoardResp.Blocks,
 		BirthDay:         getBoardResp.BirthDay,
