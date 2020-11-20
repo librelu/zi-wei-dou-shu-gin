@@ -18,6 +18,6 @@ require (
 	github.com/spf13/cobra v1.0.0
 	github.com/spf13/viper v1.7.1
 	github.com/ztrue/tracerr v0.3.0
-	golang.org/x/sys v0.0.0-20201026173827-119d4633e4d1 // indirect
+	golang.org/x/sys v0.0.0-20201119102817-f84b799fce68 // indirect
 	golang.org/x/tools v0.0.0-20201110030525-169ad6d6ecb2 // indirect
 )
