@@ -2,6 +2,7 @@ package boards
 
 import (
 	"fmt"
+	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -16,7 +17,12 @@ func (h handler) GetYearBoard(c *gin.Context) {
 		handleError(c, err)
 		return
 	}
-	birthday := time.Unix(req.Birthday, 0)
+	timezone := 0
+	if req.TimeZone != 0 {
+		timezone = req.TimeZone / 60
+	}
+	location := time.FixedZone(fmt.Sprintf("UTC %d", timezone), req.TimeZone)
+	birthday := time.Date(req.BirthYear, time.Month(req.BirthMonth), req.BirthDate, req.BirthHour, 0, 0, 0, location)
 	gender := genders.Gender(req.Gender)
 	index := req.Index
 	board, err := ziwei.NewTenYearsBoard(birthday, gender, index)
@@ -25,7 +31,7 @@ func (h handler) GetYearBoard(c *gin.Context) {
 		return
 	}
 	resp := convertBoardToGetYearBoardResponse(board.Board, birthday)
-	c.JSON(200, resp)
+	c.JSON(http.StatusOK, resp)
 }
 
 func validateGetYearBoardRequest(c *gin.Context, req *GetYearBoardRequest) error {

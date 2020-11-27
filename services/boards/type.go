@@ -16,8 +16,12 @@ type Handler interface {
 }
 
 type GetBoardRequest struct {
-	Birthday int64 `form:"birthday" binding:"required"`
-	Gender   int   `form:"gender"`
+	BirthYear  int `form:"birthYear" binding:"required"`
+	BirthMonth int `form:"birthMonth" binding:"required"`
+	BirthDate  int `form:"birthDate" binding:"required"`
+	BirthHour  int `form:"birthHour"`
+	TimeZone   int `form:"timezone"`
+	Gender     int `form:"gender"`
 }
 
 type GetBoardResponse struct {
@@ -33,9 +37,13 @@ type GetBoardResponse struct {
 }
 
 type GetYearBoardRequest struct {
-	Birthday int64 `form:"birthday" binding:"required"`
-	Gender   int   `form:"gender"`
-	Index    int   `form:"index"`
+	BirthYear  int `form:"birthYear" binding:"required"`
+	BirthMonth int `form:"birthMonth" binding:"required"`
+	BirthDate  int `form:"birthDate" binding:"required"`
+	BirthHour  int `form:"birthHour"`
+	TimeZone   int `form:"timezone"`
+	Gender     int `form:"gender"`
+	Index      int `form:"index"`
 }
 
 type GetYearBoardResponse struct {
@@ -69,3 +77,4 @@ type Location struct {
 }
 
 var numberMap = []string{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"}
+var tenDigitMap = []string{"零", "一", "廿", "三", "四", "五", "六", "七", "八", "九", "十"}

@@ -40,7 +40,7 @@ var _ = Describe("BoardHandler()", func() {
 		})
 		When("in success", func() {
 			BeforeEach(func() {
-				path = "/board?birthday=1602658277&gender=0"
+				path = "/board?birthYear=2020&birthMonth=05&birthDate=01&birthHour=0&gender=0&timezone=-480"
 			})
 			It("should returns correct response", func() {
 				Expect(recorder.Code).Should(Equal(http.StatusOK))

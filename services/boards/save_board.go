@@ -2,6 +2,7 @@ package boards
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/genders"
@@ -16,7 +17,7 @@ func (h handler) SaveBoard(c *gin.Context) {
 	}
 	gender := genders.Gender(req.Gender)
 	h.dao.SaveBoard(gender.String(), req.Name, req.Birthday)
-	c.JSON(200, map[string]string{})
+	c.JSON(http.StatusOK, map[string]string{})
 }
 
 func validateSaveBoardRequest(c *gin.Context, req *SaveBoardRequest) error {

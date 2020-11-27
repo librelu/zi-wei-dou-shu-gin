@@ -17,7 +17,12 @@ func (h handler) GetBoard(c *gin.Context) {
 		handleError(c, err)
 		return
 	}
-	birthday := time.Unix(req.Birthday, 0)
+	timezone := 0
+	if req.TimeZone != 0 {
+		timezone = req.TimeZone / 60
+	}
+	location := time.FixedZone(fmt.Sprintf("UTC %d", timezone), req.TimeZone)
+	birthday := time.Date(req.BirthYear, time.Month(req.BirthMonth), req.BirthDate, req.BirthHour, 0, 0, 0, location)
 	gender := genders.Gender(req.Gender)
 	board, err := ziwei.NewBoard(birthday, gender).CreateTianBoard()
 	if err != nil {
@@ -25,7 +30,7 @@ func (h handler) GetBoard(c *gin.Context) {
 		return
 	}
 	resp := convertBoardToGetBoardResponse(board, birthday)
-	c.JSON(200, resp)
+	c.JSON(http.StatusOK, resp)
 }
 
 func convertBoardToGetBoardResponse(board *ziwei.Board, birthday time.Time) *GetBoardResponse {
@@ -42,13 +47,17 @@ func convertBoardToGetBoardResponse(board *ziwei.Board, birthday time.Time) *Get
 			TenYearsRound: b.TenYearsRound,
 		}
 	}
+	month := toChineseNums(int(board.LunaBirthday.Month))
+	if board.LunaBirthday.IsLeap {
+		month = "閏" + month
+	}
 	return &GetBoardResponse{
 		Blocks:   blocks,
 		BirthDay: fmt.Sprintf("%d年%d月%d日%d時", birthday.Year(), birthday.Month(), birthday.Day(), birthday.Hour()),
 		LunaBirthDay: fmt.Sprintf("%s%s年%s月%s日%s時",
 			board.LunaBirthday.Year.TianGan.String(),
 			board.LunaBirthday.Year.DiZhi.String(),
-			toChineseNums(int(board.LunaBirthday.Month)),
+			month,
 			toChineseNums(int(board.LunaBirthday.Day)),
 			board.LunaBirthday.Hour,
 		),
@@ -84,9 +93,9 @@ func toChineseNums(number int) string {
 			return result + numberMap[number]
 		}
 		if i == 1 {
-			result = result + numberMap[10]
+			result = result + tenDigitMap[10]
 		} else {
-			result = result + numberMap[i]
+			result = result + tenDigitMap[i]
 		}
 		number = number - (i * 10)
 		if number == 0 && len(result) > 0 {

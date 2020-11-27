@@ -13,6 +13,9 @@ migration-create:
 devup:
 	docker-compose build && docker-compose up
 
+devlocal:
+	export GIN_MODE=debug; go run main.go
+
 build:
 	docker build -t bearners-backend .
 
