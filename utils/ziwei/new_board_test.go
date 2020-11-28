@@ -251,7 +251,7 @@ var _ = Describe("ziwei", func() {
 				When("given 金四局 and birthday is 12th", func() {
 					BeforeEach(func() {
 						// luna date: 甲子年 7 / 12 子時
-						birthday = time.Date(1984, 8, 8, 0, 4, 0, 0, time.Local)
+						birthday = time.Date(1984, 8, 7, 0, 4, 0, 0, time.Local)
 						gender = genders.Male
 					})
 					It("shouldn't returns any errors", func() {
@@ -347,7 +347,7 @@ var _ = Describe("ziwei", func() {
 				When("given 火六局 and birthday is 26th", func() {
 					BeforeEach(func() {
 						// luna date: 戊辰年 6 / 26 子時
-						birthday = time.Date(1988, 8, 8, 0, 4, 0, 0, time.Local)
+						birthday = time.Date(1988, 8, 7, 0, 4, 0, 0, time.Local)
 					})
 					It("shouldn't returns any errors", func() {
 						Expect(err).Should(BeNil())
@@ -435,7 +435,7 @@ var _ = Describe("ziwei", func() {
 				When("given a birthday Huo ju and 12th", func() {
 					BeforeEach(func() {
 						// luna date: 戊辰年 6 / 26 子時
-						birthday = time.Date(1988, 8, 8, 0, 4, 0, 0, time.Local)
+						birthday = time.Date(1988, 8, 7, 0, 4, 0, 0, time.Local)
 					})
 					It("shouldn't returns any errors", func() {
 						Expect(err).Should(BeNil())
@@ -523,7 +523,7 @@ var _ = Describe("ziwei", func() {
 				When("given a birthday Tu ju and 12th", func() {
 					BeforeEach(func() {
 						// luna date: 庚子年 6 / 18 子時
-						birthday = time.Date(1990, 8, 8, 0, 4, 0, 0, time.Local)
+						birthday = time.Date(1990, 8, 7, 0, 4, 0, 0, time.Local)
 					})
 					It("shouldn't returns any errors", func() {
 						Expect(err).Should(BeNil())
@@ -1100,7 +1100,7 @@ var _ = Describe("ziwei", func() {
 			When("zi wei is in 亥 location", func() {
 				BeforeEach(func() {
 					// luna date: 癸酉年 5 / 3 子時
-					birthday = time.Date(1993, 6, 22, 0, 4, 0, 0, time.Local)
+					birthday = time.Date(1993, 6, 21, 0, 4, 0, 0, time.Local)
 					gender = genders.Male
 				})
 				It("should display zi wei star in shen location", func() {
