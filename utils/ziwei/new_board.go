@@ -17,17 +17,21 @@ import (
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/tiangan"
 )
 
-func NewBoard(birthday time.Time, gender genders.Gender) *Board {
+func NewBoard(birthday time.Time, gender genders.Gender) (*Board, error) {
 	board := new(Board)
 	board.Birthday = birthday
 	board.Gender = gender
 	lunaDate := lunacal.Solar2Lunar(birthday)
 	board.LunaBirthday = lunaDate
+	err := board.setGender(&board.LunaBirthday.Year.TianGan, board.Gender)
+	if err != nil {
+		return nil, fmt.Errorf("failed in set gender: %w", err)
+	}
 	board.StarsMap = make(map[stars.StarName]int)
 	board.setupDiZhi()
 	board.setupGongWei(board.LunaBirthday)
 	board.setYinShouAndTianGanLocation(&board.LunaBirthday.Year.TianGan)
-	return board
+	return board, nil
 }
 
 func (b *Board) CreateTianBoard() (*Board, error) {
@@ -52,10 +56,6 @@ func (b *Board) CreateTianBoard() (*Board, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed in set shen zhu, error: %w", err)
 	}
-	err = b.setGender(&b.LunaBirthday.Year.TianGan, b.Gender)
-	if err != nil {
-		return nil, fmt.Errorf("failed in set gender: %w", err)
-	}
 
 	luCunLocation, ok := b.StarsMap[stars.LuCun]
 	if !ok {
@@ -75,7 +75,8 @@ func (b *Board) CreateTianBoard() (*Board, error) {
 func (b *Board) setTenYearsRound(mingGongLocation *dizhi.DiZhi) {
 	number := int(b.MingJu.Number)
 	tenYearsRoundFormat := "%d-%d"
-	if b.Gender == genders.YangFemale || b.Gender == genders.YangMale {
+	if b.Gender == genders.YangMale || b.Gender == genders.YinFemale {
+		// clockwise
 		for i := range b.Blocks {
 			idx := (i + int(*mingGongLocation)) % 12
 			startYear := number + i*10
@@ -83,8 +84,9 @@ func (b *Board) setTenYearsRound(mingGongLocation *dizhi.DiZhi) {
 			b.Blocks[idx].TenYearsRound = fmt.Sprintf(tenYearsRoundFormat, startYear, endYear)
 		}
 	}
-	if b.Gender == genders.YinFemale || b.Gender == genders.YinMale {
+	if b.Gender == genders.YinMale || b.Gender == genders.YangFemale {
 		for i := range b.Blocks {
+			// reverse clockwise
 			idx := (int(*mingGongLocation) - i) % 12
 			if idx < 0 {
 				idx = 12 + idx

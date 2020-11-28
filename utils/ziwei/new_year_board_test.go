@@ -20,10 +20,11 @@ var _ = Describe("ziwei", func() {
 		gender    genders.Gender
 	)
 	JustBeforeEach(func() {
-		board, err = ziwei.NewBoard(birthday, gender).CreateTianBoard()
+		b, err := ziwei.NewBoard(birthday, gender)
 		if err != nil {
 			panic(err)
 		}
+		board, err = b.CreateTianBoard()
 		yearBoard, err = ziwei.NewTenYearsBoard(birthday, gender, index)
 	})
 	Describe("NewTenYearsBoard()", func() {

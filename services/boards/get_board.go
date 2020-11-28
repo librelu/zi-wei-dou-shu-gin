@@ -24,7 +24,8 @@ func (h handler) GetBoard(c *gin.Context) {
 	location := time.FixedZone(fmt.Sprintf("UTC %d", timezone), req.TimeZone)
 	birthday := time.Date(req.BirthYear, time.Month(req.BirthMonth), req.BirthDate, req.BirthHour, 0, 0, 0, location)
 	gender := genders.Gender(req.Gender)
-	board, err := ziwei.NewBoard(birthday, gender).CreateTianBoard()
+	b, err := ziwei.NewBoard(birthday, gender)
+	board, err := b.CreateTianBoard()
 	if err != nil {
 		handleError(c, err)
 		return

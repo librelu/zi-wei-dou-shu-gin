@@ -21,7 +21,9 @@ var _ = Describe("ziwei", func() {
 	Measure("it should do new board efficiently", func(b Benchmarker) {
 		runtime := b.Time("runtime", func() {
 			birthday := time.Date(1984, 8, 8, 0, 4, 0, 0, time.Local)
-			_, err := ziwei.NewBoard(birthday, genders.Male).CreateTianBoard()
+			b, err := ziwei.NewBoard(birthday, genders.Male)
+			Expect(err).To(BeNil())
+			_, err = b.CreateTianBoard()
 			Expect(err).To(BeNil())
 		})
 		Expect(runtime.Milliseconds()).Should(BeNumerically("<", 500), "NewBoard() shouldn't take too long.")
@@ -38,7 +40,11 @@ var _ = Describe("ziwei", func() {
 			gender = genders.Male
 		})
 		JustBeforeEach(func() {
-			board, err = ziwei.NewBoard(birthday, gender).CreateTianBoard()
+			b, err := ziwei.NewBoard(birthday, gender)
+			if err != nil {
+				panic(err)
+			}
+			board, err = b.CreateTianBoard()
 		})
 		When("init board", func() {
 			BeforeEach(func() {
@@ -215,6 +221,7 @@ var _ = Describe("ziwei", func() {
 				BeforeEach(func() {
 					// luna date: 丙寅年 7 / 3 子時
 					birthday = time.Date(1984, 12, 8, 0, 4, 0, 0, time.Local)
+					gender = genders.Male
 				})
 				It("shouldn't returns any errors", func() {
 					Expect(err).Should(BeNil())

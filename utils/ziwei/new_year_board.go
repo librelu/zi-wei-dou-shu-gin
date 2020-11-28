@@ -12,7 +12,11 @@ import (
 
 func NewTenYearsBoard(birthday time.Time, gender genders.Gender, index int) (*YearBoard, error) {
 	// TOOD: cache board if necessary
-	board, err := NewBoard(birthday, gender).CreateTianBoard()
+	b, err := NewBoard(birthday, gender)
+	if err != nil {
+		return nil, err
+	}
+	board, err := b.CreateTianBoard()
 	if err != nil {
 		return nil, err
 	}
