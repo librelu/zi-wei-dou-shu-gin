@@ -21,7 +21,11 @@ func NewBoard(birthday time.Time, gender genders.Gender) (*Board, error) {
 	board := new(Board)
 	board.Birthday = birthday
 	board.Gender = gender
-	lunaDate := lunacal.Solar2Lunar(birthday)
+	lunaBDay := birthday
+	if lunaBDay.Hour() == 23 || lunaBDay.Hour() == 0 {
+		lunaBDay = lunaBDay.AddDate(0, 0, 1)
+	}
+	lunaDate := lunacal.Solar2Lunar(lunaBDay)
 	board.LunaBirthday = lunaDate
 	err := board.setGender(&board.LunaBirthday.Year.TianGan, board.Gender)
 	if err != nil {
