@@ -53,16 +53,18 @@ type MingJu struct {
 }
 
 type Board struct {
-	Birthday         time.Time
-	LunaBirthday     *lunacal.LunaDate
-	Blocks           []*Block
-	StarsMap         map[stars.StarName]int
-	Gender           genders.Gender
-	MingJu           *MingJu
-	ShenZhu          string
-	MingZhu          string
-	LocationTainGan  string
-	ShenGongLocation int
+	Birthday            time.Time
+	LunaBirthday        *lunacal.LunaDate
+	Blocks              []*Block
+	StarsMap            map[stars.StarName]int
+	Gender              genders.Gender
+	MingJu              *MingJu
+	ShenZhu             string
+	MingZhu             string
+	LocationTainGan     string
+	ShenGongLocation    int
+	MingGongLocation    int
+	MainStarConnections []int
 }
 
 type YearBoard struct {

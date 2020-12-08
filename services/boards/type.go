@@ -25,15 +25,17 @@ type GetBoardRequest struct {
 }
 
 type GetBoardResponse struct {
-	Blocks           []*Block
-	BirthDay         string
-	LunaBirthDay     string
-	Gender           string
-	MingJu           string
-	MingJuValue      int
-	ShenZhu          string
-	MingZhu          string
-	ShenGongLocation int
+	Blocks              []*Block
+	BirthDay            string
+	LunaBirthDay        string
+	Gender              string
+	MingJu              string
+	MingJuValue         int
+	ShenZhu             string
+	MingZhu             string
+	ShenGongLocation    int
+	MingGongLocation    int
+	MainStarConnections []int
 }
 
 type GetYearBoardRequest struct {

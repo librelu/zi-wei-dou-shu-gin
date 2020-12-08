@@ -40,11 +40,13 @@ func NewBoard(birthday time.Time, gender genders.Gender) (*Board, error) {
 
 func (b *Board) CreateTianBoard() (*Board, error) {
 	mingGongLocation := b.getMingGong(b.LunaBirthday.Hour, b.LunaBirthday.Month)
+	b.MingGongLocation = int(*mingGongLocation)
 	b.setMingJu(mingGongLocation)
 	err := b.setFourteenMainStars(mingGongLocation, b.MingJu, b.LunaBirthday.Day)
 	if err != nil {
 		return nil, fmt.Errorf("failed in set fourteen main stars, error: %w", err)
 	}
+	b.setupMainStarsConnections(mingGongLocation)
 	b.setUpNainGanStars(&b.LunaBirthday.Year.TianGan)
 	b.setXunKong(b.LunaBirthday.Year)
 	b.setJieKong(&b.LunaBirthday.Year.TianGan)
@@ -74,6 +76,14 @@ func (b *Board) CreateTianBoard() (*Board, error) {
 	}
 	b.setTenYearsRound(mingGongLocation)
 	return b, nil
+}
+
+func (b *Board) setupMainStarsConnections(minGongLocation *dizhi.DiZhi) {
+	mingGongIndex := int(*minGongLocation)
+	b.MainStarConnections = make([]int, 3)
+	b.MainStarConnections[0] = (mingGongIndex + 4) % 12
+	b.MainStarConnections[1] = (mingGongIndex + 6) % 12
+	b.MainStarConnections[2] = (mingGongIndex + 8) % 12
 }
 
 func (b *Board) setTenYearsRound(mingGongLocation *dizhi.DiZhi) {

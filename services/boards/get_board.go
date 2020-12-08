@@ -62,12 +62,14 @@ func convertBoardToGetBoardResponse(board *ziwei.Board, birthday time.Time) *Get
 			toChineseNums(int(board.LunaBirthday.Day)),
 			board.LunaBirthday.Hour,
 		),
-		Gender:           board.Gender.String(),
-		MingJu:           board.MingJu.JuType.String(),
-		MingJuValue:      int(board.MingJu.Number),
-		ShenZhu:          board.ShenZhu,
-		MingZhu:          board.MingZhu,
-		ShenGongLocation: board.ShenGongLocation,
+		Gender:              board.Gender.String(),
+		MingJu:              board.MingJu.JuType.String(),
+		MingJuValue:         int(board.MingJu.Number),
+		ShenZhu:             board.ShenZhu,
+		MingZhu:             board.MingZhu,
+		ShenGongLocation:    board.ShenGongLocation,
+		MingGongLocation:    board.MingGongLocation,
+		MainStarConnections: board.MainStarConnections,
 	}
 }
 
