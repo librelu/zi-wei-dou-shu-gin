@@ -1,9 +1,9 @@
 package ziwei_test
 
 import (
-	"fmt"
 	"time"
 
+	"bou.ke/monkey"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei"
@@ -14,17 +14,14 @@ var _ = Describe("ziwei", func() {
 	var (
 		birthday  time.Time
 		yearBoard *ziwei.YearBoard
-		board     *ziwei.Board
 		err       error
 		index     int
 		gender    genders.Gender
 	)
+	monkey.Patch(time.Now, func() time.Time {
+		return time.Date(2009, 11, 17, 20, 34, 58, 651387237, time.UTC)
+	})
 	JustBeforeEach(func() {
-		b, err := ziwei.NewBoard(birthday, gender)
-		if err != nil {
-			panic(err)
-		}
-		board, err = b.CreateTianBoard()
 		yearBoard, err = ziwei.NewTenYearsBoard(birthday, gender, index)
 	})
 	Describe("NewTenYearsBoard()", func() {
@@ -41,20 +38,6 @@ var _ = Describe("ziwei", func() {
 		})
 	})
 	Describe("rotateGongWeiNameByIndex()", func() {
-		actualBlocksShouldMatchOriginWithIndex := func(index int) bool {
-			for i, actualBlock := range yearBoard.Blocks {
-				idx := i + index
-				if idx >= len(board.Blocks) {
-					idx = idx - len(board.Blocks)
-				}
-				if !Expect(actualBlock.GongWeiName).To(Equal(board.Blocks[idx].GongWeiName),
-					fmt.Sprintf("testing input: %d, actual block index:%d, current block index:%d", index, i, idx),
-				) {
-					return false
-				}
-			}
-			return true
-		}
 		BeforeEach(func() {
 			birthday = time.Date(2019, 9, 13, 19, 4, 0, 0, time.Local)
 			gender = genders.Male
@@ -65,7 +48,7 @@ var _ = Describe("ziwei", func() {
 				index = 1
 			})
 			It("should display correct blocks location", func() {
-				Expect(actualBlocksShouldMatchOriginWithIndex(index)).To(BeTrue())
+				Expect(yearBoard.Blocks[1].GongWeiName).To(Equal("命宮"))
 			})
 		})
 
@@ -74,7 +57,7 @@ var _ = Describe("ziwei", func() {
 				index = 2
 			})
 			It("should display correct blocks location", func() {
-				Expect(actualBlocksShouldMatchOriginWithIndex(index)).To(BeTrue())
+				Expect(yearBoard.Blocks[2].GongWeiName).To(Equal("命宮"))
 			})
 		})
 
@@ -83,7 +66,7 @@ var _ = Describe("ziwei", func() {
 				index = 3
 			})
 			It("should display correct blocks location", func() {
-				Expect(actualBlocksShouldMatchOriginWithIndex(index)).To(BeTrue())
+				Expect(yearBoard.Blocks[3].GongWeiName).To(Equal("命宮"))
 			})
 		})
 
@@ -92,7 +75,7 @@ var _ = Describe("ziwei", func() {
 				index = 4
 			})
 			It("should display correct blocks location", func() {
-				Expect(actualBlocksShouldMatchOriginWithIndex(index)).To(BeTrue())
+				Expect(yearBoard.Blocks[4].GongWeiName).To(Equal("命宮"))
 			})
 		})
 		When("given an index 5", func() {
@@ -100,7 +83,7 @@ var _ = Describe("ziwei", func() {
 				index = 5
 			})
 			It("should display correct blocks location", func() {
-				Expect(actualBlocksShouldMatchOriginWithIndex(index)).To(BeTrue())
+				Expect(yearBoard.Blocks[5].GongWeiName).To(Equal("命宮"))
 			})
 		})
 
@@ -109,7 +92,7 @@ var _ = Describe("ziwei", func() {
 				index = 6
 			})
 			It("should display correct blocks location", func() {
-				Expect(actualBlocksShouldMatchOriginWithIndex(index)).To(BeTrue())
+				Expect(yearBoard.Blocks[6].GongWeiName).To(Equal("命宮"))
 			})
 		})
 
@@ -118,7 +101,7 @@ var _ = Describe("ziwei", func() {
 				index = 7
 			})
 			It("should display correct blocks location", func() {
-				Expect(actualBlocksShouldMatchOriginWithIndex(index)).To(BeTrue())
+				Expect(yearBoard.Blocks[7].GongWeiName).To(Equal("命宮"))
 			})
 		})
 
@@ -127,7 +110,7 @@ var _ = Describe("ziwei", func() {
 				index = 8
 			})
 			It("should display correct blocks location", func() {
-				Expect(actualBlocksShouldMatchOriginWithIndex(index)).To(BeTrue())
+				Expect(yearBoard.Blocks[8].GongWeiName).To(Equal("命宮"))
 			})
 		})
 
@@ -136,7 +119,7 @@ var _ = Describe("ziwei", func() {
 				index = 9
 			})
 			It("should display correct blocks location", func() {
-				Expect(actualBlocksShouldMatchOriginWithIndex(index)).To(BeTrue())
+				Expect(yearBoard.Blocks[9].GongWeiName).To(Equal("命宮"))
 			})
 		})
 
@@ -145,7 +128,7 @@ var _ = Describe("ziwei", func() {
 				index = 10
 			})
 			It("should display correct blocks location", func() {
-				Expect(actualBlocksShouldMatchOriginWithIndex(index)).To(BeTrue())
+				Expect(yearBoard.Blocks[10].GongWeiName).To(Equal("命宮"))
 			})
 		})
 
@@ -154,7 +137,7 @@ var _ = Describe("ziwei", func() {
 				index = 11
 			})
 			It("should display correct blocks location", func() {
-				Expect(actualBlocksShouldMatchOriginWithIndex(index)).To(BeTrue())
+				Expect(yearBoard.Blocks[11].GongWeiName).To(Equal("命宮"))
 			})
 		})
 
@@ -163,7 +146,7 @@ var _ = Describe("ziwei", func() {
 				index = 12
 			})
 			It("should display correct blocks location", func() {
-				Expect(actualBlocksShouldMatchOriginWithIndex(index)).To(BeTrue())
+				Expect(yearBoard.Blocks[0].GongWeiName).To(Equal("命宮"))
 			})
 		})
 	})
