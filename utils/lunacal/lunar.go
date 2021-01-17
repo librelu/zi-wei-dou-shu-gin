@@ -223,6 +223,9 @@ func betweenDay(d time.Time, s time.Time) int {
 
 //Solar2Lunar 输入日历输出月历
 func Solar2Lunar(time time.Time) *LunaDate {
+	if time.Hour() == 23 || time.Hour() == 0 {
+		time = time.AddDate(0, 0, 1)
+	}
 	lunaDate := new(LunaDate)
 	lunar := calculateLunar(time.Format(DateFormat))
 	lunaDate.Year = getChineseYear(lunar.year)

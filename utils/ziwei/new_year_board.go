@@ -3,6 +3,7 @@ package ziwei
 import (
 	"time"
 
+	"github.com/zi-wei-dou-shu-gin/utils/lunacal"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/dizhi"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/genders"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/stars"
@@ -24,10 +25,12 @@ func NewTenYearsBoard(birthday time.Time, gender genders.Gender, index int) (*Ye
 	for i := range board.Blocks {
 		board.Blocks[i].Stars = make([]*Star, 0)
 	}
+	yearMingGong := getYearMingGong()
+	board.setTwelveGongs(yearMingGong)
 	yearBoard := &YearBoard{
-		Board: board,
+		Board:            board,
+		mingGongLocation: yearMingGong,
 	}
-	yearBoard.mingGongLocation = board.getMingGong(board.LunaBirthday.Hour, board.LunaBirthday.Month)
 	yearBoard.rotateGongWeiNameByIndex(index)
 	currentTianGan := tiangan.TianGan(int(board.LunaBirthday.Year.TianGan)+index) % 10
 	board.setLuCun(&currentTianGan)
@@ -80,15 +83,20 @@ func (yb *YearBoard) rotateGongWeiNameByIndex(index int) {
 	gongWeiNames := make([]string, blocksLength)
 	mingGongLocation := dizhi.DiZhi((int(*yb.mingGongLocation) + index) % 12)
 	yb.mingGongLocation = &mingGongLocation
-	for i, Block := range yb.Board.Blocks {
-		idx := (i - index) % 12
+	for i, block := range yb.Board.Blocks {
+		idx := (i + index) % 12
 		if idx < 0 {
 			idx = idx + blocksLength
 		}
-		gongWeiNames[idx] = Block.GongWeiName
+		gongWeiNames[idx] = block.GongWeiName
 	}
 	for i, name := range gongWeiNames {
 		yb.Board.Blocks[i].GongWeiName = name
 	}
 	return
+}
+
+func getYearMingGong() *dizhi.DiZhi {
+	lunaDate := lunacal.Solar2Lunar(time.Now())
+	return &lunaDate.Year.DiZhi
 }
