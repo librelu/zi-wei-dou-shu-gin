@@ -3,6 +3,7 @@ package ziwei
 import (
 	"time"
 
+	"github.com/pkg/errors"
 	"github.com/zi-wei-dou-shu-gin/utils/lunacal"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/dizhi"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/genders"
@@ -13,15 +14,24 @@ import (
 )
 
 func NewTenYearsBoard(birthday time.Time, gender genders.Gender, index int) (*YearBoard, error) {
-	yearBoard := new(YearBoard)
-	yearMingGong := getYearMingGong()
-	b := utils.Board(*yearBoard)
-	utilsBoard := utils.SetTwelveGongs(&b, yearMingGong)
-	*yearBoard = YearBoard(*utilsBoard)
+	tianBoard, err := NewTianBoard(birthday, gender)
+	if err != nil {
+		return nil, errors.Wrap(err, "can't new tian board in year board process")
+	}
+	if tianBoard, err = tianBoard.CreateTianBoard(); err != nil {
+		return nil, errors.Wrap(err, "can't create tian board in year board process")
+	}
+	// clean stars
+	for i := range tianBoard.Blocks {
+		tianBoard.Blocks[i].Stars = make([]*utils.Star, 0)
+	}
+	yearBoard := YearBoard(*tianBoard)
 	yearBoard.rotateGongWeiNameByIndex(index)
+	yearMingGong := getYearMingGong()
 	currentTianGan := tiangan.TianGan(int(yearBoard.LunaBirthday.Year.TianGan)+index) % 10
-	b = utils.Board(*yearBoard)
-	utilsBoard = utils.SetLuCun(&b, currentTianGan)
+	b := utils.Board(yearBoard)
+	utilsBoard := utils.SetTwelveGongs(&b, yearMingGong)
+	utilsBoard = utils.SetLuCun(utilsBoard, currentTianGan)
 	utilsBoard = utils.SetQingYang(utilsBoard, currentTianGan)
 	utilsBoard = utils.SetTuoLuo(utilsBoard, currentTianGan)
 	utilsBoard = utils.SetTianKui(utilsBoard, currentTianGan)
@@ -61,8 +71,8 @@ func NewTenYearsBoard(birthday time.Time, gender genders.Gender, index int) (*Ye
 	currentDiZhi := dizhi.DiZhi(int(utilsBoard.LunaBirthday.Year.DiZhi)+index) % 12
 	utilsBoard = utils.SetHuo(utilsBoard, &currentDiZhi, utilsBoard.LunaBirthday.Hour)
 	utilsBoard = utils.SetLing(utilsBoard, &currentDiZhi, utilsBoard.LunaBirthday.Hour)
-	*yearBoard = YearBoard(*utilsBoard)
-	return yearBoard, nil
+	yearBoard = YearBoard(*utilsBoard)
+	return &yearBoard, nil
 }
 
 // rotateGongWeiNameByIndex one index is ten years. Basic on ages, this function is returning
