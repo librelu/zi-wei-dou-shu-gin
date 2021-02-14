@@ -39,3 +39,6 @@ test:
 
 vet:
 	go vet ./
+
+run:
+	export GIN_MODE=debug; go run main.go

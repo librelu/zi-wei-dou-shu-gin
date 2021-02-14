@@ -10,8 +10,8 @@ import (
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/genders"
 )
 
-// GetBoard get board handler
-func (h handler) GetBoard(c *gin.Context) {
+// GetTianBoard get board handler
+func (h handler) GetTianBoard(c *gin.Context) {
 	req := new(GetBoardRequest)
 	if err := validateGetBoardRequest(c, req); err != nil {
 		handleError(c, err)
@@ -24,17 +24,17 @@ func (h handler) GetBoard(c *gin.Context) {
 	location := time.FixedZone(fmt.Sprintf("UTC %d", timezone), req.TimeZone)
 	birthday := time.Date(req.BirthYear, time.Month(req.BirthMonth), req.BirthDate, req.BirthHour, 0, 0, 0, location)
 	gender := genders.Gender(req.Gender)
-	b, err := ziwei.NewBoard(birthday, gender)
+	b, err := ziwei.NewTianBoard(birthday, gender)
 	board, err := b.CreateTianBoard()
 	if err != nil {
 		handleError(c, err)
 		return
 	}
-	resp := convertBoardToGetBoardResponse(board, birthday)
+	resp := convertTianBoardToGetBoardResponse(board, birthday)
 	c.JSON(http.StatusOK, resp)
 }
 
-func convertBoardToGetBoardResponse(board *ziwei.Board, birthday time.Time) *GetBoardResponse {
+func convertTianBoardToGetBoardResponse(board *ziwei.TianBoard, birthday time.Time) *GetBoardResponse {
 	// convert blocks
 	blocks := make([]*Block, len(board.Blocks))
 	for i, b := range board.Blocks {

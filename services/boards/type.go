@@ -3,7 +3,7 @@ package boards
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/zi-wei-dou-shu-gin/db/dao"
-	"github.com/zi-wei-dou-shu-gin/utils/ziwei"
+	"github.com/zi-wei-dou-shu-gin/utils/ziwei/utils"
 )
 
 type handler struct {
@@ -11,7 +11,7 @@ type handler struct {
 }
 
 type Handler interface {
-	GetBoard(c *gin.Context)
+	GetTianBoard(c *gin.Context)
 	GetYearBoard(c *gin.Context)
 }
 
@@ -68,7 +68,7 @@ type SaveBoardRequest struct {
 
 type Block struct {
 	GongWeiName   string
-	Stars         []*ziwei.Star
+	Stars         []*utils.Star
 	Location      *Location
 	TenYearsRound string
 }

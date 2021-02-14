@@ -9,16 +9,16 @@ import (
 	"github.com/zi-wei-dou-shu-gin/utils/lunacal"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/dizhi"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/genders"
-	"github.com/zi-wei-dou-shu-gin/utils/ziwei/gong"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/miaoxian"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/mingju"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/stars"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/startype"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/tiangan"
+	"github.com/zi-wei-dou-shu-gin/utils/ziwei/utils"
 )
 
-func NewBoard(birthday time.Time, gender genders.Gender) (*Board, error) {
-	board := new(Board)
+func NewTianBoard(birthday time.Time, gender genders.Gender) (*TianBoard, error) {
+	board := new(TianBoard)
 	board.Birthday = birthday
 	board.Gender = gender
 	lunaDate := lunacal.Solar2Lunar(birthday)
@@ -28,13 +28,15 @@ func NewBoard(birthday time.Time, gender genders.Gender) (*Board, error) {
 		return nil, fmt.Errorf("failed in set gender: %w", err)
 	}
 	board.StarsMap = make(map[stars.StarName]int)
-	board.setupDiZhi()
-	board.setupGongWei(board.LunaBirthday)
-	board.setYinShouAndTianGanLocation(&board.LunaBirthday.Year.TianGan)
-	return board, nil
+	b := utils.Board(*board)
+	utilBoard := utils.SetupDiZhi(&b)
+	utilBoard = utils.SetupGongWei(utilBoard, lunaDate)
+	utilBoard = utils.SetYinShouAndTianGanLocation(utilBoard, &board.LunaBirthday.Year.TianGan)
+	tainBoard := TianBoard(*utilBoard)
+	return &tainBoard, nil
 }
 
-func (b *Board) CreateTianBoard() (*Board, error) {
+func (b *TianBoard) CreateTianBoard() (*TianBoard, error) {
 	mingGongLocation := b.getMingGong(b.LunaBirthday.Hour, b.LunaBirthday.Month)
 	b.MingGongLocation = int(*mingGongLocation)
 	b.setMingJu(mingGongLocation)
@@ -43,13 +45,13 @@ func (b *Board) CreateTianBoard() (*Board, error) {
 		return nil, fmt.Errorf("failed in set fourteen main stars, error: %w", err)
 	}
 	b.setupMainStarsConnections(mingGongLocation)
-	b.setUpNainGanStars(&b.LunaBirthday.Year.TianGan)
+	b = setUpNainGanStars(b, b.LunaBirthday.Year.TianGan)
 	b.setXunKong(b.LunaBirthday.Year)
 	b.setJieKong(&b.LunaBirthday.Year.TianGan)
 	shenGongLocation := b.getShengGong(b.LunaBirthday.Hour, b.LunaBirthday.Month)
 	b.setNianZhiXiZhuXing(&b.LunaBirthday.Year.DiZhi, mingGongLocation, shenGongLocation)
 	b.setYueXiXing(int(b.LunaBirthday.Month))
-	b.setShiXiZhuXing(&b.LunaBirthday.Year.DiZhi, int(b.LunaBirthday.Month), int(b.LunaBirthday.Day), b.LunaBirthday.Hour)
+	b = setShiXiZhuXing(b, &b.LunaBirthday.Year.DiZhi, int(b.LunaBirthday.Month), int(b.LunaBirthday.Day), b.LunaBirthday.Hour)
 	err = b.setMingZhu(&b.LunaBirthday.Year.DiZhi)
 	if err != nil {
 		return nil, fmt.Errorf("failed in set ming zhu, error: %w", err)
@@ -74,7 +76,7 @@ func (b *Board) CreateTianBoard() (*Board, error) {
 	return b, nil
 }
 
-func (b *Board) setupMainStarsConnections(minGongLocation *dizhi.DiZhi) {
+func (b *TianBoard) setupMainStarsConnections(minGongLocation *dizhi.DiZhi) {
 	mingGongIndex := int(*minGongLocation)
 	b.MainStarConnections = make([]int, 3)
 	b.MainStarConnections[0] = (mingGongIndex + 4) % 12
@@ -82,7 +84,7 @@ func (b *Board) setupMainStarsConnections(minGongLocation *dizhi.DiZhi) {
 	b.MainStarConnections[2] = (mingGongIndex + 8) % 12
 }
 
-func (b *Board) setTenYearsRound(mingGongLocation *dizhi.DiZhi) {
+func (b *TianBoard) setTenYearsRound(mingGongLocation *dizhi.DiZhi) {
 	number := int(b.MingJu.Number)
 	tenYearsRoundFormat := "%d-%d"
 	if b.Gender == genders.YangMale || b.Gender == genders.YinFemale {
@@ -109,52 +111,7 @@ func (b *Board) setTenYearsRound(mingGongLocation *dizhi.DiZhi) {
 
 }
 
-func (b *Board) setupDiZhi() {
-	b.Blocks = make([]*Block, defaultBoardBlock)
-	for i := range b.Blocks {
-		b.Blocks[i] = &Block{
-			Location: &Location{
-				DiZhi: dizhi.DiZhi(i),
-			},
-		}
-	}
-	return
-}
-
-// 設定寅首
-func (b *Board) setYinShouAndTianGanLocation(birthYear *tiangan.TianGan) {
-	yinShou := yinShouMap[*birthYear]
-	for i := 0; i < 12; i++ {
-		blockIndex := (i + 2) % 12
-		tainGanName := (int(yinShou) + i) % 10
-		b.Blocks[blockIndex].Location.TianGan = tiangan.TianGan(tainGanName)
-	}
-	return
-}
-
-func (b *Board) setupGongWei(lunaDate *lunacal.LunaDate) {
-	hour := lunaDate.Hour
-	month := lunaDate.Month
-	mingGongLocation := b.getMingGong(hour, month)
-	shengGongLocation := b.getShengGong(hour, month)
-	b.setTwelveGongs(mingGongLocation)
-	b.ShenGongLocation = int(*shengGongLocation)
-
-	return
-}
-
-func (b *Board) setTwelveGongs(mingGongLocation *dizhi.DiZhi) {
-	for i := range b.Blocks {
-		index := int(*mingGongLocation) + i
-		if index > 11 {
-			index -= 12
-		}
-		b.Blocks[index].GongWeiName = gong.Gong(i).String()
-	}
-	return
-}
-
-func (b *Board) getMingGong(hour *dizhi.DiZhi, month uint) *dizhi.DiZhi {
+func (b *TianBoard) getMingGong(hour *dizhi.DiZhi, month uint) *dizhi.DiZhi {
 	hourIndex := int(*hour) - 2
 	mingGong := int(month-1) - int(hourIndex)
 	if mingGong < 0 {
@@ -166,7 +123,7 @@ func (b *Board) getMingGong(hour *dizhi.DiZhi, month uint) *dizhi.DiZhi {
 	return &mingGongLocation
 }
 
-func (b *Board) getShengGong(hour *dizhi.DiZhi, month uint) *dizhi.DiZhi {
+func (b *TianBoard) getShengGong(hour *dizhi.DiZhi, month uint) *dizhi.DiZhi {
 	hourIndex := int(*hour) - 10
 	shengGong := int(month-1) + int(hourIndex)
 	if shengGong < 0 {
@@ -176,7 +133,7 @@ func (b *Board) getShengGong(hour *dizhi.DiZhi, month uint) *dizhi.DiZhi {
 	return &shengGongLocation
 }
 
-func (b *Board) setMingJu(mingGongLocation *dizhi.DiZhi) {
+func (b *TianBoard) setMingJu(mingGongLocation *dizhi.DiZhi) {
 	minGongTainGan := b.Blocks[*mingGongLocation].Location.TianGan
 	tianGanIndex := int((minGongTainGan)/2) % 5
 	diZhiIndex := int((*mingGongLocation)/2) % 3
@@ -186,16 +143,16 @@ func (b *Board) setMingJu(mingGongLocation *dizhi.DiZhi) {
 	}
 
 	juType := mingju.MingJuType(mingJuIndex)
-	b.MingJu = &MingJu{
+	b.MingJu = &utils.MingJu{
 		JuType: juType,
 		Number: mingju.JuShuMap[juType],
 	}
 }
 
-func (b *Board) setFourteenMainStars(mingGongLocation *dizhi.DiZhi, mingJu *MingJu, birthdate uint) error {
+func (b *TianBoard) setFourteenMainStars(mingGongLocation *dizhi.DiZhi, mingJu *utils.MingJu, birthdate uint) error {
 	// 設定紫微
 	ziWeiStarIndex := getZiWeiStarLocation(mingGongLocation, mingJu, birthdate)
-	b.Blocks[ziWeiStarIndex].Stars = append(b.Blocks[ziWeiStarIndex].Stars, &Star{
+	b.Blocks[ziWeiStarIndex].Stars = append(b.Blocks[ziWeiStarIndex].Stars, &utils.Star{
 		Name:     stars.ZiWei.String(),
 		StarType: startype.FourteenMainStars.String(),
 		MiaoXian: getZiWeiMiaoXian(ziWeiStarIndex).String(),
@@ -205,7 +162,7 @@ func (b *Board) setFourteenMainStars(mingGongLocation *dizhi.DiZhi, mingJu *Ming
 	// 設定天府
 	tianFuIndex, err := b.setTianFuStarLocation(ziWeiStarIndex)
 	if err == nil {
-		b.Blocks[tianFuIndex].Stars = append(b.Blocks[tianFuIndex].Stars, &Star{
+		b.Blocks[tianFuIndex].Stars = append(b.Blocks[tianFuIndex].Stars, &utils.Star{
 			Name:     stars.TianFu.String(),
 			StarType: startype.FourteenMainStars.String(),
 			MiaoXian: getTianFuMiaoXian(tianFuIndex).String(),
@@ -221,7 +178,7 @@ func (b *Board) setFourteenMainStars(mingGongLocation *dizhi.DiZhi, mingJu *Ming
 }
 
 // setSiHua 安四化
-func (b *Board) setSiHua(birthYear *tiangan.TianGan) error {
+func (b *TianBoard) setSiHua(birthYear *tiangan.TianGan) error {
 	if err := b.setHuaLu(birthYear); err != nil {
 		return err
 	}
@@ -237,92 +194,8 @@ func (b *Board) setSiHua(birthYear *tiangan.TianGan) error {
 	return nil
 }
 
-func (b *Board) getHuaLuLocation(birthYear *tiangan.TianGan) (int, error) {
-	starMap := []stars.StarName{
-		stars.LianZhen,
-		stars.TianJi,
-		stars.TianTong,
-		stars.TaiYin,
-		stars.TanLang,
-		stars.WuQu,
-		stars.TaiYang,
-		stars.JuMen,
-		stars.TianLiang,
-		stars.PoJun,
-	}
-	starName := starMap[*birthYear]
-	index, ok := b.StarsMap[starName]
-	if !ok {
-		return 0, fmt.Errorf("current star not found, current birth year: %d", birthYear)
-	}
-	return index, nil
-}
-
-func (b *Board) getHuaQuanLocation(birthYear *tiangan.TianGan) (int, error) {
-	starMap := []stars.StarName{
-		stars.PoJun,
-		stars.TianLiang,
-		stars.TianJi,
-		stars.TianTong,
-		stars.TaiYin,
-		stars.TanLang,
-		stars.WuQu,
-		stars.TaiYang,
-		stars.ZiWei,
-		stars.JuMen,
-	}
-	starName := starMap[*birthYear]
-	index, ok := b.StarsMap[starName]
-	if !ok {
-		return 0, fmt.Errorf("current star not found, current birth year: %d", birthYear)
-	}
-	return index, nil
-}
-
-func (b *Board) getHuaKeLocation(birthYear *tiangan.TianGan) (int, error) {
-	starMap := []stars.StarName{
-		stars.WuQu,
-		stars.ZiWei,
-		stars.WenChang,
-		stars.TianJi,
-		stars.TaiYang,
-		stars.TianLiang,
-		stars.TianFu,
-		stars.WenQu,
-		stars.TianFu,
-		stars.TaiYin,
-	}
-	starName := starMap[*birthYear]
-	index, ok := b.StarsMap[starName]
-	if !ok {
-		return 0, fmt.Errorf("current star not found, current birth year: %d", birthYear)
-	}
-	return index, nil
-}
-
-func (b *Board) getHuaJiLocation(birthYear *tiangan.TianGan) (int, error) {
-	starMap := []stars.StarName{
-		stars.TaiYang,
-		stars.TaiYin,
-		stars.LianZhen,
-		stars.JuMen,
-		stars.TianJi,
-		stars.WenQu,
-		stars.TianTong,
-		stars.WenChang,
-		stars.WuQu,
-		stars.TanLang,
-	}
-	starName := starMap[*birthYear]
-	index, ok := b.StarsMap[starName]
-	if !ok {
-		return 0, fmt.Errorf("current star not found, current birth year: %d", birthYear)
-	}
-	return index, nil
-}
-
 // setHuaLu 設定化祿
-func (b *Board) setHuaLu(birthYear *tiangan.TianGan) error {
+func (b *TianBoard) setHuaLu(birthYear *tiangan.TianGan) error {
 	starMap := []stars.StarName{
 		stars.LianZhen,
 		stars.TianJi,
@@ -354,7 +227,7 @@ func (b *Board) setHuaLu(birthYear *tiangan.TianGan) error {
 }
 
 // setHuaQuan 設定化權
-func (b *Board) setHuaQuan(birthYear *tiangan.TianGan) error {
+func (b *TianBoard) setHuaQuan(birthYear *tiangan.TianGan) error {
 	starMap := []stars.StarName{
 		stars.PoJun,
 		stars.TianLiang,
@@ -386,7 +259,7 @@ func (b *Board) setHuaQuan(birthYear *tiangan.TianGan) error {
 }
 
 // setHuaKe 設定化科
-func (b *Board) setHuaKe(birthYear *tiangan.TianGan) error {
+func (b *TianBoard) setHuaKe(birthYear *tiangan.TianGan) error {
 	starMap := []stars.StarName{
 		stars.WuQu,
 		stars.ZiWei,
@@ -418,7 +291,7 @@ func (b *Board) setHuaKe(birthYear *tiangan.TianGan) error {
 }
 
 // setHuaJi 設定化忌
-func (b *Board) setHuaJi(birthYear *tiangan.TianGan) error {
+func (b *TianBoard) setHuaJi(birthYear *tiangan.TianGan) error {
 	starMap := []stars.StarName{
 		stars.TaiYang,
 		stars.TaiYin,
@@ -450,13 +323,13 @@ func (b *Board) setHuaJi(birthYear *tiangan.TianGan) error {
 }
 
 //setStarsBeggingWithZiWei 順時針一宮安天機星，跳隔一宮，安太陽星，順時針一宮安武曲星，順時針一宮安天同星，跳隔兩宮，安廉貞星
-func (b *Board) setStarsBeggingWithZiWei(ziWeiStarIndex int) {
+func (b *TianBoard) setStarsBeggingWithZiWei(ziWeiStarIndex int) {
 	// 設定天機
 	tianJi := ziWeiStarIndex - 1
 	if tianJi < 0 {
 		tianJi = 12 + tianJi
 	}
-	b.Blocks[tianJi].Stars = append(b.Blocks[tianJi].Stars, &Star{
+	b.Blocks[tianJi].Stars = append(b.Blocks[tianJi].Stars, &utils.Star{
 		Name:     stars.TianJi.String(),
 		StarType: startype.FourteenMainStars.String(),
 		MiaoXian: getTianJiMiaoXian(tianJi).String(),
@@ -468,7 +341,7 @@ func (b *Board) setStarsBeggingWithZiWei(ziWeiStarIndex int) {
 	if taiYang < 0 {
 		taiYang = 12 + taiYang
 	}
-	b.Blocks[taiYang].Stars = append(b.Blocks[taiYang].Stars, &Star{
+	b.Blocks[taiYang].Stars = append(b.Blocks[taiYang].Stars, &utils.Star{
 		Name:     stars.TaiYang.String(),
 		StarType: startype.FourteenMainStars.String(),
 		MiaoXian: getTaiYangMiaoXian(taiYang).String(),
@@ -480,7 +353,7 @@ func (b *Board) setStarsBeggingWithZiWei(ziWeiStarIndex int) {
 	if wuQu < 0 {
 		wuQu = 12 + wuQu
 	}
-	b.Blocks[wuQu].Stars = append(b.Blocks[wuQu].Stars, &Star{
+	b.Blocks[wuQu].Stars = append(b.Blocks[wuQu].Stars, &utils.Star{
 		Name:     stars.WuQu.String(),
 		StarType: startype.FourteenMainStars.String(),
 		MiaoXian: getWuQuMiaoXian(wuQu).String(),
@@ -492,7 +365,7 @@ func (b *Board) setStarsBeggingWithZiWei(ziWeiStarIndex int) {
 	if tianTong < 0 {
 		tianTong = 12 + tianTong
 	}
-	b.Blocks[tianTong].Stars = append(b.Blocks[tianTong].Stars, &Star{
+	b.Blocks[tianTong].Stars = append(b.Blocks[tianTong].Stars, &utils.Star{
 		Name:     stars.TianTong.String(),
 		StarType: startype.FourteenMainStars.String(),
 		MiaoXian: getTianTongMiaoXian(tianTong).String(),
@@ -504,7 +377,7 @@ func (b *Board) setStarsBeggingWithZiWei(ziWeiStarIndex int) {
 	if lianZhen < 0 {
 		lianZhen = 12 + lianZhen
 	}
-	b.Blocks[lianZhen].Stars = append(b.Blocks[lianZhen].Stars, &Star{
+	b.Blocks[lianZhen].Stars = append(b.Blocks[lianZhen].Stars, &utils.Star{
 		Name:     stars.LianZhen.String(),
 		StarType: startype.FourteenMainStars.String(),
 		MiaoXian: getLianZhenMiaoXian(lianZhen).String(),
@@ -515,13 +388,13 @@ func (b *Board) setStarsBeggingWithZiWei(ziWeiStarIndex int) {
 }
 
 //setStarsBeggingWithTianFu 逆時針一宮安太陰星，逆時針一宮安貪狼星，逆時針一宮安巨門星，逆時針一宮安天相星，逆時針一宮安天梁星，逆時針一宮安七殺星，跳隔三宮，安破軍星
-func (b *Board) setStarsBeggingWithTianFu(tianFuIndex int) {
+func (b *TianBoard) setStarsBeggingWithTianFu(tianFuIndex int) {
 	// 設定太陰
 	taiYin := tianFuIndex + 1
 	if taiYin > 11 {
 		taiYin = taiYin - 12
 	}
-	b.Blocks[taiYin].Stars = append(b.Blocks[taiYin].Stars, &Star{
+	b.Blocks[taiYin].Stars = append(b.Blocks[taiYin].Stars, &utils.Star{
 		Name:     stars.TaiYin.String(),
 		StarType: startype.FourteenMainStars.String(),
 		MiaoXian: getTaiYinMiaoXian(taiYin).String(),
@@ -533,7 +406,7 @@ func (b *Board) setStarsBeggingWithTianFu(tianFuIndex int) {
 	if tanLang > 11 {
 		tanLang = tanLang - 12
 	}
-	b.Blocks[tanLang].Stars = append(b.Blocks[tanLang].Stars, &Star{
+	b.Blocks[tanLang].Stars = append(b.Blocks[tanLang].Stars, &utils.Star{
 		Name:     stars.TanLang.String(),
 		StarType: startype.FourteenMainStars.String(),
 		MiaoXian: getTanLangMiaoXian(tanLang).String(),
@@ -545,7 +418,7 @@ func (b *Board) setStarsBeggingWithTianFu(tianFuIndex int) {
 	if juMen > 11 {
 		juMen = juMen - 12
 	}
-	b.Blocks[juMen].Stars = append(b.Blocks[juMen].Stars, &Star{
+	b.Blocks[juMen].Stars = append(b.Blocks[juMen].Stars, &utils.Star{
 		Name:     stars.JuMen.String(),
 		StarType: startype.FourteenMainStars.String(),
 		MiaoXian: getJuMenMiaoXian(juMen).String(),
@@ -557,7 +430,7 @@ func (b *Board) setStarsBeggingWithTianFu(tianFuIndex int) {
 	if tianXiang > 11 {
 		tianXiang = tianXiang - 12
 	}
-	b.Blocks[tianXiang].Stars = append(b.Blocks[tianXiang].Stars, &Star{
+	b.Blocks[tianXiang].Stars = append(b.Blocks[tianXiang].Stars, &utils.Star{
 		Name:     stars.TianXiang.String(),
 		StarType: startype.FourteenMainStars.String(),
 		MiaoXian: getTianXiangXian(tianXiang).String(),
@@ -569,7 +442,7 @@ func (b *Board) setStarsBeggingWithTianFu(tianFuIndex int) {
 	if tianLiang > 11 {
 		tianLiang = tianLiang - 12
 	}
-	b.Blocks[tianLiang].Stars = append(b.Blocks[tianLiang].Stars, &Star{
+	b.Blocks[tianLiang].Stars = append(b.Blocks[tianLiang].Stars, &utils.Star{
 		Name:     stars.TianLiang.String(),
 		StarType: startype.FourteenMainStars.String(),
 		MiaoXian: getTianLiangXian(tianLiang).String(),
@@ -581,7 +454,7 @@ func (b *Board) setStarsBeggingWithTianFu(tianFuIndex int) {
 	if qiSha > 11 {
 		qiSha = qiSha - 12
 	}
-	b.Blocks[qiSha].Stars = append(b.Blocks[qiSha].Stars, &Star{
+	b.Blocks[qiSha].Stars = append(b.Blocks[qiSha].Stars, &utils.Star{
 		Name:     stars.QiSha.String(),
 		StarType: startype.FourteenMainStars.String(),
 		MiaoXian: getQiShaMiaoXian(qiSha).String(),
@@ -593,7 +466,7 @@ func (b *Board) setStarsBeggingWithTianFu(tianFuIndex int) {
 	if poJun > 11 {
 		poJun = poJun - 12
 	}
-	b.Blocks[poJun].Stars = append(b.Blocks[poJun].Stars, &Star{
+	b.Blocks[poJun].Stars = append(b.Blocks[poJun].Stars, &utils.Star{
 		Name:     stars.PoJun.String(),
 		StarType: startype.FourteenMainStars.String(),
 		MiaoXian: getPoJunMiaoXian(poJun).String(),
@@ -602,7 +475,7 @@ func (b *Board) setStarsBeggingWithTianFu(tianFuIndex int) {
 	return
 }
 
-func getZiWeiStarLocation(mingGongLocation *dizhi.DiZhi, mingJu *MingJu, birthdate uint) int {
+func getZiWeiStarLocation(mingGongLocation *dizhi.DiZhi, mingJu *utils.MingJu, birthdate uint) int {
 	steps := int(math.Floor(float64(birthdate / mingJu.Number)))
 	if birthdate%mingJu.Number > 0 {
 		steps = steps + 1
@@ -624,7 +497,7 @@ func getZiWeiStarLocation(mingGongLocation *dizhi.DiZhi, mingJu *MingJu, birthda
 	return index
 }
 
-func (b *Board) setTianFuStarLocation(ziWeiStarIndex int) (int, error) {
+func (b *TianBoard) setTianFuStarLocation(ziWeiStarIndex int) (int, error) {
 	index := 0
 	if ziWeiStarIndex < 8 {
 		index = 8 + (8 - ziWeiStarIndex)
@@ -644,114 +517,22 @@ func (b *Board) setTianFuStarLocation(ziWeiStarIndex int) (int, error) {
 }
 
 // setUpNainGanStars　設定年干系諸星
-func (b *Board) setUpNainGanStars(tianGan *tiangan.TianGan) {
-	b.setLuCun(tianGan)
-	b.setQingYang(tianGan)
-	b.setTuoLuo(tianGan)
-	b.setTianKui(tianGan)
-	b.setTianYue(tianGan)
-	b.setTianGuan(tianGan)
-	b.setTianFu(tianGan)
-}
-
-// setLuCun 設定祿存
-func (b *Board) setLuCun(tianGan *tiangan.TianGan) {
-	luCunMap := []dizhi.DiZhi{
-		dizhi.Yin,
-		dizhi.Mao,
-		dizhi.Si,
-		dizhi.Wu,
-		dizhi.Si,
-		dizhi.Wu,
-		dizhi.Shen,
-		dizhi.You,
-		dizhi.Hai,
-		dizhi.Zi,
-	}
-	luCunLocation := luCunMap[int(*tianGan)]
-	b.Blocks[luCunLocation].Stars = append(b.Blocks[luCunLocation].Stars, &Star{
-		Name:     stars.LuCun.String(),
-		StarType: startype.ShiSiFuXing.String(),
-		MiaoXian: getLuCunMiaoXian(int(luCunLocation)).String(),
-	})
-	b.StarsMap[stars.LuCun] = int(luCunLocation)
-	return
-}
-
-// setQingYang 設定擎羊
-func (b *Board) setQingYang(tianGan *tiangan.TianGan) {
-	qingYangMap := []dizhi.DiZhi{
-		dizhi.Mao,
-		dizhi.Chen,
-		dizhi.Wu,
-		dizhi.Wei,
-		dizhi.Wu,
-		dizhi.Wei,
-		dizhi.You,
-		dizhi.Xu,
-		dizhi.Zi,
-		dizhi.Chou,
-	}
-	qingYangLocation := qingYangMap[int(*tianGan)]
-	b.Blocks[qingYangLocation].Stars = append(b.Blocks[qingYangLocation].Stars, &Star{
-		Name:     stars.QingYang.String(),
-		StarType: startype.RightFuXing.String(),
-		MiaoXian: getQingYangMiaoXian(int(qingYangLocation)).String(),
-	})
-	b.StarsMap[stars.QingYang] = int(qingYangLocation)
-	return
-}
-
-// setTuoLuo 設定陀羅
-func (b *Board) setTuoLuo(tianGan *tiangan.TianGan) {
-	tuoLuoMap := []dizhi.DiZhi{
-		dizhi.Chou,
-		dizhi.Yin,
-		dizhi.Chen,
-		dizhi.Si,
-		dizhi.Chen,
-		dizhi.Si,
-		dizhi.Wei,
-		dizhi.Shen,
-		dizhi.Xu,
-		dizhi.Hai,
-	}
-	tuoLuoLocation := tuoLuoMap[int(*tianGan)]
-	b.Blocks[tuoLuoLocation].Stars = append(b.Blocks[tuoLuoLocation].Stars, &Star{
-		Name:     stars.TuoLuo.String(),
-		StarType: startype.RightFuXing.String(),
-		MiaoXian: getTuoLuoMiaoXian(int(tuoLuoLocation)).String(),
-	})
-	b.StarsMap[stars.TuoLuo] = int(tuoLuoLocation)
-	return
-}
-
-// setTianKui 設定天𣁽
-func (b *Board) setTianKui(tianGan *tiangan.TianGan) {
-	tianKuiMap := []dizhi.DiZhi{
-		dizhi.Chou,
-		dizhi.Zi,
-		dizhi.Hai,
-		dizhi.Hai,
-		dizhi.Chou,
-		dizhi.Zi,
-		dizhi.Yin,
-		dizhi.Yin,
-		dizhi.Mao,
-		dizhi.Mao,
-	}
-	tianKuiLocation := tianKuiMap[int(*tianGan)]
-	b.Blocks[tianKuiLocation].Stars = append(b.Blocks[tianKuiLocation].Stars, &Star{
-		Name:     stars.TianKui.String(),
-		StarType: startype.LeftFuXing.String(),
-		MiaoXian: getTianKuiMiaoXian(int(tianKuiLocation)).String(),
-	})
-	b.StarsMap[stars.TianKui] = int(tianKuiLocation)
-	return
+func setUpNainGanStars(b *TianBoard, tianGan tiangan.TianGan) *TianBoard {
+	board := utils.Board(*b)
+	utilBoard := utils.SetLuCun(&board, tianGan)
+	utilBoard = utils.SetQingYang(utilBoard, tianGan)
+	utilBoard = utils.SetTuoLuo(utilBoard, tianGan)
+	utilBoard = utils.SetTianKui(utilBoard, tianGan)
+	utilBoard = utils.SetTianGuan(utilBoard, tianGan)
+	tainBoard := TianBoard(*utilBoard)
+	tb := &tainBoard
+	tb = setTianYue(tb, tianGan)
+	tb = setTianFu(tb, tianGan)
+	return tb
 }
 
 // setTianYue 設定天鉞
-func (b *Board) setTianYue(tianGan *tiangan.TianGan) {
+func setTianYue(b *TianBoard, tianGan tiangan.TianGan) *TianBoard {
 	tianYueMap := []dizhi.DiZhi{
 		dizhi.Wei,
 		dizhi.Shen,
@@ -764,40 +545,18 @@ func (b *Board) setTianYue(tianGan *tiangan.TianGan) {
 		dizhi.Si,
 		dizhi.Si,
 	}
-	tianYueLocation := tianYueMap[int(*tianGan)]
-	b.Blocks[tianYueLocation].Stars = append(b.Blocks[tianYueLocation].Stars, &Star{
+	tianYueLocation := tianYueMap[int(tianGan)]
+	b.Blocks[tianYueLocation].Stars = append(b.Blocks[tianYueLocation].Stars, &utils.Star{
 		Name:     stars.TianYue.String(),
 		StarType: startype.LeftFuXing.String(),
 		MiaoXian: getTianYueMiaoXian(int(tianYueLocation)).String(),
 	})
 	b.StarsMap[stars.TianYue] = int(tianYueLocation)
-	return
-}
-
-// setTianGuan 設定天官
-func (b *Board) setTianGuan(tianGan *tiangan.TianGan) {
-	tianGuanMap := []dizhi.DiZhi{
-		dizhi.Wei,
-		dizhi.Chen,
-		dizhi.Si,
-		dizhi.Yin,
-		dizhi.Mao,
-		dizhi.You,
-		dizhi.Hai,
-		dizhi.You,
-		dizhi.Xu,
-		dizhi.Wu,
-	}
-	tianGuanLocation := tianGuanMap[int(*tianGan)]
-	b.Blocks[tianGuanLocation].Stars = append(b.Blocks[tianGuanLocation].Stars, &Star{
-		Name:     stars.TianGuan.String(),
-		StarType: startype.NianGanXiZhuXing.String(),
-	})
-	return
+	return b
 }
 
 // setTianGuan 設定天福
-func (b *Board) setTianFu(tianGan *tiangan.TianGan) {
+func setTianFu(b *TianBoard, tianGan tiangan.TianGan) *TianBoard {
 	tianFuMap := []dizhi.DiZhi{
 		dizhi.You,
 		dizhi.Shen,
@@ -810,16 +569,16 @@ func (b *Board) setTianFu(tianGan *tiangan.TianGan) {
 		dizhi.Wu,
 		dizhi.Si,
 	}
-	tianFuLocation := tianFuMap[int(*tianGan)]
-	b.Blocks[tianFuLocation].Stars = append(b.Blocks[tianFuLocation].Stars, &Star{
+	tianFuLocation := tianFuMap[int(tianGan)]
+	b.Blocks[tianFuLocation].Stars = append(b.Blocks[tianFuLocation].Stars, &utils.Star{
 		Name:     stars.NainGanTianFu.String(),
 		StarType: startype.NianGanXiZhuXing.String(),
 	})
-	return
+	return b
 }
 
 // setXunKong 設定旬空星
-func (b *Board) setXunKong(birthYear *lunacal.TianGanDiZhi) {
+func (b *TianBoard) setXunKong(birthYear *lunacal.TianGanDiZhi) {
 	dizhi := int(birthYear.DiZhi)
 	if int(birthYear.TianGan) > dizhi {
 		dizhi += 11
@@ -830,24 +589,24 @@ func (b *Board) setXunKong(birthYear *lunacal.TianGanDiZhi) {
 	}
 
 	if (idx % 2) == 0 {
-		b.Blocks[idx].Stars = append(b.Blocks[idx].Stars, &Star{
+		b.Blocks[idx].Stars = append(b.Blocks[idx].Stars, &utils.Star{
 			Name:     stars.XunKong.String(),
 			StarType: startype.NianGanXiZhuXing.String(),
 		})
 
 		idx++
-		b.Blocks[idx].Stars = append(b.Blocks[idx].Stars, &Star{
+		b.Blocks[idx].Stars = append(b.Blocks[idx].Stars, &utils.Star{
 			Name:     stars.XunKong.String(),
 			StarType: startype.NianGanXiZhuXing.String(),
 		})
 	} else {
-		b.Blocks[idx].Stars = append(b.Blocks[idx].Stars, &Star{
+		b.Blocks[idx].Stars = append(b.Blocks[idx].Stars, &utils.Star{
 			Name:     stars.XunKong.String(),
 			StarType: startype.NianGanXiZhuXing.String(),
 		})
 
 		idx--
-		b.Blocks[idx].Stars = append(b.Blocks[idx].Stars, &Star{
+		b.Blocks[idx].Stars = append(b.Blocks[idx].Stars, &utils.Star{
 			Name:     stars.XunKong.String(),
 			StarType: startype.NianGanXiZhuXing.String(),
 		})
@@ -856,13 +615,13 @@ func (b *Board) setXunKong(birthYear *lunacal.TianGanDiZhi) {
 }
 
 // setJieKong 設定截空星
-func (b *Board) setJieKong(birthYear *tiangan.TianGan) {
+func (b *TianBoard) setJieKong(birthYear *tiangan.TianGan) {
 	index := ((4 - int(*birthYear)%5 + 1) * 2) - 1
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.JieKong.String(),
 		StarType: startype.NianGanXiZhuXing.String(),
 	})
-	b.Blocks[index-1].Stars = append(b.Blocks[index-1].Stars, &Star{
+	b.Blocks[index-1].Stars = append(b.Blocks[index-1].Stars, &utils.Star{
 		Name:     stars.JieKong.String(),
 		StarType: startype.NianGanXiZhuXing.String(),
 	})
@@ -870,7 +629,7 @@ func (b *Board) setJieKong(birthYear *tiangan.TianGan) {
 }
 
 // NianZhiXiZhuXing 設定年支系諸星
-func (b *Board) setNianZhiXiZhuXing(birthYear *dizhi.DiZhi, mingGongLocation *dizhi.DiZhi, shengGongLocation *dizhi.DiZhi) {
+func (b *TianBoard) setNianZhiXiZhuXing(birthYear *dizhi.DiZhi, mingGongLocation *dizhi.DiZhi, shengGongLocation *dizhi.DiZhi) {
 	b.setTianKu(birthYear)
 	b.setTianXu(birthYear)
 	b.setLongChi(birthYear)
@@ -894,9 +653,9 @@ func (b *Board) setNianZhiXiZhuXing(birthYear *dizhi.DiZhi, mingGongLocation *di
 }
 
 // setTianKu 設定天哭
-func (b *Board) setTianKu(birthYear *dizhi.DiZhi) {
+func (b *TianBoard) setTianKu(birthYear *dizhi.DiZhi) {
 	index := (11 - int(*birthYear) + 7) % 12
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.TianKu.String(),
 		StarType: startype.NianZhiXiZhuXing.String(),
 		MiaoXian: getTianKuMiaoXian(index).String(),
@@ -906,9 +665,9 @@ func (b *Board) setTianKu(birthYear *dizhi.DiZhi) {
 }
 
 // setTianXu 設定天虛
-func (b *Board) setTianXu(birthYear *dizhi.DiZhi) {
+func (b *TianBoard) setTianXu(birthYear *dizhi.DiZhi) {
 	index := (int(*birthYear) + 6) % 12
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.TianXu.String(),
 		StarType: startype.NianZhiXiZhuXing.String(),
 		MiaoXian: getTianXuMiaoXian(index).String(),
@@ -918,9 +677,9 @@ func (b *Board) setTianXu(birthYear *dizhi.DiZhi) {
 }
 
 // setLongChi 設定龍池
-func (b *Board) setLongChi(birthYear *dizhi.DiZhi) {
+func (b *TianBoard) setLongChi(birthYear *dizhi.DiZhi) {
 	index := (int(*birthYear) + 4) % 12
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.LongChi.String(),
 		StarType: startype.NianZhiXiZhuXing.String(),
 	})
@@ -928,9 +687,9 @@ func (b *Board) setLongChi(birthYear *dizhi.DiZhi) {
 }
 
 // setFengGe 設定鳳閣
-func (b *Board) setFengGe(birthYear *dizhi.DiZhi) {
+func (b *TianBoard) setFengGe(birthYear *dizhi.DiZhi) {
 	index := (11 - int(*birthYear) + 11) % 12
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.FengGe.String(),
 		StarType: startype.NianZhiXiZhuXing.String(),
 	})
@@ -938,9 +697,9 @@ func (b *Board) setFengGe(birthYear *dizhi.DiZhi) {
 }
 
 // setHongLuan 設定紅鸞
-func (b *Board) setHongLuan(birthYear *dizhi.DiZhi) {
+func (b *TianBoard) setHongLuan(birthYear *dizhi.DiZhi) {
 	index := (11 - int(*birthYear) + 4) % 12
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.HongLuan.String(),
 		StarType: startype.NianZhiXiZhuXing.String(),
 		MiaoXian: getHongLuanMiaoXian(index).String(),
@@ -950,9 +709,9 @@ func (b *Board) setHongLuan(birthYear *dizhi.DiZhi) {
 }
 
 // setTianXi 設定天喜
-func (b *Board) setTianXi(birthYear *dizhi.DiZhi) {
+func (b *TianBoard) setTianXi(birthYear *dizhi.DiZhi) {
 	index := (11 - int(*birthYear) + 10) % 12
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.TianXi.String(),
 		StarType: startype.NianZhiXiZhuXing.String(),
 		MiaoXian: getTianXiMiaoXian(index).String(),
@@ -962,11 +721,11 @@ func (b *Board) setTianXi(birthYear *dizhi.DiZhi) {
 }
 
 // setGuChen 設定孤辰
-func (b *Board) setGuChen(birthYear *dizhi.DiZhi) {
+func (b *TianBoard) setGuChen(birthYear *dizhi.DiZhi) {
 	locationIndex := (int(*birthYear) + 1) / 3 % 4
 	locations := []dizhi.DiZhi{dizhi.Yin, dizhi.Si, dizhi.Shen, dizhi.Hai}
 	index := locations[locationIndex]
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.GuChen.String(),
 		StarType: startype.NianZhiXiZhuXing.String(),
 	})
@@ -974,11 +733,11 @@ func (b *Board) setGuChen(birthYear *dizhi.DiZhi) {
 }
 
 // setGuaXiu　設定寡宿
-func (b *Board) setGuaXiu(birthYear *dizhi.DiZhi) {
+func (b *TianBoard) setGuaXiu(birthYear *dizhi.DiZhi) {
 	locationIndex := (int(*birthYear) + 1) / 3 % 4
 	locations := []dizhi.DiZhi{dizhi.Xu, dizhi.Chou, dizhi.Chen, dizhi.Wei}
 	index := locations[locationIndex]
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.GuaXiu.String(),
 		StarType: startype.NianZhiXiZhuXing.String(),
 	})
@@ -986,9 +745,9 @@ func (b *Board) setGuaXiu(birthYear *dizhi.DiZhi) {
 }
 
 // setJieShen 設定解神
-func (b *Board) setJieShen(birthYear *dizhi.DiZhi) {
+func (b *TianBoard) setJieShen(birthYear *dizhi.DiZhi) {
 	index := (11 - int(*birthYear) + 11) % 12
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.JieShen.String(),
 		StarType: startype.NianZhiXiZhuXing.String(),
 	})
@@ -996,11 +755,11 @@ func (b *Board) setJieShen(birthYear *dizhi.DiZhi) {
 }
 
 // setPoSui 設定破碎
-func (b *Board) setPoSui(birthYear *dizhi.DiZhi) {
+func (b *TianBoard) setPoSui(birthYear *dizhi.DiZhi) {
 	locationIndex := int(int(*birthYear) % 3)
 	locations := []dizhi.DiZhi{dizhi.Si, dizhi.Chou, dizhi.You}
 	b.Blocks[locations[locationIndex]].Stars = append(
-		b.Blocks[locations[locationIndex]].Stars, &Star{
+		b.Blocks[locations[locationIndex]].Stars, &utils.Star{
 			Name:     stars.PoSui.String(),
 			StarType: startype.NianZhiXiZhuXing.String(),
 		})
@@ -1008,12 +767,12 @@ func (b *Board) setPoSui(birthYear *dizhi.DiZhi) {
 }
 
 // setPoSui 設定天馬
-func (b *Board) setTianMa(birthYear *dizhi.DiZhi) {
+func (b *TianBoard) setTianMa(birthYear *dizhi.DiZhi) {
 	locationIndex := int((int(*birthYear) + 1) % 4)
 	locations := []dizhi.DiZhi{dizhi.Si, dizhi.Yin, dizhi.Hai, dizhi.Shen}
 	blockIndex := locations[locationIndex]
 	b.Blocks[blockIndex].Stars = append(
-		b.Blocks[blockIndex].Stars, &Star{
+		b.Blocks[blockIndex].Stars, &utils.Star{
 			Name:     stars.TianMa.String(),
 			StarType: startype.ShiSiFuXing.String(),
 			MiaoXian: getTianMaMiaoXian(int(blockIndex)).String(),
@@ -1023,13 +782,13 @@ func (b *Board) setTianMa(birthYear *dizhi.DiZhi) {
 }
 
 // setDaHao 設定大耗
-func (b *Board) setDaHao(birthYear *dizhi.DiZhi) {
+func (b *TianBoard) setDaHao(birthYear *dizhi.DiZhi) {
 	locationMap := []dizhi.DiZhi{
 		dizhi.Wei, dizhi.Wu, dizhi.You, dizhi.Shen, dizhi.Hai, dizhi.Xu, dizhi.Chou, dizhi.Zi, dizhi.Mao, dizhi.Yin, dizhi.Si, dizhi.Chen,
 	}
 	index := locationMap[*birthYear]
 	b.Blocks[index].Stars = append(
-		b.Blocks[index].Stars, &Star{
+		b.Blocks[index].Stars, &utils.Star{
 			Name:     stars.DaHao.String(),
 			StarType: startype.NianZhiXiZhuXing.String(),
 		})
@@ -1037,9 +796,9 @@ func (b *Board) setDaHao(birthYear *dizhi.DiZhi) {
 }
 
 // setTianDe 設定天德
-func (b *Board) setTianDe(birthYear *dizhi.DiZhi) {
+func (b *TianBoard) setTianDe(birthYear *dizhi.DiZhi) {
 	index := (int(*birthYear) + 9) % 12
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.TianDe.String(),
 		StarType: startype.NianZhiXiZhuXing.String(),
 	})
@@ -1047,11 +806,11 @@ func (b *Board) setTianDe(birthYear *dizhi.DiZhi) {
 }
 
 // setJieSha 設定劫殺
-func (b *Board) setJieSha(birthYear *dizhi.DiZhi) {
+func (b *TianBoard) setJieSha(birthYear *dizhi.DiZhi) {
 	locationIndex := int(int(*birthYear) % 4)
 	locations := []dizhi.DiZhi{dizhi.Si, dizhi.Yin, dizhi.Hai, dizhi.Shen}
 	b.Blocks[locations[locationIndex]].Stars = append(
-		b.Blocks[locations[locationIndex]].Stars, &Star{
+		b.Blocks[locations[locationIndex]].Stars, &utils.Star{
 			Name:     stars.JieSha.String(),
 			StarType: startype.NianZhiXiZhuXing.String(),
 		})
@@ -1059,11 +818,11 @@ func (b *Board) setJieSha(birthYear *dizhi.DiZhi) {
 }
 
 // setHuaGai 設定華蓋
-func (b *Board) setHuaGai(birthYear *dizhi.DiZhi) {
+func (b *TianBoard) setHuaGai(birthYear *dizhi.DiZhi) {
 	locationIndex := int(int(*birthYear) % 4)
 	locations := []dizhi.DiZhi{dizhi.Chen, dizhi.Chou, dizhi.Xu, dizhi.Wei}
 	b.Blocks[locations[locationIndex]].Stars = append(
-		b.Blocks[locations[locationIndex]].Stars, &Star{
+		b.Blocks[locations[locationIndex]].Stars, &utils.Star{
 			Name:     stars.HuaGai.String(),
 			StarType: startype.NianZhiXiZhuXing.String(),
 		})
@@ -1071,11 +830,11 @@ func (b *Board) setHuaGai(birthYear *dizhi.DiZhi) {
 }
 
 // setXianChi 設定咸池
-func (b *Board) setXianChi(birthYear *dizhi.DiZhi) {
+func (b *TianBoard) setXianChi(birthYear *dizhi.DiZhi) {
 	locationIndex := int(int(*birthYear) % 4)
 	locations := []dizhi.DiZhi{dizhi.You, dizhi.Wu, dizhi.Mao, dizhi.Zi}
 	b.Blocks[locations[locationIndex]].Stars = append(
-		b.Blocks[locations[locationIndex]].Stars, &Star{
+		b.Blocks[locations[locationIndex]].Stars, &utils.Star{
 			Name:     stars.XianChi.String(),
 			StarType: startype.NianZhiXiZhuXing.String(),
 		})
@@ -1083,10 +842,10 @@ func (b *Board) setXianChi(birthYear *dizhi.DiZhi) {
 }
 
 // setTianCai 設定天才
-func (b *Board) setTianCai(birthYear *dizhi.DiZhi, mingGongLocation *dizhi.DiZhi) {
+func (b *TianBoard) setTianCai(birthYear *dizhi.DiZhi, mingGongLocation *dizhi.DiZhi) {
 	index := (*mingGongLocation + *birthYear) % 12
 	b.Blocks[index].Stars = append(
-		b.Blocks[index].Stars, &Star{
+		b.Blocks[index].Stars, &utils.Star{
 			Name:     stars.TianCai.String(),
 			StarType: startype.NianZhiXiZhuXing.String(),
 		})
@@ -1094,10 +853,10 @@ func (b *Board) setTianCai(birthYear *dizhi.DiZhi, mingGongLocation *dizhi.DiZhi
 }
 
 // setTianShou 設定天壽
-func (b *Board) setTianShou(birthYear *dizhi.DiZhi, shengGongLocation *dizhi.DiZhi) {
+func (b *TianBoard) setTianShou(birthYear *dizhi.DiZhi, shengGongLocation *dizhi.DiZhi) {
 	index := (*shengGongLocation + *birthYear) % 12
 	b.Blocks[index].Stars = append(
-		b.Blocks[index].Stars, &Star{
+		b.Blocks[index].Stars, &utils.Star{
 			Name:     stars.TianShou.String(),
 			StarType: startype.NianZhiXiZhuXing.String(),
 		})
@@ -1105,9 +864,9 @@ func (b *Board) setTianShou(birthYear *dizhi.DiZhi, shengGongLocation *dizhi.DiZ
 }
 
 // setTianKong 設定天空
-func (b *Board) setTianKong(birthYear *dizhi.DiZhi) {
+func (b *TianBoard) setTianKong(birthYear *dizhi.DiZhi) {
 	index := (int(*birthYear) + 1) % 12
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.TianKong.String(),
 		StarType: startype.NianZhiXiZhuXing.String(),
 	})
@@ -1115,7 +874,7 @@ func (b *Board) setTianKong(birthYear *dizhi.DiZhi) {
 }
 
 // setYueXiXing 安月系星
-func (b *Board) setYueXiXing(birthMonth int) {
+func (b *TianBoard) setYueXiXing(birthMonth int) {
 	b.setZuoFu(birthMonth)
 	b.setYouBi(birthMonth)
 	b.setTianXing(birthMonth)
@@ -1127,9 +886,9 @@ func (b *Board) setYueXiXing(birthMonth int) {
 }
 
 // setZuoFu 設定左輔
-func (b *Board) setZuoFu(birthMonth int) {
+func (b *TianBoard) setZuoFu(birthMonth int) {
 	index := getZuoFuLocation(birthMonth)
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.ZuoFu.String(),
 		StarType: startype.LeftFuXing.String(),
 		MiaoXian: getZuoFuMiaoXian(index).String(),
@@ -1143,9 +902,9 @@ func getZuoFuLocation(birthMonth int) int {
 }
 
 // setYouBi 設定右弼
-func (b *Board) setYouBi(birthMonth int) {
+func (b *TianBoard) setYouBi(birthMonth int) {
 	index := getYouBiLocation(birthMonth)
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.YouBi.String(),
 		StarType: startype.LeftFuXing.String(),
 		MiaoXian: getYouBiMiaoXian(index).String(),
@@ -1159,9 +918,9 @@ func getYouBiLocation(birthMonth int) int {
 }
 
 // setTianXing 設定天刑
-func (b *Board) setTianXing(birthMonth int) {
+func (b *TianBoard) setTianXing(birthMonth int) {
 	index := (birthMonth + 8) % 12
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.TianXing.String(),
 		StarType: startype.YueXiXing.String(),
 		MiaoXian: getTianXingMiaoXian(index).String(),
@@ -1171,9 +930,9 @@ func (b *Board) setTianXing(birthMonth int) {
 }
 
 // setTianYao 設定天姚
-func (b *Board) setTianYao(birthMonth int) {
+func (b *TianBoard) setTianYao(birthMonth int) {
 	index := (birthMonth) % 12
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.TianYao.String(),
 		StarType: startype.YueXiXing.String(),
 		MiaoXian: getTianYaoMiaoXian(index).String(),
@@ -1183,11 +942,11 @@ func (b *Board) setTianYao(birthMonth int) {
 }
 
 // setTianWu 設定天巫
-func (b *Board) setTianWu(birthMonth int) {
+func (b *TianBoard) setTianWu(birthMonth int) {
 	locationIndex := (birthMonth - 1) % 4
 	locations := []dizhi.DiZhi{dizhi.Si, dizhi.Shen, dizhi.Yin, dizhi.Hai}
 	b.Blocks[locations[locationIndex]].Stars = append(
-		b.Blocks[locations[locationIndex]].Stars, &Star{
+		b.Blocks[locations[locationIndex]].Stars, &utils.Star{
 			Name:     stars.TianWu.String(),
 			StarType: startype.YueXiXing.String(),
 		})
@@ -1196,13 +955,13 @@ func (b *Board) setTianWu(birthMonth int) {
 
 // setYueXiXingTianYue 設定天月
 // TODO: refactor Yue Xi Xing to a object
-func (b *Board) setYueXiXingTianYue(birthMonth int) {
+func (b *TianBoard) setYueXiXingTianYue(birthMonth int) {
 	locationMap := []dizhi.DiZhi{
 		dizhi.Xu, dizhi.Si, dizhi.Chen, dizhi.Yin, dizhi.Wei, dizhi.Mao, dizhi.Hai, dizhi.Wei, dizhi.Yin, dizhi.Wu, dizhi.Xu, dizhi.Yin,
 	}
 	index := locationMap[birthMonth-1]
 	b.Blocks[index].Stars = append(
-		b.Blocks[index].Stars, &Star{
+		b.Blocks[index].Stars, &utils.Star{
 			Name:     stars.YueXiXingTianYue.String(),
 			StarType: startype.YueXiXing.String(),
 		})
@@ -1210,11 +969,11 @@ func (b *Board) setYueXiXingTianYue(birthMonth int) {
 }
 
 // setYinSha 設定陰煞
-func (b *Board) setYinSha(birthMonth int) {
+func (b *TianBoard) setYinSha(birthMonth int) {
 	locationIndex := (birthMonth + 2) % 6
 	locations := []dizhi.DiZhi{dizhi.Shen, dizhi.Wu, dizhi.Chen, dizhi.Yin, dizhi.Zi, dizhi.Xu}
 	b.Blocks[locations[locationIndex]].Stars = append(
-		b.Blocks[locations[locationIndex]].Stars, &Star{
+		b.Blocks[locations[locationIndex]].Stars, &utils.Star{
 			Name:     stars.YinSha.String(),
 			StarType: startype.YueXiXing.String(),
 		})
@@ -1222,15 +981,18 @@ func (b *Board) setYinSha(birthMonth int) {
 }
 
 // setShiXiZhuXing 安時系諸星
-func (b *Board) setShiXiZhuXing(birthYear *dizhi.DiZhi, birthMonth int, birthDate int, birthHour *dizhi.DiZhi) {
+func setShiXiZhuXing(b *TianBoard, birthYear *dizhi.DiZhi, birthMonth int, birthDate int, birthHour *dizhi.DiZhi) *TianBoard {
 	b.setWenChang(birthHour)
 	b.setWenQu(birthHour)
 	b.setDiJie(birthHour)
 	b.setDiKong(birthHour)
 	b.setTaiFu(birthHour)
 	b.setFengGao(birthHour)
-	b.setHuo(birthYear, birthHour)
-	b.setLing(birthYear, birthHour)
+	utilBoard := utils.Board(*b)
+	ub := &utilBoard
+	ub = utils.SetHuo(ub, birthYear, birthHour)
+	ub = utils.SetLing(ub, birthYear, birthHour)
+	*b = TianBoard(*ub)
 	zuoFuLocation := getZuoFuLocation(birthMonth)
 	b.setSanTai(zuoFuLocation, birthDate)
 	youBiLocation := getYouBiLocation(birthMonth)
@@ -1239,13 +1001,13 @@ func (b *Board) setShiXiZhuXing(birthYear *dizhi.DiZhi, birthMonth int, birthDat
 	b.setEnGuang(wenChangLocation, birthDate)
 	wenQuLocation := getWenQuLocation(birthHour)
 	b.setTianGui(wenQuLocation, birthDate)
-	return
+	return b
 }
 
 // setWenChang 設定文昌
-func (b *Board) setWenChang(birthHour *dizhi.DiZhi) {
+func (b *TianBoard) setWenChang(birthHour *dizhi.DiZhi) {
 	index := getWenChangLocation(birthHour)
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.WenChang.String(),
 		StarType: startype.LeftFuXing.String(),
 		MiaoXian: getWenChangMiaoXian(index).String(),
@@ -1259,9 +1021,9 @@ func getWenChangLocation(birthHour *dizhi.DiZhi) int {
 }
 
 // setWen 設定文曲
-func (b *Board) setWenQu(birthHour *dizhi.DiZhi) {
+func (b *TianBoard) setWenQu(birthHour *dizhi.DiZhi) {
 	index := getWenQuLocation(birthHour)
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.WenQu.String(),
 		StarType: startype.LeftFuXing.String(),
 		MiaoXian: getWenQuMiaoXian(index).String(),
@@ -1275,9 +1037,9 @@ func getWenQuLocation(birthHour *dizhi.DiZhi) int {
 }
 
 // setDiJie 設定地劫
-func (b *Board) setDiJie(birthHour *dizhi.DiZhi) {
+func (b *TianBoard) setDiJie(birthHour *dizhi.DiZhi) {
 	index := (int(*birthHour) + 11) % 12
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.DiJie.String(),
 		StarType: startype.RightFuXing.String(),
 		MiaoXian: getDiJieMiaoXian(index).String(),
@@ -1287,9 +1049,9 @@ func (b *Board) setDiJie(birthHour *dizhi.DiZhi) {
 }
 
 // setDiKong 設定地空
-func (b *Board) setDiKong(birthHour *dizhi.DiZhi) {
+func (b *TianBoard) setDiKong(birthHour *dizhi.DiZhi) {
 	index := (11 - int(*birthHour) + 12) % 12
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.DiKong.String(),
 		StarType: startype.RightFuXing.String(),
 		MiaoXian: getDiKongMiaoXian(index).String(),
@@ -1299,9 +1061,9 @@ func (b *Board) setDiKong(birthHour *dizhi.DiZhi) {
 }
 
 // setTaiFu 設定台輔
-func (b *Board) setTaiFu(birthHour *dizhi.DiZhi) {
+func (b *TianBoard) setTaiFu(birthHour *dizhi.DiZhi) {
 	index := (int(*birthHour) + 6) % 12
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.TaiFu.String(),
 		StarType: startype.ShiXiZhuXing.String(),
 	})
@@ -1309,80 +1071,19 @@ func (b *Board) setTaiFu(birthHour *dizhi.DiZhi) {
 }
 
 // setFengGao 設定封誥
-func (b *Board) setFengGao(birthHour *dizhi.DiZhi) {
+func (b *TianBoard) setFengGao(birthHour *dizhi.DiZhi) {
 	index := (int(*birthHour) + 2) % 12
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.FengGao.String(),
 		StarType: startype.ShiXiZhuXing.String(),
 	})
 	return
 }
 
-// setHuo　設定火星
-func (b *Board) setHuo(birthYear *dizhi.DiZhi, birthHour *dizhi.DiZhi) {
-	xaxis := getHuoLingGroupMap(birthYear)
-	var index int
-	switch xaxis {
-	case 0:
-		index = (int(*birthHour) + 1) % 12
-	case 1:
-		index = (int(*birthHour) + 2) % 12
-	case 2:
-		index = (int(*birthHour) + 3) % 12
-	case 3:
-		index = (int(*birthHour) + 9) % 12
-	}
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
-		Name:     stars.Huo.String(),
-		StarType: startype.RightFuXing.String(),
-		MiaoXian: getHuoMiaoXian(index).String(),
-	})
-	b.StarsMap[stars.Huo] = index
-	return
-}
-
-// setHuo　設定鈴星
-func (b *Board) setLing(birthYear *dizhi.DiZhi, birthHour *dizhi.DiZhi) {
-	xaxis := getHuoLingGroupMap(birthYear)
-	var index int
-	switch xaxis {
-	case 0:
-		index = (int(*birthHour) + 3) % 12
-	default:
-		index = (int(*birthHour) + 10) % 12
-	}
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
-		Name:     stars.Ling.String(),
-		StarType: startype.RightFuXing.String(),
-		MiaoXian: getLingMiaoXian(index).String(),
-	})
-	b.StarsMap[stars.Ling] = index
-	return
-}
-
-func getHuoLingGroupMap(birthYear *dizhi.DiZhi) int {
-	birthYearGroup := map[dizhi.DiZhi]int{
-		dizhi.Yin:  0,
-		dizhi.Wu:   0,
-		dizhi.Xu:   0,
-		dizhi.Shen: 1,
-		dizhi.Zi:   1,
-		dizhi.Chen: 1,
-		dizhi.Si:   2,
-		dizhi.You:  2,
-		dizhi.Chou: 2,
-		dizhi.Hai:  3,
-		dizhi.Mao:  3,
-		dizhi.Wei:  3,
-	}
-
-	return birthYearGroup[*birthYear]
-}
-
 // setSanTai 設定三台
-func (b *Board) setSanTai(zuoFuLocation int, birthDate int) {
+func (b *TianBoard) setSanTai(zuoFuLocation int, birthDate int) {
 	index := (zuoFuLocation + birthDate - 1) % 12
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.SanTai.String(),
 		StarType: startype.ShiXiZhuXing.String(),
 	})
@@ -1390,12 +1091,12 @@ func (b *Board) setSanTai(zuoFuLocation int, birthDate int) {
 }
 
 // setBaZuo 設定八座
-func (b *Board) setBaZuo(youBiLocation int, birthDate int) {
+func (b *TianBoard) setBaZuo(youBiLocation int, birthDate int) {
 	index := (youBiLocation - (birthDate - 1)) % 12
 	if index < 0 {
 		index += 12
 	}
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.BaZuo.String(),
 		StarType: startype.ShiXiZhuXing.String(),
 	})
@@ -1403,12 +1104,12 @@ func (b *Board) setBaZuo(youBiLocation int, birthDate int) {
 }
 
 // setEnGuang 設定恩光
-func (b *Board) setEnGuang(wenChangLocation int, birthDate int) {
+func (b *TianBoard) setEnGuang(wenChangLocation int, birthDate int) {
 	index := (wenChangLocation + birthDate - 2) % 12
 	if index < 0 {
 		index += 11
 	}
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.EnGuang.String(),
 		StarType: startype.ShiXiZhuXing.String(),
 	})
@@ -1416,12 +1117,12 @@ func (b *Board) setEnGuang(wenChangLocation int, birthDate int) {
 }
 
 // setTianGui 設定天貴
-func (b *Board) setTianGui(wenQuLocation int, birthDate int) {
+func (b *TianBoard) setTianGui(wenQuLocation int, birthDate int) {
 	index := (wenQuLocation + birthDate - 2) % 12
 	if index < 0 {
 		index += 11
 	}
-	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &Star{
+	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.TianGui.String(),
 		StarType: startype.ShiXiZhuXing.String(),
 	})
@@ -1429,7 +1130,7 @@ func (b *Board) setTianGui(wenQuLocation int, birthDate int) {
 }
 
 // setMingZhu 設定命主
-func (b *Board) setMingZhu(birthYear *dizhi.DiZhi) error {
+func (b *TianBoard) setMingZhu(birthYear *dizhi.DiZhi) error {
 	starMap := []stars.StarName{
 		stars.TanLang,
 		stars.JuMen,
@@ -1454,7 +1155,7 @@ func (b *Board) setMingZhu(birthYear *dizhi.DiZhi) error {
 }
 
 // setShenZhu 設定身主
-func (b *Board) setShenZhu(birthYear *dizhi.DiZhi) error {
+func (b *TianBoard) setShenZhu(birthYear *dizhi.DiZhi) error {
 	starMap := []stars.StarName{
 		stars.Ling,
 		stars.TianXiang,
@@ -1479,7 +1180,7 @@ func (b *Board) setShenZhu(birthYear *dizhi.DiZhi) error {
 }
 
 // setGetGenders
-func (b *Board) setGender(birthYear *tiangan.TianGan, gender genders.Gender) error {
+func (b *TianBoard) setGender(birthYear *tiangan.TianGan, gender genders.Gender) error {
 	genderIndex := int(*birthYear % 2)
 	switch gender {
 	case genders.Male:
@@ -1493,8 +1194,8 @@ func (b *Board) setGender(birthYear *tiangan.TianGan, gender genders.Gender) err
 }
 
 // setBoShiTwelveStars 安博士十二星
-func (b *Board) setBoShiTwelveStars(LuCunLocation int) {
-	starsMap := []*Star{
+func (b *TianBoard) setBoShiTwelveStars(LuCunLocation int) {
+	starsMap := []*utils.Star{
 		{
 			Name:     stars.BoShi.String(),
 			StarType: startype.BoShiTwelveStars.String(),
@@ -1568,8 +1269,8 @@ func (b *Board) setBoShiTwelveStars(LuCunLocation int) {
 }
 
 // setLiuNianSuiQianZhuXing 安流年歲前諸星
-func (b *Board) setLiuNianSuiQianZhuXing(currentDiZhiYear *dizhi.DiZhi) {
-	starsMap := []*Star{
+func (b *TianBoard) setLiuNianSuiQianZhuXing(currentDiZhiYear *dizhi.DiZhi) {
+	starsMap := []*utils.Star{
 		{
 			Name:     stars.SuiJian.String(),
 			StarType: startype.LiuNianSuiQianZhuXing.String(),
@@ -1898,25 +1599,6 @@ func getPoJunMiaoXian(index int) miaoxian.MiaoXian {
 	return miaoXianMap[index]
 }
 
-// getLuCunMiaoXian 得祿存廟陷
-func getLuCunMiaoXian(index int) miaoxian.MiaoXian {
-	miaoXianMap := []miaoxian.MiaoXian{
-		miaoxian.Wang,
-		miaoxian.None,
-		miaoxian.Miao,
-		miaoxian.Wang,
-		miaoxian.None,
-		miaoxian.Miao,
-		miaoxian.Wang,
-		miaoxian.None,
-		miaoxian.Miao,
-		miaoxian.Wang,
-		miaoxian.None,
-		miaoxian.Miao,
-	}
-	return miaoXianMap[index]
-}
-
 // getTianMaMiaoXian 得天馬廟陷
 func getTianMaMiaoXian(index int) miaoxian.MiaoXian {
 	miaoXianMap := []miaoxian.MiaoXian{
@@ -1932,82 +1614,6 @@ func getTianMaMiaoXian(index int) miaoxian.MiaoXian {
 		miaoxian.None,
 		miaoxian.None,
 		miaoxian.Ping,
-	}
-	return miaoXianMap[index]
-}
-
-// getQingYangMiaoXian 得擎羊廟陷
-func getQingYangMiaoXian(index int) miaoxian.MiaoXian {
-	miaoXianMap := []miaoxian.MiaoXian{
-		miaoxian.Xian,
-		miaoxian.Miao,
-		miaoxian.None,
-		miaoxian.Xian,
-		miaoxian.Miao,
-		miaoxian.None,
-		miaoxian.Ping,
-		miaoxian.Miao,
-		miaoxian.None,
-		miaoxian.Xian,
-		miaoxian.Miao,
-		miaoxian.None,
-	}
-	return miaoXianMap[index]
-}
-
-// getTuoLuoMiaoXian 得陀羅廟陷
-func getTuoLuoMiaoXian(index int) miaoxian.MiaoXian {
-	miaoXianMap := []miaoxian.MiaoXian{
-		miaoxian.None,
-		miaoxian.Miao,
-		miaoxian.Xian,
-		miaoxian.None,
-		miaoxian.Miao,
-		miaoxian.Xian,
-		miaoxian.None,
-		miaoxian.Miao,
-		miaoxian.Xian,
-		miaoxian.None,
-		miaoxian.Miao,
-		miaoxian.Xian,
-	}
-	return miaoXianMap[index]
-}
-
-// getHuoMiaoXian 得火星廟陷
-func getHuoMiaoXian(index int) miaoxian.MiaoXian {
-	miaoXianMap := []miaoxian.MiaoXian{
-		miaoxian.Ping,
-		miaoxian.Wang,
-		miaoxian.Miao,
-		miaoxian.Ping,
-		miaoxian.Xian2,
-		miaoxian.Wang,
-		miaoxian.Miao,
-		miaoxian.Xian2,
-		miaoxian.Xian,
-		miaoxian.Xian,
-		miaoxian.Miao,
-		miaoxian.Ping,
-	}
-	return miaoXianMap[index]
-}
-
-// getLingMiaoXian 得鈴星廟陷
-func getLingMiaoXian(index int) miaoxian.MiaoXian {
-	miaoXianMap := []miaoxian.MiaoXian{
-		miaoxian.Xian,
-		miaoxian.Xian,
-		miaoxian.Miao,
-		miaoxian.Miao,
-		miaoxian.Wang,
-		miaoxian.Wang,
-		miaoxian.Miao,
-		miaoxian.Wang,
-		miaoxian.Wang,
-		miaoxian.Xian,
-		miaoxian.Miao,
-		miaoxian.Miao,
 	}
 	return miaoXianMap[index]
 }
@@ -2045,25 +1651,6 @@ func getDiJieMiaoXian(index int) miaoxian.MiaoXian {
 		miaoxian.Miao,
 		miaoxian.Ping,
 		miaoxian.Ping,
-		miaoxian.Wang,
-	}
-	return miaoXianMap[index]
-}
-
-// getTianKuiMiaoXian 得天𣁽廟陷
-func getTianKuiMiaoXian(index int) miaoxian.MiaoXian {
-	miaoXianMap := []miaoxian.MiaoXian{
-		miaoxian.Wang,
-		miaoxian.Wang,
-		miaoxian.None,
-		miaoxian.Miao,
-		miaoxian.None,
-		miaoxian.None,
-		miaoxian.Miao,
-		miaoxian.None,
-		miaoxian.None,
-		miaoxian.None,
-		miaoxian.None,
 		miaoxian.Wang,
 	}
 	return miaoXianMap[index]

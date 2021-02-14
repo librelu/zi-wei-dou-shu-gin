@@ -9,81 +9,69 @@ import (
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/stars"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/startype"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/tiangan"
+	"github.com/zi-wei-dou-shu-gin/utils/ziwei/utils"
 )
 
 func NewTenYearsBoard(birthday time.Time, gender genders.Gender, index int) (*YearBoard, error) {
-	// TOOD: cache board if necessary
-	b, err := NewBoard(birthday, gender)
-	if err != nil {
-		return nil, err
-	}
-	board, err := b.CreateTianBoard()
-	if err != nil {
-		return nil, err
-	}
-	// clean stars
-	for i := range board.Blocks {
-		board.Blocks[i].Stars = make([]*Star, 0)
-	}
+	yearBoard := new(YearBoard)
 	yearMingGong := getYearMingGong()
-	board.setTwelveGongs(yearMingGong)
-	yearBoard := &YearBoard{
-		Board:            board,
-		mingGongLocation: yearMingGong,
-	}
+	b := utils.Board(*yearBoard)
+	utilsBoard := utils.SetTwelveGongs(&b, yearMingGong)
+	*yearBoard = YearBoard(*utilsBoard)
 	yearBoard.rotateGongWeiNameByIndex(index)
-	currentTianGan := tiangan.TianGan(int(board.LunaBirthday.Year.TianGan)+index) % 10
-	board.setLuCun(&currentTianGan)
-	board.setQingYang(&currentTianGan)
-	board.setTuoLuo(&currentTianGan)
-	board.setTianKui(&currentTianGan)
-	board.setTianGuan(&currentTianGan)
-	if idx, err := board.getHuaJiLocation(&currentTianGan); err == nil {
-		board.Blocks[idx].Stars = append(board.Blocks[idx].Stars, &Star{
+	currentTianGan := tiangan.TianGan(int(yearBoard.LunaBirthday.Year.TianGan)+index) % 10
+	b = utils.Board(*yearBoard)
+	utilsBoard = utils.SetLuCun(&b, currentTianGan)
+	utilsBoard = utils.SetQingYang(utilsBoard, currentTianGan)
+	utilsBoard = utils.SetTuoLuo(utilsBoard, currentTianGan)
+	utilsBoard = utils.SetTianKui(utilsBoard, currentTianGan)
+	utilsBoard = utils.SetTianGuan(utilsBoard, currentTianGan)
+	if idx, err := utils.GetHuaJiLocation(utilsBoard, currentTianGan); err == nil {
+		utilsBoard.Blocks[idx].Stars = append(utilsBoard.Blocks[idx].Stars, &utils.Star{
 			Name:     stars.HuaLu.String(),
 			StarType: startype.LiuNianGanXing.String(),
 		})
 	} else {
 		return nil, err
 	}
-	if idx, err := board.getHuaKeLocation(&currentTianGan); err == nil {
-		board.Blocks[idx].Stars = append(board.Blocks[idx].Stars, &Star{
-			Name:     stars.HuaKe.String(),
+	if idx, err := utils.GetHuaKeLocation(utilsBoard, currentTianGan); err == nil {
+		utilsBoard.Blocks[idx].Stars = append(utilsBoard.Blocks[idx].Stars, &utils.Star{
+			Name:     stars.HuaLu.String(),
 			StarType: startype.LiuNianGanXing.String(),
 		})
 	} else {
 		return nil, err
 	}
-	if idx, err := board.getHuaQuanLocation(&currentTianGan); err == nil {
-		board.Blocks[idx].Stars = append(board.Blocks[idx].Stars, &Star{
+	if idx, err := utils.GetHuaQuanLocation(utilsBoard, currentTianGan); err == nil {
+		utilsBoard.Blocks[idx].Stars = append(utilsBoard.Blocks[idx].Stars, &utils.Star{
+			Name:     stars.HuaLu.String(),
+			StarType: startype.LiuNianGanXing.String(),
+		})
+	} else {
+		return nil, err
+	}
+	if idx, err := utils.GetHuaLuLocation(utilsBoard, &currentTianGan); err == nil {
+		utilsBoard.Blocks[idx].Stars = append(utilsBoard.Blocks[idx].Stars, &utils.Star{
 			Name:     stars.HuaQuan.String(),
 			StarType: startype.LiuNianGanXing.String(),
 		})
 	} else {
 		return nil, err
 	}
-	if idx, err := board.getHuaLuLocation(&currentTianGan); err == nil {
-		board.Blocks[idx].Stars = append(board.Blocks[idx].Stars, &Star{
-			Name:     stars.HuaQuan.String(),
-			StarType: startype.LiuNianGanXing.String(),
-		})
-	} else {
-		return nil, err
-	}
-	currentDiZhi := dizhi.DiZhi(int(board.LunaBirthday.Year.DiZhi)+index) % 12
-	board.setHuo(&currentDiZhi, board.LunaBirthday.Hour)
-	board.setLing(&currentDiZhi, board.LunaBirthday.Hour)
+	currentDiZhi := dizhi.DiZhi(int(utilsBoard.LunaBirthday.Year.DiZhi)+index) % 12
+	utilsBoard = utils.SetHuo(utilsBoard, &currentDiZhi, utilsBoard.LunaBirthday.Hour)
+	utilsBoard = utils.SetLing(utilsBoard, &currentDiZhi, utilsBoard.LunaBirthday.Hour)
+	*yearBoard = YearBoard(*utilsBoard)
 	return yearBoard, nil
 }
 
 // rotateGongWeiNameByIndex one index is ten years. Basic on ages, this function is returning
 // different Gong Wei location.
 func (yb *YearBoard) rotateGongWeiNameByIndex(index int) {
-	blocksLength := len(yb.Board.Blocks)
+	blocksLength := len(yb.Blocks)
 	gongWeiNames := make([]string, blocksLength)
-	mingGongLocation := dizhi.DiZhi((int(*yb.mingGongLocation) + index) % 12)
-	yb.mingGongLocation = &mingGongLocation
-	for i, block := range yb.Board.Blocks {
+	yb.MingGongLocation = int(dizhi.DiZhi((yb.MingGongLocation + index) % 12))
+	for i, block := range yb.Blocks {
 		idx := (i + index) % 12
 		if idx < 0 {
 			idx = idx + blocksLength
@@ -91,7 +79,7 @@ func (yb *YearBoard) rotateGongWeiNameByIndex(index int) {
 		gongWeiNames[idx] = block.GongWeiName
 	}
 	for i, name := range gongWeiNames {
-		yb.Board.Blocks[i].GongWeiName = name
+		yb.Blocks[i].GongWeiName = name
 	}
 	return
 }

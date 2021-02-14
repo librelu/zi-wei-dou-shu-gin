@@ -30,7 +30,8 @@ func (h handler) GetYearBoard(c *gin.Context) {
 		handleError(c, err)
 		return
 	}
-	resp := convertBoardToGetYearBoardResponse(board.Board, birthday)
+
+	resp := convertBoardToGetYearBoardResponse(board, birthday)
 	c.JSON(http.StatusOK, resp)
 }
 
@@ -44,8 +45,8 @@ func validateGetYearBoardRequest(c *gin.Context, req *GetYearBoardRequest) error
 	return nil
 }
 
-func convertBoardToGetYearBoardResponse(board *ziwei.Board, birthday time.Time) *GetYearBoardResponse {
-	getBoardResp := convertBoardToGetBoardResponse(board, birthday)
+func convertBoardToGetYearBoardResponse(board *ziwei.YearBoard, birthday time.Time) *GetYearBoardResponse {
+	getBoardResp := convertYearBoardToGetBoardResponse(board, birthday)
 	return &GetYearBoardResponse{
 		Blocks:           getBoardResp.Blocks,
 		BirthDay:         getBoardResp.BirthDay,
@@ -56,5 +57,44 @@ func convertBoardToGetYearBoardResponse(board *ziwei.Board, birthday time.Time) 
 		ShenZhu:          getBoardResp.ShenZhu,
 		MingZhu:          getBoardResp.MingZhu,
 		ShenGongLocation: getBoardResp.ShenGongLocation,
+	}
+}
+
+func convertYearBoardToGetBoardResponse(board *ziwei.YearBoard, birthday time.Time) *GetBoardResponse {
+	// convert blocks
+	blocks := make([]*Block, len(board.Blocks))
+	for i, b := range board.Blocks {
+		blocks[i] = &Block{
+			GongWeiName: b.GongWeiName,
+			Stars:       b.Stars,
+			Location: &Location{
+				TianGan: b.Location.TianGan.String(),
+				DiZhi:   b.Location.DiZhi.String(),
+			},
+			TenYearsRound: b.TenYearsRound,
+		}
+	}
+	month := toChineseNums(int(board.LunaBirthday.Month))
+	if board.LunaBirthday.IsLeap {
+		month = "閏" + month
+	}
+	return &GetBoardResponse{
+		Blocks:   blocks,
+		BirthDay: fmt.Sprintf("%d年%d月%d日%d時", birthday.Year(), birthday.Month(), birthday.Day(), birthday.Hour()),
+		LunaBirthDay: fmt.Sprintf("%s%s年%s月%s日%s時",
+			board.LunaBirthday.Year.TianGan.String(),
+			board.LunaBirthday.Year.DiZhi.String(),
+			month,
+			toChineseNums(int(board.LunaBirthday.Day)),
+			board.LunaBirthday.Hour,
+		),
+		Gender:              board.Gender.String(),
+		MingJu:              board.MingJu.JuType.String(),
+		MingJuValue:         int(board.MingJu.Number),
+		ShenZhu:             board.ShenZhu,
+		MingZhu:             board.MingZhu,
+		ShenGongLocation:    board.ShenGongLocation,
+		MingGongLocation:    board.MingGongLocation,
+		MainStarConnections: board.MainStarConnections,
 	}
 }
