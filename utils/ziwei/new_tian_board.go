@@ -47,7 +47,7 @@ func (b *TianBoard) CreateTianBoard() (*TianBoard, error) {
 	b.setupMainStarsConnections(mingGongLocation)
 	b = setUpNainGanStars(b, b.LunaBirthday.Year.TianGan)
 	b.setXunKong(b.LunaBirthday.Year)
-	b.setJieKong(&b.LunaBirthday.Year.TianGan)
+	b.setJieKong(b.LunaBirthday.Year.TianGan)
 	shenGongLocation := b.getShengGong(b.LunaBirthday.Hour, b.LunaBirthday.Month)
 	b.setNianZhiXiZhuXing(&b.LunaBirthday.Year.DiZhi, mingGongLocation, shenGongLocation)
 	b.setYueXiXing(int(b.LunaBirthday.Month))
@@ -615,8 +615,8 @@ func (b *TianBoard) setXunKong(birthYear *lunacal.TianGanDiZhi) {
 }
 
 // setJieKong 設定截空星
-func (b *TianBoard) setJieKong(birthYear *tiangan.TianGan) {
-	index := ((4 - int(*birthYear)%5 + 1) * 2) - 1
+func (b *TianBoard) setJieKong(birthYear tiangan.TianGan) {
+	index := ((4 - int(birthYear)%5 + 1) * 2) - 1
 	b.Blocks[index].Stars = append(b.Blocks[index].Stars, &utils.Star{
 		Name:     stars.JieKong.String(),
 		StarType: startype.NianGanXiZhuXing.String(),

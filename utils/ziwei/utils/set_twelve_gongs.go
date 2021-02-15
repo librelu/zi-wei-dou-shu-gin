@@ -5,9 +5,9 @@ import (
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/gong"
 )
 
-func SetTwelveGongs(board *Board, mingGongLocation *dizhi.DiZhi) *Board {
+func SetTwelveGongs(board *Board, mingGongLocation dizhi.DiZhi) *Board {
 	for i := range board.Blocks {
-		index := int(*mingGongLocation) + i
+		index := int(mingGongLocation) + i
 		if index > 11 {
 			index -= 12
 		}

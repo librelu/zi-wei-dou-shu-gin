@@ -39,14 +39,29 @@ func convertTianBoardToGetBoardResponse(board *ziwei.TianBoard, birthday time.Ti
 	blocks := make([]*Block, len(board.Blocks))
 	for i, b := range board.Blocks {
 		blocks[i] = &Block{
-			GongWeiName: b.GongWeiName,
-			Stars:       b.Stars,
+			GongWei: []*GongWei{
+				{
+					Name: b.GongWeiName,
+					Type: TypeTianBoard,
+				},
+			},
 			Location: &Location{
 				TianGan: b.Location.TianGan.String(),
 				DiZhi:   b.Location.DiZhi.String(),
 			},
 			TenYearsRound: b.TenYearsRound,
 		}
+		stars := []*Star{}
+		for _, star := range b.Stars {
+			stars = append(stars, &Star{
+				Name:      star.Name,
+				StarType:  star.StarType,
+				MiaoXian:  star.MiaoXian,
+				FourStar:  star.FourStar,
+				BoardType: TypeTianBoard,
+			})
+		}
+		blocks[i].Stars = stars
 	}
 	month := toChineseNums(int(board.LunaBirthday.Month))
 	if board.LunaBirthday.IsLeap {
@@ -54,7 +69,7 @@ func convertTianBoardToGetBoardResponse(board *ziwei.TianBoard, birthday time.Ti
 	}
 	return &GetBoardResponse{
 		Blocks:   blocks,
-		BirthDay: fmt.Sprintf("%d年%d月%d日%d時", birthday.Year(), birthday.Month(), birthday.Day(), birthday.Hour()),
+		Birthday: fmt.Sprintf("%d年%d月%d日%d時", birthday.Year(), birthday.Month(), birthday.Day(), birthday.Hour()),
 		LunaBirthDay: fmt.Sprintf("%s%s年%s月%s日%s時",
 			board.LunaBirthday.Year.TianGan.String(),
 			board.LunaBirthday.Year.DiZhi.String(),

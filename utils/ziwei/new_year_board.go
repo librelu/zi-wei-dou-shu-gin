@@ -13,7 +13,7 @@ import (
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/utils"
 )
 
-func NewTenYearsBoard(birthday time.Time, gender genders.Gender, index int) (*YearBoard, error) {
+func NewYearsBoard(birthday time.Time, gender genders.Gender, index int) (*YearBoard, error) {
 	tianBoard, err := NewTianBoard(birthday, gender)
 	if err != nil {
 		return nil, errors.Wrap(err, "can't new tian board in year board process")
@@ -27,7 +27,7 @@ func NewTenYearsBoard(birthday time.Time, gender genders.Gender, index int) (*Ye
 	}
 	yearBoard := YearBoard(*tianBoard)
 	yearBoard.rotateGongWeiNameByIndex(index)
-	yearMingGong := getYearMingGong()
+	yearMingGong := getYearMingGong(index)
 	currentTianGan := tiangan.TianGan(int(yearBoard.LunaBirthday.Year.TianGan)+index) % 10
 	b := utils.Board(yearBoard)
 	utilsBoard := utils.SetTwelveGongs(&b, yearMingGong)
@@ -94,7 +94,8 @@ func (yb *YearBoard) rotateGongWeiNameByIndex(index int) {
 	return
 }
 
-func getYearMingGong() *dizhi.DiZhi {
+func getYearMingGong(index int) dizhi.DiZhi {
 	lunaDate := lunacal.Solar2Lunar(time.Now())
-	return &lunaDate.Year.DiZhi
+	mingGong := (lunaDate.Year.DiZhi + dizhi.DiZhi(index)) % 12
+	return mingGong
 }

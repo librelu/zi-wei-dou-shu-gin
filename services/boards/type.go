@@ -3,7 +3,6 @@ package boards
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/zi-wei-dou-shu-gin/db/dao"
-	"github.com/zi-wei-dou-shu-gin/utils/ziwei/utils"
 )
 
 type handler struct {
@@ -26,7 +25,7 @@ type GetBoardRequest struct {
 
 type GetBoardResponse struct {
 	Blocks              []*Block
-	BirthDay            string
+	Birthday            string
 	LunaBirthDay        string
 	Gender              string
 	MingJu              string
@@ -50,7 +49,7 @@ type GetYearBoardRequest struct {
 
 type GetYearBoardResponse struct {
 	Blocks           []*Block
-	BirthDay         string
+	Birthday         string
 	LunaBirthDay     string
 	Gender           string
 	MingJu           string
@@ -67,10 +66,23 @@ type SaveBoardRequest struct {
 }
 
 type Block struct {
-	GongWeiName   string
-	Stars         []*utils.Star
+	GongWei       []*GongWei
+	Stars         []*Star
 	Location      *Location
 	TenYearsRound string
+}
+
+type Star struct {
+	Name      string
+	StarType  string
+	MiaoXian  string
+	FourStar  string
+	BoardType string
+}
+
+type GongWei struct {
+	Name string
+	Type string
 }
 
 type Location struct {
@@ -80,3 +92,9 @@ type Location struct {
 
 var numberMap = []string{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"}
 var tenDigitMap = []string{"零", "一", "廿", "三", "四", "五", "六", "七", "八", "九", "十"}
+
+const (
+	TypeYearBoard     = "year_board"
+	TypeTianBoard     = "tian_board"
+	defaultBoardBlock = 12
+)

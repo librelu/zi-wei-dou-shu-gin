@@ -25,14 +25,107 @@ func (h handler) GetYearBoard(c *gin.Context) {
 	birthday := time.Date(req.BirthYear, time.Month(req.BirthMonth), req.BirthDate, req.BirthHour, 0, 0, 0, location)
 	gender := genders.Gender(req.Gender)
 	index := req.Index
-	board, err := ziwei.NewTenYearsBoard(birthday, gender, index)
+	yearBoard, err := ziwei.NewYearsBoard(birthday, gender, index)
 	if err != nil {
 		handleError(c, err)
 		return
 	}
 
-	resp := convertBoardToGetYearBoardResponse(board, birthday)
+	tianBoard, err := ziwei.NewTianBoard(birthday, gender)
+	if err != nil {
+		handleError(c, err)
+		return
+	}
+	if tianBoard, err = tianBoard.CreateTianBoard(); err != nil {
+		handleError(c, err)
+		return
+	}
+	resp := mergeTianBoardAndYearBoard(tianBoard, yearBoard)
+
 	c.JSON(http.StatusOK, resp)
+}
+
+func mergeTianBoardAndYearBoard(tianBoard *ziwei.TianBoard, yearBoard *ziwei.YearBoard) *GetYearBoardResponse {
+	month := toChineseNums(int(yearBoard.LunaBirthday.Month))
+	if yearBoard.LunaBirthday.IsLeap {
+		month = "閏" + month
+	}
+	board := &GetYearBoardResponse{
+		Birthday: fmt.Sprintf("%d年%d月%d日%d時", yearBoard.Birthday.Year(), yearBoard.Birthday.Month(), yearBoard.Birthday.Day(), yearBoard.Birthday.Hour()),
+		LunaBirthDay: fmt.Sprintf("%s%s年%s月%s日%s時",
+			yearBoard.LunaBirthday.Year.TianGan.String(),
+			yearBoard.LunaBirthday.Year.DiZhi.String(),
+			month,
+			toChineseNums(int(yearBoard.LunaBirthday.Day)),
+			yearBoard.LunaBirthday.Hour,
+		),
+		Blocks:           make([]*Block, defaultBoardBlock),
+		Gender:           yearBoard.Gender.String(),
+		MingJu:           yearBoard.MingJu.JuType.String(),
+		MingJuValue:      int(yearBoard.MingJu.Number),
+		ShenZhu:          yearBoard.ShenZhu,
+		MingZhu:          yearBoard.MingZhu,
+		ShenGongLocation: yearBoard.ShenGongLocation,
+	}
+	for i, tianBlock := range tianBoard.Blocks {
+		if board.Blocks[i] == nil {
+			board.Blocks[i] = new(Block)
+		}
+		if len(board.Blocks[i].GongWei) == 0 {
+			board.Blocks[i].GongWei = make([]*GongWei, 0)
+		}
+		board.Blocks[i].GongWei = append(board.Blocks[i].GongWei, &GongWei{
+			Name: tianBlock.GongWeiName,
+			Type: TypeTianBoard,
+		})
+		for _, star := range tianBlock.Stars {
+			if board.Blocks[i] == nil {
+				board.Blocks[i] = new(Block)
+			}
+			if len(board.Blocks[i].Stars) == 0 {
+				board.Blocks[i].Stars = []*Star{}
+			}
+			board.Blocks[i].Stars = append(board.Blocks[i].Stars, &Star{
+				Name:      star.Name,
+				StarType:  star.StarType,
+				MiaoXian:  star.MiaoXian,
+				FourStar:  star.FourStar,
+				BoardType: TypeTianBoard,
+			})
+		}
+	}
+	for i, yearBlock := range yearBoard.Blocks {
+		if board.Blocks[i] == nil {
+			board.Blocks[i] = new(Block)
+		}
+		if len(board.Blocks[i].GongWei) == 0 {
+			board.Blocks[i].GongWei = make([]*GongWei, 0)
+		}
+		board.Blocks[i].Location = &Location{
+			TianGan: yearBlock.Location.TianGan.String(),
+			DiZhi:   yearBlock.Location.DiZhi.String(),
+		}
+		board.Blocks[i].GongWei = append(board.Blocks[i].GongWei, &GongWei{
+			Name: yearBlock.GongWeiName,
+			Type: TypeYearBoard,
+		})
+		for i, star := range yearBlock.Stars {
+			if board.Blocks[i] == nil {
+				board.Blocks[i] = new(Block)
+			}
+			if len(board.Blocks[i].Stars) == 0 {
+				board.Blocks[i].Stars = []*Star{}
+			}
+			board.Blocks[i].Stars = append(board.Blocks[i].Stars, &Star{
+				Name:      star.Name,
+				StarType:  star.StarType,
+				MiaoXian:  star.MiaoXian,
+				FourStar:  star.FourStar,
+				BoardType: TypeYearBoard,
+			})
+		}
+	}
+	return board
 }
 
 func validateGetYearBoardRequest(c *gin.Context, req *GetYearBoardRequest) error {
@@ -43,58 +136,4 @@ func validateGetYearBoardRequest(c *gin.Context, req *GetYearBoardRequest) error
 		return fmt.Errorf("illegal gender, example gender: 0=>male, 1=>female, current: %d", req.Gender)
 	}
 	return nil
-}
-
-func convertBoardToGetYearBoardResponse(board *ziwei.YearBoard, birthday time.Time) *GetYearBoardResponse {
-	getBoardResp := convertYearBoardToGetBoardResponse(board, birthday)
-	return &GetYearBoardResponse{
-		Blocks:           getBoardResp.Blocks,
-		BirthDay:         getBoardResp.BirthDay,
-		LunaBirthDay:     getBoardResp.LunaBirthDay,
-		Gender:           getBoardResp.Gender,
-		MingJu:           getBoardResp.MingJu,
-		MingJuValue:      getBoardResp.MingJuValue,
-		ShenZhu:          getBoardResp.ShenZhu,
-		MingZhu:          getBoardResp.MingZhu,
-		ShenGongLocation: getBoardResp.ShenGongLocation,
-	}
-}
-
-func convertYearBoardToGetBoardResponse(board *ziwei.YearBoard, birthday time.Time) *GetBoardResponse {
-	// convert blocks
-	blocks := make([]*Block, len(board.Blocks))
-	for i, b := range board.Blocks {
-		blocks[i] = &Block{
-			GongWeiName: b.GongWeiName,
-			Stars:       b.Stars,
-			Location: &Location{
-				TianGan: b.Location.TianGan.String(),
-				DiZhi:   b.Location.DiZhi.String(),
-			},
-			TenYearsRound: b.TenYearsRound,
-		}
-	}
-	month := toChineseNums(int(board.LunaBirthday.Month))
-	if board.LunaBirthday.IsLeap {
-		month = "閏" + month
-	}
-	return &GetBoardResponse{
-		Blocks:   blocks,
-		BirthDay: fmt.Sprintf("%d年%d月%d日%d時", birthday.Year(), birthday.Month(), birthday.Day(), birthday.Hour()),
-		LunaBirthDay: fmt.Sprintf("%s%s年%s月%s日%s時",
-			board.LunaBirthday.Year.TianGan.String(),
-			board.LunaBirthday.Year.DiZhi.String(),
-			month,
-			toChineseNums(int(board.LunaBirthday.Day)),
-			board.LunaBirthday.Hour,
-		),
-		Gender:              board.Gender.String(),
-		MingJu:              board.MingJu.JuType.String(),
-		MingJuValue:         int(board.MingJu.Number),
-		ShenZhu:             board.ShenZhu,
-		MingZhu:             board.MingZhu,
-		ShenGongLocation:    board.ShenGongLocation,
-		MingGongLocation:    board.MingGongLocation,
-		MainStarConnections: board.MainStarConnections,
-	}
 }

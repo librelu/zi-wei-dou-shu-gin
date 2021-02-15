@@ -7,8 +7,8 @@ import (
 func SetupGongWei(board *Board, lunaDate *lunacal.LunaDate) *Board {
 	hour := lunaDate.Hour
 	month := lunaDate.Month
-	mingGongLocation := GetMingGong(hour, month)
-	shengGongLocation := GetShengGong(hour, month)
+	mingGongLocation := GetMingGong(*hour, month)
+	shengGongLocation := GetShengGong(*hour, month)
 	board = SetTwelveGongs(board, mingGongLocation)
 	board.ShenGongLocation = int(*shengGongLocation)
 	return board
