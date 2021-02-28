@@ -10,3 +10,4 @@ const (
 
 type TianBoard utils.Board
 type YearBoard utils.Board
+type TenYearBoard utils.Board
