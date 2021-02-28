@@ -24,17 +24,17 @@ type GetBoardRequest struct {
 }
 
 type GetBoardResponse struct {
-	Blocks              []*Block
-	Birthday            string
-	LunaBirthDay        string
-	Gender              string
-	MingJu              string
-	MingJuValue         int
-	ShenZhu             string
-	MingZhu             string
-	ShenGongLocation    int
-	MingGongLocation    int
-	MainStarConnections []int
+	Blocks              []*Block `json:"blocks"`
+	Birthday            string   `json:"birthday"`
+	LunaBirthDay        string   `json:"luna_birthday"`
+	Gender              string   `json:"gender"`
+	MingJu              string   `json:"ming_ju"`
+	MingJuValue         int      `json:"ming_ju_value"`
+	ShenZhu             string   `json:"shen_zhu"`
+	MingZhu             string   `json:"ming_zhu"`
+	ShenGongLocation    int      `json:"shen_gong_location"`
+	MingGongLocation    int      `json:"ming_gong_location"`
+	MainStarConnections []int    `json:"main_star_connection"`
 }
 
 type GetYearBoardRequest struct {
@@ -48,15 +48,15 @@ type GetYearBoardRequest struct {
 }
 
 type GetYearBoardResponse struct {
-	Blocks           []*Block
-	Birthday         string
-	LunaBirthDay     string
-	Gender           string
-	MingJu           string
-	MingJuValue      int
-	ShenZhu          string
-	MingZhu          string
-	ShenGongLocation int
+	Blocks           []*Block `json:"blocks"`
+	Birthday         string   `json:"birthday"`
+	LunaBirthDay     string   `json:"luna_birthday"`
+	Gender           string   `json:"gender"`
+	MingJu           string   `json:"min_ju"`
+	MingJuValue      int      `json:"ming_ju_value"`
+	ShenZhu          string   `json:"shen_zhu"`
+	MingZhu          string   `json:"ming_zhu"`
+	ShenGongLocation int      `json:"shen_gong_location"`
 }
 
 type SaveBoardRequest struct {
@@ -66,28 +66,28 @@ type SaveBoardRequest struct {
 }
 
 type Block struct {
-	GongWei       []*GongWei
-	Stars         []*Star
-	Location      *Location
-	TenYearsRound string
+	GongWei       []*GongWei `json:"gong_wei"`
+	Stars         []*Star    `json:"stars"`
+	Location      *Location  `json:"location"`
+	TenYearsRound string     `json:"ten_years_round"`
 }
 
 type Star struct {
-	Name      string
-	StarType  string
-	MiaoXian  string
-	FourStar  string
-	BoardType string
+	Name      string `json:"name"`
+	StarType  string `json:"star_type"`
+	MiaoXian  string `json:"miao_xian"`
+	FourStar  string `json:"four_star"`
+	BoardType string `json:"board_type"`
 }
 
 type GongWei struct {
-	Name string
-	Type string
+	Name string `json:"name"`
+	Type string `json:"type"`
 }
 
 type Location struct {
-	TianGan string
-	DiZhi   string
+	TianGan string `json:"tian_gan"`
+	DiZhi   string `json:"dizhi"`
 }
 
 var numberMap = []string{"零", "一", "二", "三", "四", "五", "六", "七", "八", "九", "十"}
