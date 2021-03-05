@@ -52,7 +52,7 @@ type GetYearBoardResponse struct {
 	Birthday         string   `json:"birthday"`
 	LunaBirthDay     string   `json:"luna_birthday"`
 	Gender           string   `json:"gender"`
-	MingJu           string   `json:"min_ju"`
+	MingJu           string   `json:"ming_ju"`
 	MingJuValue      int      `json:"ming_ju_value"`
 	ShenZhu          string   `json:"shen_zhu"`
 	MingZhu          string   `json:"ming_zhu"`
