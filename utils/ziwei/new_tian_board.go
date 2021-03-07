@@ -108,7 +108,6 @@ func (b *TianBoard) setTenYearsRound(mingGongLocation *dizhi.DiZhi) {
 			b.Blocks[idx].TenYearsRound = fmt.Sprintf(tenYearsRoundFormat, startYear, endYear)
 		}
 	}
-
 }
 
 func (b *TianBoard) getMingGong(hour *dizhi.DiZhi, month uint) *dizhi.DiZhi {

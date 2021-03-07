@@ -12,6 +12,7 @@ type handler struct {
 type Handler interface {
 	GetTianBoard(c *gin.Context)
 	GetYearBoard(c *gin.Context)
+	GetTenYearsBoard(c *gin.Context)
 }
 
 type GetBoardRequest struct {
@@ -59,6 +60,28 @@ type GetYearBoardResponse struct {
 	ShenGongLocation int      `json:"shen_gong_location"`
 }
 
+type GetTenBoardRequest struct {
+	BirthYear  int `form:"birthYear" binding:"required"`
+	BirthMonth int `form:"birthMonth" binding:"required"`
+	BirthDate  int `form:"birthDate" binding:"required"`
+	BirthHour  int `form:"birthHour"`
+	TimeZone   int `form:"timezone"`
+	Gender     int `form:"gender"`
+	Index      int `form:"index"`
+}
+
+type GetTenBoardResponse struct {
+	Blocks           []*Block `json:"blocks"`
+	Birthday         string   `json:"birthday"`
+	LunaBirthDay     string   `json:"luna_birthday"`
+	Gender           string   `json:"gender"`
+	MingJu           string   `json:"ming_ju"`
+	MingJuValue      int      `json:"ming_ju_value"`
+	ShenZhu          string   `json:"shen_zhu"`
+	MingZhu          string   `json:"ming_zhu"`
+	ShenGongLocation int      `json:"shen_gong_location"`
+}
+
 type SaveBoardRequest struct {
 	Birthday int64  `form:"birthday" binding:"required"`
 	Gender   int    `form:"gender"`
@@ -94,6 +117,7 @@ var numberMap = []string{"零", "一", "二", "三", "四", "五", "六", "七",
 var tenDigitMap = []string{"零", "一", "廿", "三", "四", "五", "六", "七", "八", "九", "十"}
 
 const (
+	TypeTenBoard      = "ten_years_board"
 	TypeYearBoard     = "year_board"
 	TypeTianBoard     = "tian_board"
 	defaultBoardBlock = 12

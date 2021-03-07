@@ -109,6 +109,7 @@ func mergeTianBoardAndYearBoard(tianBoard *ziwei.TianBoard, yearBoard *ziwei.Yea
 			Name: yearBlock.GongWeiName,
 			Type: TypeYearBoard,
 		})
+		board.Blocks[i].TenYearsRound = yearBlock.TenYearsRound
 		for i, star := range yearBlock.Stars {
 			if board.Blocks[i] == nil {
 				board.Blocks[i] = new(Block)

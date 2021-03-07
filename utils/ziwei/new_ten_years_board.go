@@ -26,10 +26,9 @@ func NewTenYearsBoard(birthday time.Time, gender genders.Gender, index int) (*Te
 	}
 	tenYearBoard := TenYearBoard(*tianBoard)
 	tenYearBoard.rotateGongWeiNameByIndex(index)
-	yearMingGong := getYearMingGong(index)
 	currentTianGan := tiangan.TianGan(int(tenYearBoard.LunaBirthday.Year.TianGan)+index) % 10
 	b := utils.Board(tenYearBoard)
-	utilsBoard := utils.SetTwelveGongs(&b, yearMingGong)
+	utilsBoard := utils.SetTwelveGongs(&b, dizhi.DiZhi(tenYearBoard.MingGongLocation))
 	utilsBoard = utils.SetLuCun(utilsBoard, currentTianGan)
 	utilsBoard = utils.SetQingYang(utilsBoard, currentTianGan)
 	utilsBoard = utils.SetTuoLuo(utilsBoard, currentTianGan)
@@ -77,18 +76,31 @@ func NewTenYearsBoard(birthday time.Time, gender genders.Gender, index int) (*Te
 // rotateGongWeiNameByIndex one index is ten years. Basic on ages, this function is returning
 // different Gong Wei location.
 func (yb *TenYearBoard) rotateGongWeiNameByIndex(index int) {
-	blocksLength := len(yb.Blocks)
-	gongWeiNames := make([]string, blocksLength)
-	yb.MingGongLocation = int(dizhi.DiZhi((yb.MingGongLocation + index) % 12))
-	for i, block := range yb.Blocks {
-		idx := (i + index) % 12
-		if idx < 0 {
-			idx = idx + blocksLength
+	blocks := make([]*utils.Block, len(yb.Blocks))
+	if yb.Gender == genders.YangMale || yb.Gender == genders.YinFemale {
+		mingGongLocation := int(dizhi.DiZhi((yb.MingGongLocation + index) % 12))
+		yb.MingGongLocation = mingGongLocation
+		// clockwise
+		for i := range yb.Blocks {
+			idx := (i + mingGongLocation) % 12
+			blocks[idx] = yb.Blocks[idx]
 		}
-		gongWeiNames[idx] = block.GongWeiName
 	}
-	for i, name := range gongWeiNames {
-		yb.Blocks[i].GongWeiName = name
+	if yb.Gender == genders.YinMale || yb.Gender == genders.YangFemale {
+		mingGongLocation := int(dizhi.DiZhi((yb.MingGongLocation - index) % 12))
+		if mingGongLocation < 0 {
+			mingGongLocation = 12 + mingGongLocation
+		}
+		yb.MingGongLocation = mingGongLocation
+		for i := range yb.Blocks {
+			// reverse clockwise
+			idx := (mingGongLocation - i) % 12
+			if idx < 0 {
+				idx = 12 + idx
+			}
+			blocks[idx] = yb.Blocks[idx]
+		}
 	}
+	yb.Blocks = blocks
 	return
 }
