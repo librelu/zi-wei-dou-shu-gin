@@ -10,10 +10,10 @@ import (
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/genders"
 )
 
-// GetYearBoard get board handler
-func (h handler) GetYearBoard(c *gin.Context) {
-	req := new(GetYearBoardRequest)
-	if err := validateGetYearBoardRequest(c, req); err != nil {
+// GetMonthBoard get month board handler
+func (h handler) GetMonthBoard(c *gin.Context) {
+	req := new(GetMonthBoardRequest)
+	if err := validateGetMonthBoardRequest(c, req); err != nil {
 		handleError(c, err)
 		return
 	}
@@ -25,7 +25,7 @@ func (h handler) GetYearBoard(c *gin.Context) {
 	birthday := time.Date(req.BirthYear, time.Month(req.BirthMonth), req.BirthDate, req.BirthHour, 0, 0, 0, location)
 	gender := genders.Gender(req.Gender)
 	index := req.Index
-	yearBoard, err := ziwei.NewYearsBoard(birthday, gender, index)
+	monthBoard, err := ziwei.NewMonthBoard(birthday, gender, index)
 	if err != nil {
 		handleError(c, err)
 		return
@@ -40,34 +40,34 @@ func (h handler) GetYearBoard(c *gin.Context) {
 		handleError(c, err)
 		return
 	}
-	resp := mergeTianBoardAndYearBoard(tianBoard, yearBoard)
+	resp := mergeTianBoardAndMonthBoard(tianBoard, monthBoard)
 
 	c.JSON(http.StatusOK, resp)
 }
 
-func mergeTianBoardAndYearBoard(tianBoard *ziwei.TianBoard, yearBoard *ziwei.YearBoard) *GetYearBoardResponse {
-	month := toChineseNums(int(yearBoard.LunaBirthday.Month))
-	if yearBoard.LunaBirthday.IsLeap {
+func mergeTianBoardAndMonthBoard(tianBoard *ziwei.TianBoard, monthBoard *ziwei.MonthBoard) *GetMonthBoardResponse {
+	month := toChineseNums(int(monthBoard.LunaBirthday.Month))
+	if monthBoard.LunaBirthday.IsLeap {
 		month = "閏" + month
 	}
-	board := &GetYearBoardResponse{
-		Birthday: fmt.Sprintf("%d年%d月%d日%d時", yearBoard.Birthday.Year(), yearBoard.Birthday.Month(), yearBoard.Birthday.Day(), yearBoard.Birthday.Hour()),
+	board := &GetMonthBoardResponse{
+		Birthday: fmt.Sprintf("%d年%d月%d日%d時", tianBoard.Birthday.Year(), tianBoard.Birthday.Month(), tianBoard.Birthday.Day(), tianBoard.Birthday.Hour()),
 		LunaBirthDay: fmt.Sprintf("%s%s年%s月%s日%s時",
-			yearBoard.LunaBirthday.Year.TianGan.String(),
-			yearBoard.LunaBirthday.Year.DiZhi.String(),
+			tianBoard.LunaBirthday.Year.TianGan.String(),
+			tianBoard.LunaBirthday.Year.DiZhi.String(),
 			month,
-			toChineseNums(int(yearBoard.LunaBirthday.Day)),
-			yearBoard.LunaBirthday.Hour,
+			toChineseNums(int(tianBoard.LunaBirthday.Day)),
+			tianBoard.LunaBirthday.Hour,
 		),
 		Blocks:           make([]*Block, defaultBoardBlock),
-		Gender:           yearBoard.Gender.String(),
-		MingJu:           yearBoard.MingJu.JuType.String(),
-		MingJuValue:      int(yearBoard.MingJu.Number),
-		ShenZhu:          yearBoard.ShenZhu,
-		MingZhu:          yearBoard.MingZhu,
-		ShenGongLocation: yearBoard.ShenGongLocation,
+		Gender:           tianBoard.Gender.String(),
+		MingJu:           tianBoard.MingJu.JuType.String(),
+		MingJuValue:      int(tianBoard.MingJu.Number),
+		ShenZhu:          tianBoard.ShenZhu,
+		MingZhu:          tianBoard.MingZhu,
+		ShenGongLocation: tianBoard.ShenGongLocation,
 	}
-	for i, yearBlock := range yearBoard.Blocks {
+	for i, monthBlock := range monthBoard.Blocks {
 		if board.Blocks[i] == nil {
 			board.Blocks[i] = new(Block)
 		}
@@ -75,15 +75,15 @@ func mergeTianBoardAndYearBoard(tianBoard *ziwei.TianBoard, yearBoard *ziwei.Yea
 			board.Blocks[i].GongWei = make([]*GongWei, 0)
 		}
 		board.Blocks[i].Location = &Location{
-			TianGan: yearBlock.Location.TianGan.String(),
-			DiZhi:   yearBlock.Location.DiZhi.String(),
+			TianGan: monthBlock.Location.TianGan.String(),
+			DiZhi:   monthBlock.Location.DiZhi.String(),
 		}
 		board.Blocks[i].GongWei = append(board.Blocks[i].GongWei, &GongWei{
-			Name: yearBlock.GongWeiName,
-			Type: TypeYearBoard,
+			Name: monthBlock.GongWeiName,
+			Type: TypeMonthBoard,
 		})
-		board.Blocks[i].TenYearsRound = yearBlock.TenYearsRound
-		for i, star := range yearBlock.Stars {
+		board.Blocks[i].TenYearsRound = monthBlock.TenYearsRound
+		for i, star := range monthBlock.Stars {
 			if board.Blocks[i] == nil {
 				board.Blocks[i] = new(Block)
 			}
@@ -95,7 +95,7 @@ func mergeTianBoardAndYearBoard(tianBoard *ziwei.TianBoard, yearBoard *ziwei.Yea
 				StarType:  star.StarType,
 				MiaoXian:  star.MiaoXian,
 				FourStar:  star.FourStar,
-				BoardType: TypeYearBoard,
+				BoardType: TypeMonthBoard,
 			})
 		}
 	}
@@ -129,7 +129,7 @@ func mergeTianBoardAndYearBoard(tianBoard *ziwei.TianBoard, yearBoard *ziwei.Yea
 	return board
 }
 
-func validateGetYearBoardRequest(c *gin.Context, req *GetYearBoardRequest) error {
+func validateGetMonthBoardRequest(c *gin.Context, req *GetMonthBoardRequest) error {
 	if err := c.ShouldBindQuery(req); err != nil {
 		return err
 	}

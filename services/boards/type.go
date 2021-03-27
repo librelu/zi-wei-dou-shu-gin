@@ -13,6 +13,7 @@ type Handler interface {
 	GetTianBoard(c *gin.Context)
 	GetYearBoard(c *gin.Context)
 	GetTenYearsBoard(c *gin.Context)
+	GetMonthBoard(c *gin.Context)
 }
 
 type GetBoardRequest struct {
@@ -120,5 +121,28 @@ const (
 	TypeTenBoard      = "ten_years_board"
 	TypeYearBoard     = "year_board"
 	TypeTianBoard     = "tian_board"
+	TypeMonthBoard    = "month_board"
 	defaultBoardBlock = 12
 )
+
+type GetMonthBoardRequest struct {
+	BirthYear  int `form:"birthYear" binding:"required"`
+	BirthMonth int `form:"birthMonth" binding:"required"`
+	BirthDate  int `form:"birthDate" binding:"required"`
+	BirthHour  int `form:"birthHour"`
+	TimeZone   int `form:"timezone"`
+	Gender     int `form:"gender"`
+	Index      int `form:"index"`
+}
+
+type GetMonthBoardResponse struct {
+	Blocks           []*Block `json:"blocks"`
+	Birthday         string   `json:"birthday"`
+	LunaBirthDay     string   `json:"luna_birthday"`
+	Gender           string   `json:"gender"`
+	MingJu           string   `json:"ming_ju"`
+	MingJuValue      int      `json:"ming_ju_value"`
+	ShenZhu          string   `json:"shen_zhu"`
+	MingZhu          string   `json:"ming_zhu"`
+	ShenGongLocation int      `json:"shen_gong_location"`
+}
