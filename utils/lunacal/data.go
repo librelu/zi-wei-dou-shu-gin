@@ -39,6 +39,14 @@ var stemBranchTable = []string{
 	`壬子`, `癸丑`, `甲寅`, `乙卯`, `丙辰`, `丁巳`, `戊午`, `己未`, `庚申`, `辛酉`, `壬戌`, `癸亥`, //戊或癸日
 }
 
+var stemBranchTableWithTianGanDiZhi = []TianGanDiZhi{
+	{tiangan.Jia, dizhi.Zi}, {tiangan.Yi, dizhi.Chou}, {tiangan.Bing, dizhi.Yin}, {tiangan.Ding, dizhi.Mao}, {tiangan.Wu, dizhi.Chen}, {tiangan.Ji, dizhi.Si}, {tiangan.Geng, dizhi.Wu}, {tiangan.Xin, dizhi.Wei}, {tiangan.Ren, dizhi.Shen}, {tiangan.Gui, dizhi.You}, {tiangan.Jia, dizhi.Xu}, {tiangan.Yi, dizhi.Hai}, //甲或己日
+	{tiangan.Bing, dizhi.Zi}, {tiangan.Ding, dizhi.Chou}, {tiangan.Wu, dizhi.Yin}, {tiangan.Ji, dizhi.Mao}, {tiangan.Geng, dizhi.Chen}, {tiangan.Xin, dizhi.Si}, {tiangan.Ren, dizhi.Wu}, {tiangan.Gui, dizhi.Wei}, {tiangan.Jia, dizhi.Shen}, {tiangan.Yi, dizhi.You}, {tiangan.Bing, dizhi.Xu}, {tiangan.Ding, dizhi.Hai}, //乙或庚日
+	{tiangan.Wu, dizhi.Zi}, {tiangan.Ji, dizhi.Chou}, {tiangan.Geng, dizhi.Yin}, {tiangan.Xin, dizhi.Mao}, {tiangan.Ren, dizhi.Chen}, {tiangan.Gui, dizhi.Si}, {tiangan.Jia, dizhi.Wu}, {tiangan.Yi, dizhi.Wei}, {tiangan.Bing, dizhi.Shen}, {tiangan.Ding, dizhi.You}, {tiangan.Wu, dizhi.Xu}, {tiangan.Ji, dizhi.Hai}, //丙或辛日
+	{tiangan.Geng, dizhi.Zi}, {tiangan.Xin, dizhi.Chou}, {tiangan.Ren, dizhi.Yin}, {tiangan.Gui, dizhi.Mao}, {tiangan.Jia, dizhi.Chen}, {tiangan.Yi, dizhi.Si}, {tiangan.Bing, dizhi.Wu}, {tiangan.Ding, dizhi.Wei}, {tiangan.Wu, dizhi.Shen}, {tiangan.Ji, dizhi.You}, {tiangan.Geng, dizhi.Xu}, {tiangan.Xin, dizhi.Hai}, //丁或壬日
+	{tiangan.Ren, dizhi.Zi}, {tiangan.Gui, dizhi.Chou}, {tiangan.Jia, dizhi.Yin}, {tiangan.Yi, dizhi.Mao}, {tiangan.Bing, dizhi.Chen}, {tiangan.Ding, dizhi.Si}, {tiangan.Wu, dizhi.Wu}, {tiangan.Ji, dizhi.Wei}, {tiangan.Geng, dizhi.Shen}, {tiangan.Xin, dizhi.You}, {tiangan.Ren, dizhi.Xu}, {tiangan.Gui, dizhi.Hai}, //戊或癸日
+}
+
 var yearNumber = []int{
 	0x9, 0xE, 0x13, 0x18, 0x1E, 0x23, 0x28, 0x2D, 0x33, 0x38, //1900-1909
 	0x1, 0x6, 0xC, 0x11, 0x16, 0x1B, 0x21, 0x26, 0x2B, 0x30, //1910-1919
@@ -270,6 +278,11 @@ func stemBranchIndex(y, m, d int) int {
 // StemBranchDay 获取日柱
 func StemBranchDay(y, m, d int) string {
 	return stemBranchTable[stemBranchIndex(y, m, d)]
+}
+
+// StemBranchDayWithTianGangDizhi 获取日柱
+func StemBranchDayWithTianGangDizhi(y, m, d int) TianGanDiZhi {
+	return stemBranchTableWithTianGanDiZhi[stemBranchIndex(y, m, d)]
 }
 
 //StemBranchMonth 获取月柱
