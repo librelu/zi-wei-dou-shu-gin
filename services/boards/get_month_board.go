@@ -83,7 +83,7 @@ func mergeTianBoardAndMonthBoard(tianBoard *ziwei.TianBoard, monthBoard *ziwei.M
 			Type: TypeMonthBoard,
 		})
 		board.Blocks[i].TenYearsRound = monthBlock.TenYearsRound
-		for i, star := range monthBlock.Stars {
+		for _, star := range monthBlock.Stars {
 			if board.Blocks[i] == nil {
 				board.Blocks[i] = new(Block)
 			}
