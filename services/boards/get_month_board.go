@@ -24,8 +24,8 @@ func (h handler) GetMonthBoard(c *gin.Context) {
 	location := time.FixedZone(fmt.Sprintf("UTC %d", timezone), req.TimeZone)
 	birthday := time.Date(req.BirthYear, time.Month(req.BirthMonth), req.BirthDate, req.BirthHour, 0, 0, 0, location)
 	gender := genders.Gender(req.Gender)
-	index := req.Index
-	monthBoard, err := ziwei.NewMonthBoard(birthday, gender, index)
+	targetDate := time.Date(req.TargetYear, time.Month(req.TargetMonth), 0, 0, 0, 0, 0, location)
+	monthBoard, err := ziwei.NewMonthBoard(birthday, targetDate, gender)
 	if err != nil {
 		handleError(c, err)
 		return
@@ -40,32 +40,18 @@ func (h handler) GetMonthBoard(c *gin.Context) {
 		handleError(c, err)
 		return
 	}
-	resp := mergeTianBoardAndMonthBoard(tianBoard, monthBoard)
+	resp := mergeTianBoardAndMonthBoard(monthBoard)
 
 	c.JSON(http.StatusOK, resp)
 }
 
-func mergeTianBoardAndMonthBoard(tianBoard *ziwei.TianBoard, monthBoard *ziwei.MonthBoard) *GetMonthBoardResponse {
+func mergeTianBoardAndMonthBoard(monthBoard *ziwei.MonthBoard) *GetMonthBoardResponse {
 	month := toChineseNums(int(monthBoard.LunaBirthday.Month))
 	if monthBoard.LunaBirthday.IsLeap {
 		month = "閏" + month
 	}
 	board := &GetMonthBoardResponse{
-		Birthday: fmt.Sprintf("%d年%d月%d日%d時", tianBoard.Birthday.Year(), tianBoard.Birthday.Month(), tianBoard.Birthday.Day(), tianBoard.Birthday.Hour()),
-		LunaBirthDay: fmt.Sprintf("%s%s年%s月%s日%s時",
-			tianBoard.LunaBirthday.Year.TianGan.String(),
-			tianBoard.LunaBirthday.Year.DiZhi.String(),
-			month,
-			toChineseNums(int(tianBoard.LunaBirthday.Day)),
-			tianBoard.LunaBirthday.Hour,
-		),
-		Blocks:           make([]*Block, defaultBoardBlock),
-		Gender:           tianBoard.Gender.String(),
-		MingJu:           tianBoard.MingJu.JuType.String(),
-		MingJuValue:      int(tianBoard.MingJu.Number),
-		ShenZhu:          tianBoard.ShenZhu,
-		MingZhu:          tianBoard.MingZhu,
-		ShenGongLocation: tianBoard.ShenGongLocation,
+		Blocks: make([]*Block, defaultBoardBlock),
 	}
 	for i, monthBlock := range monthBoard.Blocks {
 		if board.Blocks[i] == nil {
@@ -96,33 +82,6 @@ func mergeTianBoardAndMonthBoard(tianBoard *ziwei.TianBoard, monthBoard *ziwei.M
 				MiaoXian:  star.MiaoXian,
 				FourStar:  star.FourStar,
 				BoardType: TypeMonthBoard,
-			})
-		}
-	}
-	for i, tianBlock := range tianBoard.Blocks {
-		if board.Blocks[i] == nil {
-			board.Blocks[i] = new(Block)
-		}
-		if len(board.Blocks[i].GongWei) == 0 {
-			board.Blocks[i].GongWei = make([]*GongWei, 0)
-		}
-		board.Blocks[i].GongWei = append(board.Blocks[i].GongWei, &GongWei{
-			Name: tianBlock.GongWeiName,
-			Type: TypeTianBoard,
-		})
-		for _, star := range tianBlock.Stars {
-			if board.Blocks[i] == nil {
-				board.Blocks[i] = new(Block)
-			}
-			if len(board.Blocks[i].Stars) == 0 {
-				board.Blocks[i].Stars = []*Star{}
-			}
-			board.Blocks[i].Stars = append(board.Blocks[i].Stars, &Star{
-				Name:      star.Name,
-				StarType:  star.StarType,
-				MiaoXian:  star.MiaoXian,
-				FourStar:  star.FourStar,
-				BoardType: TypeTianBoard,
 			})
 		}
 	}

@@ -9,11 +9,10 @@ import (
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/genders"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/stars"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/startype"
-	"github.com/zi-wei-dou-shu-gin/utils/ziwei/tiangan"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/utils"
 )
 
-func NewYearsBoard(birthday time.Time, gender genders.Gender, index int) (*YearBoard, error) {
+func NewYearsBoard(birthday time.Time, targetDate time.Time, gender genders.Gender) (*YearBoard, error) {
 	tianBoard, err := NewTianBoard(birthday, gender)
 	if err != nil {
 		return nil, errors.Wrap(err, "can't new tian board in year board process")
@@ -25,10 +24,12 @@ func NewYearsBoard(birthday time.Time, gender genders.Gender, index int) (*YearB
 	for i := range tianBoard.Blocks {
 		tianBoard.Blocks[i].Stars = make([]*utils.Star, 0)
 	}
+	currentLunaDate := lunacal.Solar2Lunar(targetDate)
 	yearBoard := YearBoard(*tianBoard)
+	index := targetDate.Year() - birthday.Year()
 	yearBoard.rotateGongWeiNameByIndex(index)
 	yearMingGong := getYearMingGong(index)
-	currentTianGan := tiangan.TianGan(int(yearBoard.LunaBirthday.Year.TianGan)+index) % 10
+	currentTianGan := currentLunaDate.Year.TianGan
 	b := utils.Board(yearBoard)
 	utilsBoard := utils.SetTwelveGongs(&b, yearMingGong)
 	utilsBoard = utils.SetLuCun(utilsBoard, currentTianGan)

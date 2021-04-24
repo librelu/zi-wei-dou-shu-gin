@@ -1,6 +1,7 @@
 package ziwei
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/pkg/errors"
@@ -12,7 +13,7 @@ import (
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/utils"
 )
 
-func NewMonthBoard(birthday time.Time, gender genders.Gender, index int) (*MonthBoard, error) {
+func NewMonthBoard(birthday time.Time, targetDate time.Time, gender genders.Gender) (*MonthBoard, error) {
 	tianBoard, err := NewTianBoard(birthday, gender)
 	if err != nil {
 		return nil, errors.Wrap(err, "can't new tian board in year board process")
@@ -28,8 +29,11 @@ func NewMonthBoard(birthday time.Time, gender genders.Gender, index int) (*Month
 	yearMingGong := getYearMingGong(0)
 	monthMingGong := getMonthMingGong(yearMingGong, tianBoard.LunaBirthday)
 	monthBoard.MingGongLocation = int(monthMingGong)
+	// TODO: fix month setting
+	index := getIndex(targetDate, birthday)
+	fmt.Println(index)
 	monthBoard.rotateGongWeiNameByIndex(index)
-	lunaDate := lunacal.Solar2Lunar(time.Now())
+	lunaDate := lunacal.Solar2Lunar(targetDate)
 	currentTianGan := utils.GetYinShou(lunaDate.Year.TianGan)
 	b := utils.Board(monthBoard)
 	utilsBoard := utils.SetTwelveGongs(&b, dizhi.DiZhi(monthBoard.MingGongLocation))
@@ -96,10 +100,21 @@ func (mb *MonthBoard) rotateGongWeiNameByIndex(index int) {
 	return
 }
 
+func getIndex(targetDate time.Time, birthDate time.Time) int {
+	if targetDate.Before(targetDate) {
+		return 0
+	}
+	if targetDate.Year() == birthDate.Year() {
+		return int(targetDate.Month()) - int(birthDate.Month())
+	}
+	yearDifference := targetDate.Year() - birthDate.Year()
+	return yearDifference*12 + int(targetDate.Month())
+}
+
 func getMonthMingGong(yearMingGong dizhi.DiZhi, lunaBirthDay *lunacal.LunaDate) dizhi.DiZhi {
 	month := lunaBirthDay.Month - 1
 	startMonth := yearMingGong - dizhi.DiZhi(month)
-	if startMonth < 0 {
+	if int(startMonth) < 0 {
 		startMonth = startMonth + 12
 	}
 	monthMingGong := (startMonth + *lunaBirthDay.Hour) % 12

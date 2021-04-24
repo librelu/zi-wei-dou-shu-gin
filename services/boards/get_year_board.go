@@ -24,8 +24,8 @@ func (h handler) GetYearBoard(c *gin.Context) {
 	location := time.FixedZone(fmt.Sprintf("UTC %d", timezone), req.TimeZone)
 	birthday := time.Date(req.BirthYear, time.Month(req.BirthMonth), req.BirthDate, req.BirthHour, 0, 0, 0, location)
 	gender := genders.Gender(req.Gender)
-	index := req.Index
-	yearBoard, err := ziwei.NewYearsBoard(birthday, gender, index)
+	targetDate := time.Date(req.TargetYear, 0, 0, 0, 0, 0, 0, location)
+	yearBoard, err := ziwei.NewYearsBoard(birthday, targetDate, gender)
 	if err != nil {
 		handleError(c, err)
 		return

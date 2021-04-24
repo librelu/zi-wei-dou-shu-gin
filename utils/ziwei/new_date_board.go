@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/pkg/errors"
+	"github.com/zi-wei-dou-shu-gin/utils/helper"
 	"github.com/zi-wei-dou-shu-gin/utils/lunacal"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/dizhi"
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/genders"
@@ -12,7 +13,7 @@ import (
 	"github.com/zi-wei-dou-shu-gin/utils/ziwei/utils"
 )
 
-func NewDateBoard(birthday time.Time, gender genders.Gender, index int) (*DateBoard, error) {
+func NewDateBoard(birthday time.Time, targetDate time.Time, gender genders.Gender) (*DateBoard, error) {
 	tianBoard, err := NewTianBoard(birthday, gender)
 	if err != nil {
 		return nil, errors.Wrap(err, "can't new tian board in year board process")
@@ -28,6 +29,10 @@ func NewDateBoard(birthday time.Time, gender genders.Gender, index int) (*DateBo
 	yearMingGong := getYearMingGong(0)
 	monthMingGong := getMonthMingGong(yearMingGong, tianBoard.LunaBirthday)
 	dateBoard.MingGongLocation = int(monthMingGong)
+	index, err := helper.GetIndex(targetDate, birthday)
+	if err != nil {
+		return nil, err
+	}
 	dateBoard.rotateGongWeiNameByIndex(index)
 	birthday = birthday.AddDate(0, 0, index)
 	date := lunacal.StemBranchDayWithTianGangDizhi(birthday.Year(), int(birthday.Month()), birthday.Day())

@@ -11,6 +11,9 @@ func SetTwelveGongs(board *Board, mingGongLocation dizhi.DiZhi) *Board {
 		if index > 11 {
 			index -= 12
 		}
+		if index < 0 {
+			index += 12
+		}
 		board.Blocks[index].GongWeiName = gong.Gong(i).String()
 	}
 	return board

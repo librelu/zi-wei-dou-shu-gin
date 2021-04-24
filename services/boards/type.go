@@ -45,9 +45,9 @@ type GetYearBoardRequest struct {
 	BirthMonth int `form:"birthMonth" binding:"required"`
 	BirthDate  int `form:"birthDate" binding:"required"`
 	BirthHour  int `form:"birthHour"`
+	TargetYear int `form:"targetYear"`
 	TimeZone   int `form:"timezone"`
 	Gender     int `form:"gender"`
-	Index      int `form:"index"`
 }
 
 type GetYearBoardResponse struct {
@@ -128,13 +128,14 @@ const (
 )
 
 type GetMonthBoardRequest struct {
-	BirthYear  int `form:"birthYear" binding:"required"`
-	BirthMonth int `form:"birthMonth" binding:"required"`
-	BirthDate  int `form:"birthDate" binding:"required"`
-	BirthHour  int `form:"birthHour"`
-	TimeZone   int `form:"timezone"`
-	Gender     int `form:"gender"`
-	Index      int `form:"index"`
+	BirthYear   int `form:"birthYear" binding:"required"`
+	BirthMonth  int `form:"birthMonth" binding:"required"`
+	BirthDate   int `form:"birthDate" binding:"required"`
+	BirthHour   int `form:"birthHour"`
+	TargetYear  int `form:"targetYear" binding:"required"`
+	TargetMonth int `form:"targetMonth" binding:"required"`
+	TimeZone    int `form:"timezone"`
+	Gender      int `form:"gender"`
 }
 
 type GetMonthBoardResponse struct {
@@ -150,13 +151,15 @@ type GetMonthBoardResponse struct {
 }
 
 type GetDateBoardRequest struct {
-	BirthYear  int `form:"birthYear" binding:"required"`
-	BirthMonth int `form:"birthMonth" binding:"required"`
-	BirthDate  int `form:"birthDate" binding:"required"`
-	BirthHour  int `form:"birthHour"`
-	TimeZone   int `form:"timezone"`
-	Gender     int `form:"gender"`
-	Index      int `form:"index"`
+	BirthYear   int `form:"birthYear" binding:"required"`
+	BirthMonth  int `form:"birthMonth" binding:"required"`
+	BirthDate   int `form:"birthDate" binding:"required"`
+	BirthHour   int `form:"birthHour"`
+	TargetYear  int `form:"targetYear" binding:"required"`
+	TargetMonth int `form:"targetMonth" binding:"required"`
+	TargetDate  int `form:"targetDate" binding:"required"`
+	TimeZone    int `form:"timezone"`
+	Gender      int `form:"gender"`
 }
 
 type GetDateBoardResponse struct {
